@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Listado de Solicitudes - Sistema OTEC</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect"/>
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #2563EB;
+            --secondary: #64748B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --background-light: #f8fafc;
+        }
+        @layer base {
+            body {
+                font-size: 14px;
+                font-family: "Inter", sans-serif;
+            }
+            .bg-primary { background-color: var(--primary); }
+            .text-primary { color: var(--primary); }
+            .text-secondary { color: var(--secondary); }
+            .bg-success { background-color: var(--success); }
+            .bg-warning { background-color: var(--warning); }
+            .bg-danger { background-color: var(--danger); }
+            tbody tr:nth-child(even) {
+                background-color: rgba(248, 250, 252, 0.5);
+            }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "secondary": "#64748B",
+                        "success": "#10B981",
+                        "warning": "#F59E0B",
+                        "danger": "#EF4444",
+                        "background-light": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light text-[#1e293b] antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="flex w-64 flex-col bg-white border-r border-slate-200 flex-shrink-0 z-20 hidden lg:flex">
+        <div class="flex h-full flex-col justify-between p-4">
+            <div class="flex flex-col gap-8">
+                <div class="flex items-center gap-3 px-2 py-2">
+                    <div class="bg-primary rounded-lg size-10 flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined">analytics</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-slate-900 text-sm font-bold leading-none">Sistema Gestión</h1>
+                        <p class="text-slate-500 text-[11px] font-medium uppercase tracking-wider mt-1">OTEC Admin</p>
+                    </div>
+                </div>
+                <nav class="flex flex-col gap-1" id="sidebar-nav">
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-secondary transition-colors group" href="dashboard.html" data-page="inicio">
+                        <span class="material-symbols-outlined text-[22px]">house</span>
+                        <p class="font-medium">Inicio</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary transition-colors" href="solicitudes-listado.html" data-page="solicitudes">
+                        <span class="material-symbols-outlined text-[22px] fill-1">assignment</span>
+                        <p class="font-bold">Solicitudes</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-secondary transition-colors group" href="relatores-listado.html" data-page="relatores">
+                        <span class="material-symbols-outlined text-[22px]">group</span>
+                        <p class="font-medium">Relatores</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-secondary transition-colors group" href="reportes.html" data-page="reportes">
+                        <span class="material-symbols-outlined text-[22px]">bar_chart</span>
+                        <p class="font-medium">Reportes</p>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-secondary transition-colors group" href="empresas-listado.html" data-page="empresas">
+                        <span class="material-symbols-outlined text-[22px]">business</span>
+                        <p class="font-medium">Empresas</p>
+                    </a>
+                </nav>
+            </div>
+            <div class="flex flex-col gap-1">
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-slate-400 font-bold">Configuración</p>
+                </div>
+                <a class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 text-secondary transition-colors group" href="configuracion.html" data-page="ajustes">
+                    <span class="material-symbols-outlined text-[22px]">settings</span>
+                    <p class="font-medium">Ajustes</p>
+                </a>
+                <div class="mt-4 pt-4 border-t border-slate-100 flex items-center gap-3 px-2">
+                    <div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBn3d9kDjFsvL9R3959o8YscI3NtCMNTrXwukN85-20RQtFoL7RN-P6tO99zU2MFJUcn_DKagfnR2x3CDBPfFnHoZvJsIEcPbuDzYTPDc2mskQgfLpuxvJFpcDuITELgM9ffCgpfwLWIPeOaFOJaKy-5ggVBrygBmvKEZO6XwS8JyWuQJfV9zp1I4fnIsnqX3sCZtk7RKkqWpmI_F2uGbJT742AOYSiiGiZD3rCMjDss6Umcpq_koMdyzIXS8CchCwkU7rz3Z9TIN4");'></div>
+                    <div class="flex-1 overflow-hidden">
+                        <p class="text-[13px] font-semibold text-slate-900 truncate">Admin User</p>
+                        <p class="text-[11px] text-slate-500 truncate">admin@otec.cl</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-[#f8fafc]">
+        <!-- Mobile Header -->
+        <div class="lg:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200">
+            <div class="font-bold text-slate-900">OTEC Manager</div>
+            <button class="text-secondary" id="mobile-menu-toggle">
+                <span class="material-symbols-outlined">menu</span>
+            </button>
+        </div>
+
+        <!-- Content Area -->
+        <div class="flex-1 overflow-y-auto p-6 md:p-8 space-y-6">
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div class="space-y-1">
+                    <div class="flex items-center gap-2 text-[12px] font-medium text-secondary uppercase tracking-wider">
+                        <a href="dashboard.html" class="hover:text-primary transition-colors">Gestión</a>
+                        <span class="material-symbols-outlined text-sm">chevron_right</span>
+                        <span class="text-slate-900">Solicitudes</span>
+                    </div>
+                    <h1 class="text-slate-900 text-2xl font-black tracking-tight">Listado de Solicitudes</h1>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="btn-nueva-solicitud" class="flex items-center justify-center gap-2 h-10 px-4 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors font-bold text-[13px] shadow-sm">
+                        <span class="material-symbols-outlined text-[18px]">add</span>
+                        <span>Nueva Solicitud</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Filters Card -->
+            <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- Buscar -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-slate-700 text-[11px] font-bold uppercase tracking-wider">Buscar</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-secondary text-[18px]">search</span>
+                            <input id="filter-search" class="w-full h-9 pl-9 pr-4 rounded-lg border border-slate-200 bg-slate-50 text-[13px] focus:ring-1 focus:ring-primary focus:border-primary placeholder:text-slate-400" placeholder="ID, Empresa, Curso..." type="text"/>
+                        </div>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-slate-700 text-[11px] font-bold uppercase tracking-wider">Estado</label>
+                        <select id="filter-estado" class="w-full h-9 px-3 rounded-lg border border-slate-200 bg-slate-50 text-[13px] focus:ring-1 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+                            <option value="">Todos los Estados</option>
+                            <option value="evaluacion_otic">En Evaluación OTIC</option>
+                            <option value="rechazada_otic">Rechazada por OTIC</option>
+                            <option value="derivada_tercero">Derivada a Tercero</option>
+                            <option value="en_coordinacion">En Coordinación</option>
+                            <option value="lista_ejecucion">Lista para Ejecución</option>
+                            <option value="finalizada">Finalizada</option>
+                            <option value="cerrada">Cerrada</option>
+                        </select>
+                    </div>
+
+                    <!-- Coordinador -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-slate-700 text-[11px] font-bold uppercase tracking-wider">Coordinador Asignado</label>
+                        <select id="filter-coordinador" class="w-full h-9 px-3 rounded-lg border border-slate-200 bg-slate-50 text-[13px] focus:ring-1 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+                            <option value="">Todos los Coordinadores</option>
+                            <option value="Andrés Silva">Andrés Silva</option>
+                            <option value="Beatriz Luna">Beatriz Luna</option>
+                            <option value="Carlos Méndez">Carlos Méndez</option>
+                            <option value="Daniela Rivas">Daniela Rivas</option>
+                        </select>
+                    </div>
+
+                    <!-- Fecha -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="text-slate-700 text-[11px] font-bold uppercase tracking-wider">Fecha</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-secondary text-[18px]">calendar_today</span>
+                            <input id="filter-fecha" class="w-full h-9 pl-9 pr-4 rounded-lg border border-slate-200 bg-slate-50 text-[13px] focus:ring-1 focus:ring-primary focus:border-primary" type="date"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table Card -->
+            <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse min-w-[1100px]">
+                        <thead>
+                            <tr class="bg-slate-50 border-b border-slate-200">
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider">ID</th>
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider">Fecha</th>
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider">Empresa</th>
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider">Centro Gestión</th>
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider">Nombre Curso</th>
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider">Solicitante</th>
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider w-[180px]">Estado</th>
+                                <th class="px-4 py-3 text-[11px] font-bold text-secondary uppercase tracking-wider text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-100" id="tabla-solicitudes-body">
+                            <!-- Rows will be rendered here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="flex items-center justify-between px-6 py-4 border-t border-slate-200 bg-slate-50/50 mt-auto">
+                    <div class="text-[13px] text-secondary" id="pagination-info">
+                        Mostrando <span class="font-semibold text-slate-900" id="showing-start">0</span> a
+                        <span class="font-semibold text-slate-900" id="showing-end">0</span> de
+                        <span class="font-semibold text-slate-900" id="showing-total">0</span> resultados
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <button id="btn-prev-page" class="flex items-center justify-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-[13px] font-medium text-secondary hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            Anterior
+                        </button>
+                        <div class="flex items-center gap-1" id="pagination-numbers">
+                            <!-- Page numbers will be rendered here -->
+                        </div>
+                        <button id="btn-next-page" class="flex items-center justify-center px-3 py-1.5 rounded-lg border border-slate-200 bg-white text-[13px] font-medium text-secondary hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                            Siguiente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Modal de confirmación para eliminar -->
+<div id="modal-eliminar" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-4">
+        <div class="flex items-center gap-3">
+            <div class="size-12 rounded-full bg-red-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-danger text-[24px]">warning</span>
+            </div>
+            <div>
+                <h3 class="text-lg font-bold text-slate-900">Confirmar Eliminación</h3>
+                <p class="text-sm text-secondary" id="modal-eliminar-mensaje">¿Está seguro de eliminar esta solicitud?</p>
+            </div>
+        </div>
+        <div class="flex gap-3 justify-end">
+            <button id="modal-eliminar-cancelar" class="px-4 py-2 rounded-lg border border-slate-200 text-secondary hover:bg-slate-50 transition-colors font-medium">
+                Cancelar
+            </button>
+            <button id="modal-eliminar-confirmar" class="px-4 py-2 rounded-lg bg-danger hover:bg-danger/90 text-white transition-colors font-bold">
+                Eliminar
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+<script src="../assets/js/data/solicitudes-mock.js"></script>
+<script src="../assets/js/utils/helpers.js"></script>
+<script src="../assets/js/components/sidebar.js"></script>
+<script src="../assets/js/components/tabla-solicitudes.js"></script>
+<script src="../assets/js/pages/solicitudes-listado.js"></script>
+</body>
+</html>

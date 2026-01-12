@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Empresas - Sistema OTEC</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav { background-color: #f0f1f4; border-right: 4px solid #2463eb; }
+        .table-zebra tr:nth-child(even) {
+            background-color: rgba(249, 250, 251, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-white antialiased">
+<div class="flex h-screen overflow-hidden">
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-white dark:bg-[#1a202c] border-r border-[#dbdee6] dark:border-gray-800 flex flex-col shrink-0">
+        <div class="p-6">
+            <div class="flex items-center gap-3">
+                <div class="bg-primary rounded-lg p-2 text-white">
+                    <span class="material-symbols-outlined">analytics</span>
+                </div>
+                <div class="flex flex-col">
+                    <h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">Sistema OTEC</h1>
+                    <p class="text-[#616e89] text-xs font-normal">Gestión Corporativa</p>
+                </div>
+            </div>
+        </div>
+        <nav class="flex-1 px-3 space-y-1" id="sidebar-nav">
+            <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="dashboard.html" data-page="inicio">
+                <span class="material-symbols-outlined text-[24px]">house</span>
+                <span class="text-sm font-medium">Inicio</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="solicitudes-listado.html" data-page="solicitudes">
+                <span class="material-symbols-outlined text-[24px]">assignment</span>
+                <span class="text-sm font-medium">Solicitudes</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="relatores-listado.html" data-page="relatores">
+                <span class="material-symbols-outlined text-[24px]">group</span>
+                <span class="text-sm font-medium">Relatores</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="reportes.html" data-page="reportes">
+                <span class="material-symbols-outlined text-[24px]">bar_chart</span>
+                <span class="text-sm font-medium">Reportes</span>
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="empresas-listado.html" data-page="empresas">
+                <span class="material-symbols-outlined text-[24px]">business</span>
+                <span class="text-sm font-medium">Empresas</span>
+            </a>
+            <div class="pt-4 pb-2 px-3">
+                <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Configuración</p>
+            </div>
+            <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="configuracion.html" data-page="ajustes">
+                <span class="material-symbols-outlined text-[24px]">settings</span>
+                <span class="text-sm font-medium">Ajustes</span>
+            </a>
+        </nav>
+        <div class="p-4 border-t border-[#dbdee6] dark:border-gray-800">
+            <div class="flex items-center gap-3">
+                <div class="size-10 rounded-full bg-cover bg-center bg-[#f0f1f4]" data-alt="Avatar de usuario administrador" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiz4oKSzbq6_6G2zUileRWNM9J7ejhCs5U-9EIAXmhnLS6y-nF-i4LltyKkFjZQsFJgfaQjHHgapYjJdtue70IS_lPZJJ796EP7u2zDdPssJltnYqlRE-PVauNDy4PQN8AFzvNt9wprW4_qqLW7mQZKaOEakUJP9W3byeOmZ7l0OVFe-RYFtFggRa7BoW91YRZeZE_-0Wg0EAfa1LUUtkfGAfRTpyAmLaBojspSPBmmbauygCC66nf7G1wSulHg80z0wEsYHiv6HU')"></div>
+                <div class="flex flex-col">
+                    <p class="text-xs font-bold dark:text-white">Admin OTEC</p>
+                    <p class="text-[10px] text-[#616e89]">admin@otec.cl</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col overflow-y-auto">
+        <!-- Page Header -->
+        <header class="bg-white dark:bg-[#111621] px-8 py-6 border-b border-[#dbdee6] dark:border-gray-800 sticky top-0 z-10">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-[#111318] dark:text-white text-2xl font-black tracking-tight">Gestión de Empresas</h2>
+                    <p class="text-[#616e89] text-sm mt-1">Administración de clientes corporativos y centros de gestión.</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[#616e89] text-[20px]">search</span>
+                        <input class="pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 rounded-lg text-sm w-64 focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Buscar empresa o RUT..." type="text"/>
+                    </div>
+                    <button class="flex items-center gap-2 px-4 h-10 rounded-lg bg-primary text-white text-sm font-bold shadow-md hover:bg-primary/90 transition-all">
+                        <span class="material-symbols-outlined text-[20px]">add</span>
+                        <span>Nueva Empresa</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <div class="p-8">
+            <div class="bg-white dark:bg-gray-900 border border-[#dbdee6] dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse table-zebra">
+                        <thead class="bg-gray-50 dark:bg-gray-800/50 text-[#616e89] text-[11px] font-bold uppercase tracking-widest border-b border-[#dbdee6] dark:border-gray-700">
+                            <tr>
+                                <th class="px-6 py-4 w-12 text-center">Logo</th>
+                                <th class="px-6 py-4">Nombre Empresa</th>
+                                <th class="px-6 py-4">RUT</th>
+                                <th class="px-6 py-4">Centro de Gestión Principal</th>
+                                <th class="px-6 py-4 text-center">Solicitudes Activas</th>
+                                <th class="px-6 py-4">Estado</th>
+                                <th class="px-6 py-4 text-right">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm divide-y divide-[#dbdee6] dark:divide-gray-800">
+                            <!-- Row 1 -->
+                            <tr class="hover:bg-blue-50/30 dark:hover:bg-primary/5 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="size-8 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 overflow-hidden">
+                                        <img alt="MN" class="size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDkDu_zH0fZ9qXVPYwXZ8UOdBiJTL5nHLCQZ9B_5ZQbM_r0xHOWN3EXvxqNWcb4t5pZHsQ-Dxi52Rv7IJW3L3vL6MXv3HNOu_3kXMz5WNH8h8Gv6p8LmkXOZ6PBTFQ4pxLw3nP5YL8KZ1lbmST7g5f8gH0v3Q3n5Z8f"/>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="font-bold text-[#111318] dark:text-white">Minería del Norte S.A.</p>
+                                    <p class="text-[11px] text-[#616e89]">Industria Minera</p>
+                                </td>
+                                <td class="px-6 py-4 font-medium text-[#616e89]">76.123.456-K</td>
+                                <td class="px-6 py-4 text-[#616e89]">Sede Antofagasta Central</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center justify-center size-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs">12</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase">
+                                        <span class="size-1.5 rounded-full bg-green-600"></span>
+                                        Activa
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded text-gray-400 hover:text-red-600 transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 2 -->
+                            <tr class="hover:bg-blue-50/30 dark:hover:bg-primary/5 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="size-8 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 overflow-hidden">
+                                        <img alt="CH" class="size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNsirn_zSx0IEnnoyyCIIGt5HANgYGxvpikdDLS5csDF12vv4D-Nx2LOGk3BF51HN0CMHAl59BDg2r-n37Q3gL8qv9I73WyBv552DQk3SyM4kpdf2QlkwN8Lk-d-Z8gtYLAfCMA-ErxkWDnK4zLGLkhr7Qpnh3MHzC8TEo2YDd_WRxW1vGAXHzTgYCUSPaODALlmr_dsmC8d0_6go5oald1UqeGqq8WWfpxebK4K-XHHoJgMv9QxDVzHukdFFHWdDA0Mwh3JCjFhQ"/>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="font-bold text-[#111318] dark:text-white">Constructora Horizonte</p>
+                                    <p class="text-[11px] text-[#616e89]">Construcción y Obras</p>
+                                </td>
+                                <td class="px-6 py-4 font-medium text-[#616e89]">81.445.900-3</td>
+                                <td class="px-6 py-4 text-[#616e89]">Oficina Santiago Oriente</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center justify-center size-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs">5</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase">
+                                        <span class="size-1.5 rounded-full bg-green-600"></span>
+                                        Activa
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded text-gray-400 hover:text-red-600 transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 3 -->
+                            <tr class="hover:bg-blue-50/30 dark:hover:bg-primary/5 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="size-8 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 overflow-hidden">
+                                        <img alt="LR" class="size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCoqnVDtNCXS-NLiYrrdz0CbqWbAW_ZQxqZB_6ImqMuPZL_P1aCrB6aamAJDv_JG0Q6NgKatyUW0Vm_Khiyxw0ZkZ0pthaUCBOw6RBqeLbQj3ZFWljJN5BFwrJt7dveFRVLiPhd2fAt6FWgitp586_TJchz5wp9RjFDB0xpxQd35GRtPNJQsZiDF5fnS4e0YSRkpN7JpOEGrIQBwl8sYTrl89odt9SyJePjEZ7YQVzfNIh8rGfF8df44FlbkBXqzKorOb96eux2mew"/>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="font-bold text-[#111318] dark:text-white">Logística Regional Ltda.</p>
+                                    <p class="text-[11px] text-[#616e89]">Transporte Terrestre</p>
+                                </td>
+                                <td class="px-6 py-4 font-medium text-[#616e89]">92.887.330-1</td>
+                                <td class="px-6 py-4 text-[#616e89]">Centro Distribución Sur</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center justify-center size-7 rounded-full bg-gray-100 text-gray-500 font-bold text-xs">0</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-gray-600 text-[10px] font-bold uppercase">
+                                        <span class="size-1.5 rounded-full bg-gray-400"></span>
+                                        Inactiva
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded text-gray-400 hover:text-red-600 transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Row 4 -->
+                            <tr class="hover:bg-blue-50/30 dark:hover:bg-primary/5 transition-colors">
+                                <td class="px-6 py-4">
+                                    <div class="size-8 rounded-full bg-gray-100 flex items-center justify-center border border-gray-200 overflow-hidden">
+                                        <img alt="TE" class="size-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDtLJV5jklogSSIBYGcMfA_J6EEcQ3VOta3os82C2LoiFBFWKn40rH-b3nHzh0MSQ1GjILdtOk_wV7AXRw9Eiw1_pE4SoUegTv-qfQn0EGWy3e_XnTpwzwNbDcgCNt9EPNwc-833f61fDUBatARJGw-kVbxItzBlTWn-JTqrOZeAd0yCuxgfKTlZQ84MoAtP91PLZVzrI6ITrEvlIzAawknemU0XII7XoKDO0azURGL8Y4-1E5q1wHEjJG3LJyUCkX29yYHE3Y9W5k"/>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="font-bold text-[#111318] dark:text-white">TecnoEnergía SPA</p>
+                                    <p class="text-[11px] text-[#616e89]">Energía y Servicios</p>
+                                </td>
+                                <td class="px-6 py-4 font-medium text-[#616e89]">77.550.210-9</td>
+                                <td class="px-6 py-4 text-[#616e89]">Planta Solar El Sol</td>
+                                <td class="px-6 py-4 text-center">
+                                    <span class="inline-flex items-center justify-center size-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs">8</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-100 text-green-700 text-[10px] font-bold uppercase">
+                                        <span class="size-1.5 rounded-full bg-green-600"></span>
+                                        Activa
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-gray-100 dark:hover:bg-gray-800 rounded text-gray-400 hover:text-primary transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">edit</span>
+                                        </button>
+                                        <button class="p-1.5 hover:bg-red-50 dark:hover:bg-red-900/20 rounded text-gray-400 hover:text-red-600 transition-colors">
+                                            <span class="material-symbols-outlined text-[20px]">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="px-6 py-4 bg-gray-50 dark:bg-gray-800/30 border-t border-[#dbdee6] dark:border-gray-800 flex items-center justify-between">
+                    <p class="text-xs text-[#616e89]">Mostrando <span class="font-bold text-[#111318] dark:text-white">4</span> de <span class="font-bold text-[#111318] dark:text-white">32</span> empresas</p>
+                    <div class="flex gap-2">
+                        <button class="px-3 py-1.5 rounded bg-white dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 text-xs font-medium hover:bg-gray-50 transition-colors">Anterior</button>
+                        <button class="px-3 py-1.5 rounded bg-primary text-white text-xs font-bold shadow-sm">1</button>
+                        <button class="px-3 py-1.5 rounded bg-white dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 text-xs font-medium hover:bg-gray-50 transition-colors">2</button>
+                        <button class="px-3 py-1.5 rounded bg-white dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 text-xs font-medium hover:bg-gray-50 transition-colors">3</button>
+                        <button class="px-3 py-1.5 rounded bg-white dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 text-xs font-medium hover:bg-gray-50 transition-colors">Siguiente</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-[#dbdee6] dark:border-gray-800 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-lg bg-blue-50 dark:bg-blue-900/20 flex items-center justify-center text-primary">
+                            <span class="material-symbols-outlined">corporate_fare</span>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-[#616e89] font-bold uppercase tracking-wider">Total Empresas</p>
+                            <h4 class="text-xl font-black dark:text-white">32</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-[#dbdee6] dark:border-gray-800 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-lg bg-green-50 dark:bg-green-900/20 flex items-center justify-center text-green-600">
+                            <span class="material-symbols-outlined">check_circle</span>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-[#616e89] font-bold uppercase tracking-wider">Empresas Activas</p>
+                            <h4 class="text-xl font-black dark:text-white">28</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-white dark:bg-gray-900 p-5 rounded-xl border border-[#dbdee6] dark:border-gray-800 shadow-sm">
+                    <div class="flex items-center gap-3">
+                        <div class="size-10 rounded-lg bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center text-orange-600">
+                            <span class="material-symbols-outlined">pending_actions</span>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-[#616e89] font-bold uppercase tracking-wider">Solicitudes Totales</p>
+                            <h4 class="text-xl font-black dark:text-white">156</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Info -->
+        <div class="mt-auto px-8 pb-8">
+            <div class="p-4 rounded-lg bg-white/50 dark:bg-gray-900/30 border border-dashed border-[#dbdee6] dark:border-gray-800">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <p class="text-xs font-bold dark:text-white">Centro de Gestión de Clientes</p>
+                        <p class="text-[11px] text-[#616e89]">Vista administrativa para el control de contratos y centros de formación asociados.</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[11px] text-[#616e89] font-medium italic">Sistema de Gestión de Calidad - Módulo Empresas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Scripts -->
+<script src="../assets/js/components/sidebar.js"></script>
+<script>
+    // Handle view empresa detail button clicks
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get all table rows
+        const tableRows = document.querySelectorAll('tbody tr');
+
+        tableRows.forEach((row, index) => {
+            // Get all buttons in this row
+            const buttons = row.querySelectorAll('button');
+
+            // Find the button with visibility icon
+            buttons.forEach(button => {
+                const icon = button.querySelector('.material-symbols-outlined');
+                if (icon && icon.textContent.trim() === 'visibility') {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // Navigate to detail page with empresa ID (index + 1)
+                        window.location.href = `empresas-detalle.html?id=${index + 1}`;
+                    });
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

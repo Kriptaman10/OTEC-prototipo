@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Detalle Relator - Sistema OTEC</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2463eb",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 200ms;
+        }
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col shrink-0 sticky top-0 h-screen">
+            <div class="p-6 flex flex-col h-full">
+                <div class="flex items-center gap-3 mb-8">
+                    <div class="size-10 rounded-full bg-primary flex items-center justify-center text-white">
+                        <span class="material-symbols-outlined filled-icon">school</span>
+                    </div>
+                    <div>
+                        <h1 class="text-base font-bold leading-none">Gestión OTEC</h1>
+                        <p class="text-xs text-slate-500 mt-1">Administrador</p>
+                    </div>
+                </div>
+                <nav class="space-y-1 flex-1">
+                    <a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">dashboard</span>
+                        <span class="text-sm font-medium">Dashboard</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">book</span>
+                        <span class="text-sm font-medium">Cursos</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg" href="relatores-listado.html">
+                        <span class="material-symbols-outlined filled-icon">group</span>
+                        <span class="text-sm font-medium">Relatores</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">corporate_fare</span>
+                        <span class="text-sm font-medium">Empresas</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">bar_chart</span>
+                        <span class="text-sm font-medium">Reportes</span>
+                    </a>
+                </nav>
+                <div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+                    <a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-lg" href="#">
+                        <span class="material-symbols-outlined">settings</span>
+                        <span class="text-sm font-medium">Configuración</span>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto">
+            <div class="max-w-6xl mx-auto p-8">
+                <!-- Breadcrumb -->
+                <nav class="flex items-center gap-2 text-sm text-slate-500 mb-6">
+                    <a class="hover:text-primary" href="relatores-listado.html">Relatores</a>
+                    <span class="material-symbols-outlined text-xs">chevron_right</span>
+                    <span id="breadcrumbNombre" class="text-slate-900 dark:text-slate-200 font-medium">...</span>
+                </nav>
+
+                <!-- Header -->
+                <header class="bg-white dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 mb-8">
+                    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                        <div class="flex gap-6 items-center">
+                            <div class="relative">
+                                <div id="avatarHeader" class="w-20 h-20 rounded-lg bg-primary/10 border-2 border-primary flex items-center justify-center text-primary text-3xl font-bold">
+                                    --
+                                </div>
+                                <div id="statusIndicator" class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 border-2 border-white dark:border-slate-900 rounded-full"></div>
+                            </div>
+                            <div>
+                                <h2 id="headerNombre" class="text-[28px] font-bold text-slate-900 dark:text-white leading-tight">Cargando...</h2>
+                                <div class="flex flex-wrap items-center gap-3 mt-1">
+                                    <span id="relatorId" class="text-sm text-slate-500">ID: ---</span>
+                                    <span id="estadoBadge" class="px-2 py-0.5 text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded">Activo</span>
+                                    <span id="disponibilidadBadge" class="flex items-center gap-1 text-xs font-medium text-green-600">
+                                        <span class="size-1.5 rounded-full bg-green-600"></span>
+                                        Disponible
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="abrirModalEditar()" class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg font-bold transition-colors">
+                            <span class="material-symbols-outlined text-sm">edit</span>
+                            Editar Perfil
+                        </button>
+                    </div>
+                </header>
+
+                <div class="grid grid-cols-1 lg:grid-cols-10 gap-8">
+                    <!-- Columna Izquierda -->
+                    <div class="lg:col-span-6 space-y-8">
+                        <!-- Información Personal -->
+                        <section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                            <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                                <h3 class="text-lg font-bold">Información Personal</h3>
+                                <span class="material-symbols-outlined text-slate-400">info</span>
+                            </div>
+                            <div class="p-0">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 px-6 py-4 border-b border-slate-50 dark:border-slate-800/50">
+                                    <p class="text-sm text-slate-500 pb-1 sm:pb-0">Email</p>
+                                    <p class="text-sm font-medium">
+                                        <a id="emailLink" href="#" class="text-primary hover:underline">...</a>
+                                    </p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 px-6 py-4 border-b border-slate-50 dark:border-slate-800/50">
+                                    <p class="text-sm text-slate-500 pb-1 sm:pb-0">Teléfono</p>
+                                    <p class="text-sm font-medium">
+                                        <a id="telefonoLink" href="#" class="text-primary hover:underline">...</a>
+                                    </p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 px-6 py-4 border-b border-slate-50 dark:border-slate-800/50">
+                                    <p class="text-sm text-slate-500 pb-1 sm:pb-0">RUT</p>
+                                    <p id="rutText" class="text-sm font-medium">...</p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 px-6 py-4 border-b border-slate-50 dark:border-slate-800/50">
+                                    <p class="text-sm text-slate-500 pb-1 sm:pb-0">Tarifa</p>
+                                    <p id="tarifaText" class="text-sm font-bold text-slate-900 dark:text-white">...</p>
+                                </div>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 px-6 py-4">
+                                    <p class="text-sm text-slate-500 pb-1 sm:pb-0">Fecha Registro</p>
+                                    <p id="fechaRegistro" class="text-sm font-medium">...</p>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Especialidades -->
+                        <section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+                            <h3 class="text-lg font-bold mb-4">Especialidades</h3>
+                            <div id="especialidadesContainer" class="flex flex-wrap gap-2">
+                                <!-- Especialidades serán insertadas aquí -->
+                            </div>
+                        </section>
+
+                        <!-- Historial de Cursos -->
+                        <section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+                            <div class="px-6 py-4 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+                                <h3 class="text-lg font-bold">Historial de Cursos</h3>
+                            </div>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead class="bg-slate-50 dark:bg-slate-800/50">
+                                        <tr>
+                                            <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">Curso</th>
+                                            <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">Fecha</th>
+                                            <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase">Participantes</th>
+                                            <th class="px-6 py-3 text-xs font-bold text-slate-500 uppercase text-center">Calificación</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cursosTableBody" class="divide-y divide-slate-100 dark:divide-slate-800">
+                                        <!-- Cursos serán insertados aquí -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!-- Columna Derecha -->
+                    <div class="lg:col-span-4 space-y-6">
+                        <!-- Stats Cards -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex flex-col gap-2 rounded-xl p-6 bg-[#EFF6FF] border border-blue-100 text-blue-900">
+                                <p class="text-xs font-bold uppercase tracking-wider opacity-70">Total Cursos</p>
+                                <p id="statTotalCursos" class="text-3xl font-black">0</p>
+                                <div class="mt-2 flex items-center text-xs font-semibold gap-1">
+                                    <span class="material-symbols-outlined text-sm">trending_up</span>
+                                    <span>+12%</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2 rounded-xl p-6 bg-[#F0FDF4] border border-green-100 text-green-900">
+                                <p class="text-xs font-bold uppercase tracking-wider opacity-70">Este Mes</p>
+                                <p id="statEsteMes" class="text-3xl font-black">0</p>
+                                <div class="mt-2 flex items-center text-xs font-semibold gap-1">
+                                    <span class="material-symbols-outlined text-sm">event</span>
+                                    <span>Proyectados</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2 rounded-xl p-6 bg-[#FFFBEB] border border-amber-100 text-amber-900">
+                                <p class="text-xs font-bold uppercase tracking-wider opacity-70">Calificación</p>
+                                <p id="statCalificacion" class="text-3xl font-black">0.0</p>
+                                <div class="mt-2 flex items-center text-xs font-semibold gap-1">
+                                    <span class="material-symbols-outlined text-sm filled-icon">star</span>
+                                    <span>Top Relator</span>
+                                </div>
+                            </div>
+                            <div class="flex flex-col gap-2 rounded-xl p-6 bg-[#FAF5FF] border border-purple-100 text-purple-900">
+                                <p class="text-xs font-bold uppercase tracking-wider opacity-70">Total Horas</p>
+                                <p id="statTotalHoras" class="text-3xl font-black">0</p>
+                                <div class="mt-2 flex items-center text-xs font-semibold gap-1">
+                                    <span class="material-symbols-outlined text-sm">timer</span>
+                                    <span>SENCE</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Calendario -->
+                        <section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+                            <div class="flex items-center justify-between mb-6">
+                                <h3 class="font-bold">Calendario Disponibilidad</h3>
+                                <div class="flex items-center gap-2">
+                                    <button onclick="cambiarMes(-1)" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded">
+                                        <span class="material-symbols-outlined text-lg">chevron_left</span>
+                                    </button>
+                                    <span id="calendarioMes" class="text-sm font-semibold">Enero 2026</span>
+                                    <button onclick="cambiarMes(1)" class="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded">
+                                        <span class="material-symbols-outlined text-lg">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="calendarioGrid" class="grid grid-cols-7 gap-1 text-center">
+                                <!-- Calendario será generado aquí -->
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4">
+                                <div class="flex items-center gap-2">
+                                    <div class="size-2 rounded-full bg-red-500"></div>
+                                    <span class="text-xs text-slate-500">Ocupado</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <div class="size-2 rounded-full bg-slate-100 border border-slate-300"></div>
+                                    <span class="text-xs text-slate-500">Libre</span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Observaciones -->
+                        <section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+                            <h3 class="font-bold mb-3">Observaciones</h3>
+                            <p id="observacionesText" class="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                                Relator con amplia experiencia en capacitación corporativa. Especialista en herramientas de productividad y liderazgo situacional. Excelentes evaluaciones de satisfacción en el último trimestre.
+                            </p>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Footer -->
+                <footer class="mt-8 pt-8 border-t border-slate-200 dark:border-slate-800 flex flex-wrap gap-3 items-center justify-between">
+                    <button onclick="volverAlListado()" class="flex items-center gap-2 px-4 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors border border-slate-200 dark:border-slate-700">
+                        <span class="material-symbols-outlined">arrow_back</span>
+                        Volver al Listado
+                    </button>
+                    <div class="flex gap-3">
+                        <button onclick="enviarEmail()" class="flex items-center gap-2 px-4 py-2 text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors font-medium">
+                            <span class="material-symbols-outlined">mail</span>
+                            Enviar Email
+                        </button>
+                        <button onclick="abrirAgendaCompleta()" class="flex items-center gap-2 px-4 py-2 text-primary border border-primary/20 bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors font-medium">
+                            <span class="material-symbols-outlined">calendar_today</span>
+                            Ver Agenda Completa
+                        </button>
+                        <button onclick="abrirModalEditar()" class="flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-lg font-bold hover:bg-primary/90 transition-colors shadow-sm">
+                            <span class="material-symbols-outlined">edit</span>
+                            Editar Perfil
+                        </button>
+                    </div>
+                </footer>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Agenda Completa -->
+    <div id="modalAgenda" class="modal">
+        <div class="bg-white dark:bg-slate-900 rounded-xl shadow-2xl w-full max-w-4xl mx-4 max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex items-center justify-between">
+                <h3 class="text-xl font-black text-slate-900 dark:text-white">Agenda Completa</h3>
+                <button onclick="cerrarModalAgenda()" class="text-slate-400 hover:text-slate-600 transition-colors">
+                    <span class="material-symbols-outlined text-[24px]">close</span>
+                </button>
+            </div>
+            <div class="p-6">
+                <p class="text-center text-slate-500 py-12">Vista de agenda completa en desarrollo...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data
+        const mockRelatores = [
+            {
+                id: 1,
+                nombre: "María González Pérez",
+                email: "maria.gonzalez@otec.cl",
+                telefono: "+56 9 8765 4321",
+                rut: "12.345.678-9",
+                especialidades: ["Minería", "Seguridad", "Prevención de Riesgos"],
+                tarifa: 45000,
+                cursos: 24,
+                disponibilidad: "disponible",
+                estado: "activo",
+                fechaRegistro: "12/03/2023",
+                stats: {
+                    totalCursos: 47,
+                    esteMes: 3,
+                    calificacion: 4.8,
+                    totalHoras: 376
+                },
+                observaciones: "Relatora con amplia experiencia en capacitación en seguridad minera. Especialista en prevención de riesgos y normativa vigente. Excelentes evaluaciones de satisfacción."
+            },
+            {
+                id: 2,
+                nombre: "Juan Carlos Rojas",
+                email: "juan.rojas@otec.cl",
+                telefono: "+56 9 7654 3210",
+                rut: "11.234.567-8",
+                especialidades: ["Construcción", "Andamios"],
+                tarifa: 38000,
+                cursos: 18,
+                disponibilidad: "en_curso",
+                estado: "activo",
+                fechaRegistro: "15/05/2023",
+                stats: {
+                    totalCursos: 35,
+                    esteMes: 2,
+                    calificacion: 4.5,
+                    totalHoras: 280
+                },
+                observaciones: "Relator especializado en construcción y trabajo en altura. Gran experiencia práctica en obra."
+            },
+            {
+                id: 3,
+                nombre: "Patricia Silva Muñoz",
+                email: "patricia.silva@otec.cl",
+                telefono: "+56 9 6543 2109",
+                rut: "13.456.789-0",
+                especialidades: ["Primeros Auxilios", "RCP", "Salud Ocupacional"],
+                tarifa: 42000,
+                cursos: 31,
+                disponibilidad: "disponible",
+                estado: "activo",
+                fechaRegistro: "20/01/2023",
+                stats: {
+                    totalCursos: 52,
+                    esteMes: 4,
+                    calificacion: 4.9,
+                    totalHoras: 416
+                },
+                observaciones: "Enfermera con especialización en salud ocupacional. Instructora certificada en primeros auxilios y RCP."
+            }
+        ];
+
+        const mockCursos = [
+            { curso: "Liderazgo Efectivo", fecha: "15 Ene 2024", participantes: 24, calificacion: 5 },
+            { curso: "Análisis de Datos Power BI", fecha: "10 Ene 2024", participantes: 18, calificacion: 4 },
+            { curso: "Comunicación Interna", fecha: "05 Ene 2024", participantes: 15, calificacion: 4.5 },
+            { curso: "Excel para Negocios", fecha: "20 Dic 2023", participantes: 30, calificacion: 5 },
+            { curso: "Gestión de Equipos", fecha: "12 Dic 2023", participantes: 22, calificacion: 4 }
+        ];
+
+        // State
+        let relatorActual = null;
+        let calendarioMesActual = new Date(2026, 0, 1); // Enero 2026
+        const diasOcupados = [9, 15, 22]; // Días ocupados en enero
+
+        // Avatar colors
+        const avatarColors = [
+            "bg-red-200 text-red-800",
+            "bg-blue-200 text-blue-800",
+            "bg-green-200 text-green-800",
+            "bg-yellow-200 text-yellow-800",
+            "bg-purple-200 text-purple-800",
+            "bg-pink-200 text-pink-800",
+            "bg-indigo-200 text-indigo-800",
+            "bg-teal-200 text-teal-800",
+        ];
+
+        // Get initials
+        function getInitials(nombre) {
+            return nombre
+                .split(' ')
+                .slice(0, 2)
+                .map(n => n[0])
+                .join('')
+                .toUpperCase();
+        }
+
+        // Get avatar color
+        function getAvatarColor(id) {
+            return avatarColors[id % avatarColors.length];
+        }
+
+        // Format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('es-CL', {
+                style: 'currency',
+                currency: 'CLP',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Render stars
+        function renderStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalf = rating % 1 !== 0;
+            let html = '';
+
+            for (let i = 0; i < fullStars; i++) {
+                html += '<span class="material-symbols-outlined filled-icon text-sm">star</span>';
+            }
+
+            if (hasHalf) {
+                html += '<span class="material-symbols-outlined filled-icon text-sm">star_half</span>';
+            }
+
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                html += '<span class="material-symbols-outlined text-sm">star</span>';
+            }
+
+            return html;
+        }
+
+        // Render especialidades
+        function renderEspecialidades(especialidades) {
+            const colors = [
+                'bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400',
+                'bg-indigo-50 text-indigo-700 dark:bg-indigo-900/20 dark:text-indigo-400',
+                'bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:text-emerald-400',
+                'bg-purple-50 text-purple-700 dark:bg-purple-900/20 dark:text-purple-400',
+                'bg-amber-50 text-amber-700 dark:bg-amber-900/20 dark:text-amber-400',
+                'bg-[#FAF5FF] text-[#9333EA]',
+                'bg-[#FEF2F2] text-[#EF4444]'
+            ];
+
+            return especialidades.map((esp, index) =>
+                `<span class="px-3 py-1.5 ${colors[index % colors.length]} rounded-lg text-sm font-medium">${esp}</span>`
+            ).join('');
+        }
+
+        // Render cursos table
+        function renderCursosTable() {
+            const tbody = document.getElementById('cursosTableBody');
+            tbody.innerHTML = mockCursos.map((curso, index) => `
+                <tr class="${index % 2 === 0 ? 'bg-white dark:bg-slate-900' : 'bg-slate-50/50 dark:bg-slate-800/20'} hover:bg-slate-50 dark:hover:bg-slate-800/50">
+                    <td class="px-6 py-4 text-sm font-medium">${curso.curso}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">${curso.fecha}</td>
+                    <td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">${curso.participantes}</td>
+                    <td class="px-6 py-4 text-sm text-center">
+                        <div class="flex justify-center text-amber-400">
+                            ${renderStars(curso.calificacion)}
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Render calendario
+        function renderCalendario() {
+            const grid = document.getElementById('calendarioGrid');
+            const year = calendarioMesActual.getFullYear();
+            const month = calendarioMesActual.getMonth();
+
+            // Nombre del mes
+            const nombreMes = calendarioMesActual.toLocaleString('es-CL', { month: 'long', year: 'numeric' });
+            document.getElementById('calendarioMes').textContent = nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1);
+
+            // Headers
+            const headers = ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'];
+            let html = headers.map(h => `<div class="text-[10px] font-bold text-slate-400 uppercase pb-2">${h}</div>`).join('');
+
+            // Primer día del mes
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+
+            // Días del mes anterior
+            for (let i = firstDay - 1; i >= 0; i--) {
+                html += `<div class="p-2 text-slate-300 text-sm">${prevMonthDays - i}</div>`;
+            }
+
+            // Días del mes actual
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isOcupado = diasOcupados.includes(day);
+                const className = isOcupado
+                    ? 'p-2 text-sm bg-red-500 text-white rounded-lg font-bold cursor-help'
+                    : 'p-2 text-sm';
+                const title = isOcupado ? 'title="Ocupado"' : '';
+                html += `<div class="${className}" ${title}>${day}</div>`;
+            }
+
+            grid.innerHTML = html;
+        }
+
+        // Cambiar mes
+        function cambiarMes(delta) {
+            calendarioMesActual.setMonth(calendarioMesActual.getMonth() + delta);
+            renderCalendario();
+        }
+
+        // Load relator
+        function cargarRelator() {
+            // Get ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = parseInt(urlParams.get('id'));
+
+            if (!id) {
+                alert('No se especificó un ID de relator');
+                window.location.href = 'relatores-listado.html';
+                return;
+            }
+
+            // Try localStorage first
+            const stored = localStorage.getItem('otec_relatores');
+            let relatores = stored ? JSON.parse(stored) : mockRelatores;
+
+            // Find relator
+            relatorActual = relatores.find(r => r.id === id);
+
+            if (!relatorActual) {
+                alert('Relator no encontrado');
+                window.location.href = 'relatores-listado.html';
+                return;
+            }
+
+            // Si no tiene stats, usar valores por defecto
+            if (!relatorActual.stats) {
+                relatorActual.stats = {
+                    totalCursos: relatorActual.cursos || 0,
+                    esteMes: 0,
+                    calificacion: 4.5,
+                    totalHoras: (relatorActual.cursos || 0) * 8
+                };
+            }
+
+            // Render data
+            renderRelatorData();
+        }
+
+        // Render relator data
+        function renderRelatorData() {
+            const r = relatorActual;
+
+            // Header
+            document.getElementById('breadcrumbNombre').textContent = r.nombre;
+            document.getElementById('headerNombre').textContent = r.nombre;
+            document.getElementById('relatorId').textContent = `ID: REL-${String(r.id).padStart(3, '0')}`;
+
+            // Avatar
+            const avatarHeader = document.getElementById('avatarHeader');
+            avatarHeader.textContent = getInitials(r.nombre);
+            avatarHeader.className = `w-20 h-20 rounded-lg border-2 border-primary flex items-center justify-center text-3xl font-bold ${getAvatarColor(r.id)}`;
+
+            // Estado badge
+            const estadoBadge = document.getElementById('estadoBadge');
+            if (r.estado === 'activo') {
+                estadoBadge.className = 'px-2 py-0.5 text-xs font-semibold bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded';
+                estadoBadge.textContent = 'Activo';
+            } else {
+                estadoBadge.className = 'px-2 py-0.5 text-xs font-semibold bg-gray-100 text-gray-700 dark:bg-gray-900/30 dark:text-gray-400 rounded';
+                estadoBadge.textContent = 'Inactivo';
+            }
+
+            // Disponibilidad badge
+            const disponibilidadBadge = document.getElementById('disponibilidadBadge');
+            const disponibilidadMap = {
+                disponible: { color: 'green', text: 'Disponible' },
+                en_curso: { color: 'blue', text: 'En Curso' },
+                vacaciones: { color: 'yellow', text: 'Vacaciones' },
+                no_disponible: { color: 'red', text: 'No Disponible' }
+            };
+            const disp = disponibilidadMap[r.disponibilidad] || disponibilidadMap.disponible;
+            disponibilidadBadge.innerHTML = `
+                <span class="size-1.5 rounded-full bg-${disp.color}-600"></span>
+                ${disp.text}
+            `;
+            disponibilidadBadge.className = `flex items-center gap-1 text-xs font-medium text-${disp.color}-600`;
+
+            // Información personal
+            document.getElementById('emailLink').href = `mailto:${r.email}`;
+            document.getElementById('emailLink').textContent = r.email;
+
+            document.getElementById('telefonoLink').href = `tel:${r.telefono}`;
+            document.getElementById('telefonoLink').textContent = r.telefono;
+
+            document.getElementById('rutText').textContent = r.rut || 'No especificado';
+            document.getElementById('tarifaText').textContent = `${formatCurrency(r.tarifa)}/hr`;
+            document.getElementById('fechaRegistro').textContent = r.fechaRegistro || 'No especificado';
+
+            // Especialidades
+            document.getElementById('especialidadesContainer').innerHTML = renderEspecialidades(r.especialidades);
+
+            // Stats
+            document.getElementById('statTotalCursos').textContent = r.stats.totalCursos;
+            document.getElementById('statEsteMes').textContent = r.stats.esteMes;
+            document.getElementById('statCalificacion').textContent = r.stats.calificacion.toFixed(1);
+            document.getElementById('statTotalHoras').textContent = r.stats.totalHoras;
+
+            // Observaciones
+            if (r.observaciones) {
+                document.getElementById('observacionesText').textContent = r.observaciones;
+            }
+
+            // Render cursos y calendario
+            renderCursosTable();
+            renderCalendario();
+        }
+
+        // Actions
+        function volverAlListado() {
+            window.location.href = 'relatores-listado.html';
+        }
+
+        function enviarEmail() {
+            if (relatorActual) {
+                window.location.href = `mailto:${relatorActual.email}`;
+            }
+        }
+
+        function abrirAgendaCompleta() {
+            document.getElementById('modalAgenda').classList.add('active');
+        }
+
+        function cerrarModalAgenda() {
+            document.getElementById('modalAgenda').classList.remove('active');
+        }
+
+        function abrirModalEditar() {
+            alert('Funcionalidad de edición en desarrollo');
+        }
+
+        // Close modal on outside click
+        document.getElementById('modalAgenda').addEventListener('click', (e) => {
+            if (e.target.id === 'modalAgenda') {
+                cerrarModalAgenda();
+            }
+        });
+
+        // Init
+        cargarRelator();
+    </script>
+</body>
+</html>
