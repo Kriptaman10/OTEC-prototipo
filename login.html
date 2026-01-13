@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Login - Sistema de Gestión OTEC</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                        "otec-purple": "#764ba2",
+                        "otec-blue": "#667eea",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "8px",
+                        "xl": "12px",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        .otec-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .input-error {
+            border-color: #ef4444 !important;
+            border-width: 2px;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            animation: fadeIn 0.2s ease-in-out;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display min-h-screen flex items-center justify-center">
+    <div class="flex flex-col lg:flex-row w-full min-h-screen">
+        <!-- Left Side - Gradient Panel -->
+        <div class="otec-gradient hidden lg:flex lg:w-1/2 flex-col justify-center items-center text-white p-12 relative overflow-hidden">
+            <!-- Grid Pattern Background -->
+            <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)"/>
+                </svg>
+            </div>
+
+            <!-- Content -->
+            <div class="relative z-10 flex flex-col items-center max-w-md text-center">
+                <div class="mb-8 p-4 bg-white/20 rounded-xl backdrop-blur-sm">
+                    <span class="material-symbols-outlined !text-6xl">school</span>
+                </div>
+                <h1 class="text-5xl font-black tracking-tight mb-4">OTEC Manager</h1>
+                <p class="text-xl font-light opacity-90 leading-relaxed">
+                    Tu plataforma de gestión integral para capacitación y formación profesional.
+                </p>
+                <div class="mt-16 w-full max-w-sm aspect-video bg-white/10 rounded-2xl border border-white/20 flex items-center justify-center backdrop-blur-md" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWe8evwgFQerIjtX_om2uIHMoR-G1cwNhKLR3g28z1Qg5SKK6NUCD1izaBBFnTDbYkAsNbDrUb797TTRUZyfu3esMNXsbbXkqZTVmXsBf3X2S2Vq1q0Q4kaGSvB_Lh2Pf7douNtTpHMk__o1T7XA7xTVAeV4NVNmO0mMYQX2vhv-pgddkfdztNfJjksdCFwgmWeLXWfp7lKDxsUMELO85iebxNAOAMaBh32Sm4bwPWPZzh-6wPQhvgv02aj-coJlcjwIo6DZITmQU'); background-size: cover;">
+                    <div class="flex flex-col items-center">
+                        <span class="material-symbols-outlined !text-5xl opacity-40">workspace_premium</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="absolute bottom-10 left-10 text-sm opacity-60">
+                © 2024 OTEC Manager. Todos los derechos reservados.
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-background-dark">
+            <div class="w-full max-w-[440px] flex flex-col">
+                <!-- Mobile Logo -->
+                <div class="lg:hidden flex items-center gap-3 mb-10">
+                    <div class="bg-primary p-2 rounded-lg">
+                        <span class="material-symbols-outlined text-white">school</span>
+                    </div>
+                    <h1 class="text-2xl font-black text-[#111318] dark:text-white">OTEC Manager</h1>
+                </div>
+
+                <!-- Header -->
+                <div class="mb-8">
+                    <h2 class="text-[#111318] dark:text-white text-[28px] font-bold leading-tight pb-2">Iniciar Sesión</h2>
+                    <p class="text-[#616e89] dark:text-gray-400">Ingresa tus credenciales para acceder al sistema.</p>
+                </div>
+
+                <!-- Login Form -->
+                <form id="loginForm" class="flex flex-col gap-5">
+                    <!-- Email Input -->
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[#111318] dark:text-white text-base font-medium leading-normal">Correo Electrónico</label>
+                        <input
+                            id="emailInput"
+                            class="form-input flex w-full rounded-lg text-[#111318] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-[#dbdee6] dark:border-gray-700 bg-white dark:bg-[#1c2230] focus:border-primary h-14 placeholder:text-[#616e89] p-[15px] text-base font-normal transition-colors"
+                            placeholder="ejemplo@empresa.cl"
+                            type="email"
+                            autocomplete="email"
+                        />
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="flex flex-col gap-2">
+                        <label class="text-[#111318] dark:text-white text-base font-medium leading-normal">Contraseña</label>
+                        <div class="relative flex w-full items-stretch rounded-lg">
+                            <input
+                                id="passwordInput"
+                                class="form-input flex w-full rounded-lg text-[#111318] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/20 border border-[#dbdee6] dark:border-gray-700 bg-white dark:bg-[#1c2230] focus:border-primary h-14 placeholder:text-[#616e89] p-[15px] text-base font-normal transition-colors"
+                                placeholder="••••••••"
+                                type="password"
+                                autocomplete="current-password"
+                            />
+                            <button
+                                id="togglePassword"
+                                aria-label="Mostrar contraseña"
+                                class="absolute right-0 top-0 h-full px-4 text-[#616e89] hover:text-primary transition-colors flex items-center justify-center"
+                                type="button"
+                            >
+                                <span class="material-symbols-outlined">visibility</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between py-1">
+                        <label class="flex items-center gap-x-2 cursor-pointer group">
+                            <input
+                                id="recordarme"
+                                type="checkbox"
+                                class="h-5 w-5 rounded border-gray-300 text-primary focus:ring-primary cursor-pointer"
+                            />
+                            <span class="text-sm text-[#111318] dark:text-white select-none">Recordarme</span>
+                        </label>
+                        <a
+                            href="#"
+                            id="forgotPasswordLink"
+                            class="text-sm text-primary hover:underline font-medium"
+                        >
+                            ¿Olvidaste tu contraseña?
+                        </a>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="hidden bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-900/30 rounded-lg p-3 flex items-center gap-2">
+                        <span class="material-symbols-outlined text-red-600 text-[20px]">error</span>
+                        <span class="text-sm text-red-700 dark:text-red-400" id="errorText"></span>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button
+                        id="btnLogin"
+                        type="submit"
+                        class="w-full bg-primary hover:bg-[#1E40AF] text-white font-semibold text-base h-14 rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    >
+                        <span id="btnText">Ingresar</span>
+                    </button>
+                </form>
+
+                <!-- Footer Links -->
+                <div class="mt-8 pt-8 border-t border-[#dbdee6] dark:border-gray-700">
+                    <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-[#616e89]">
+                        <a href="#" class="hover:text-primary transition-colors">Términos de Servicio</a>
+                        <span>•</span>
+                        <a href="#" class="hover:text-primary transition-colors">Política de Privacidad</a>
+                        <span>•</span>
+                        <a href="#" class="hover:text-primary transition-colors">Soporte</a>
+                    </div>
+                    <p class="text-center text-xs text-[#616e89] mt-4">
+                        © 2024 OTEC Manager. Todos los derechos reservados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div id="forgotPasswordModal" class="modal">
+        <div class="modal-content bg-white dark:bg-[#1c2230] rounded-xl shadow-2xl p-8 max-w-md w-full mx-4">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="text-[#111318] dark:text-white text-xl font-bold">Recuperar Contraseña</h3>
+                <button id="closeModal" class="text-[#616e89] hover:text-[#111318] dark:hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="mb-6">
+                <div class="flex items-center justify-center mb-4">
+                    <div class="size-16 rounded-full bg-primary/10 flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[32px]">mail</span>
+                    </div>
+                </div>
+                <p class="text-[#616e89] dark:text-gray-400 text-center leading-relaxed">
+                    Para recuperar tu contraseña, contacta al administrador del sistema en:
+                </p>
+                <p class="text-primary text-center font-semibold mt-2">
+                    admin@icsaotec.cl
+                </p>
+            </div>
+            <button
+                id="closeModalBtn"
+                class="w-full bg-primary hover:bg-[#1E40AF] text-white font-semibold text-base h-12 rounded-lg transition-colors"
+            >
+                Cerrar
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // DOM Elements
+        const loginForm = document.getElementById('loginForm');
+        const emailInput = document.getElementById('emailInput');
+        const passwordInput = document.getElementById('passwordInput');
+        const togglePassword = document.getElementById('togglePassword');
+        const recordarme = document.getElementById('recordarme');
+        const btnLogin = document.getElementById('btnLogin');
+        const btnText = document.getElementById('btnText');
+        const errorMessage = document.getElementById('errorMessage');
+        const errorText = document.getElementById('errorText');
+        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+        const forgotPasswordModal = document.getElementById('forgotPasswordModal');
+        const closeModal = document.getElementById('closeModal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+
+        // Load saved email on page load
+        window.addEventListener('load', () => {
+            const savedEmail = localStorage.getItem('recordarme');
+            if (savedEmail) {
+                emailInput.value = savedEmail;
+                recordarme.checked = true;
+            }
+        });
+
+        // Toggle password visibility
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+
+            const icon = togglePassword.querySelector('.material-symbols-outlined');
+            icon.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+        });
+
+        // Remove error styling when user types
+        emailInput.addEventListener('input', () => {
+            emailInput.classList.remove('input-error');
+            hideError();
+        });
+
+        passwordInput.addEventListener('input', () => {
+            passwordInput.classList.remove('input-error');
+            hideError();
+        });
+
+        // Form submission
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            // Validate email
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!email || !emailRegex.test(email)) {
+                emailInput.classList.add('input-error');
+                showError('Por favor ingresa un correo electrónico válido');
+                return;
+            }
+
+            // Validate password
+            if (!password) {
+                passwordInput.classList.add('input-error');
+                showError('Por favor ingresa tu contraseña');
+                return;
+            }
+
+            // Show loading state
+            btnLogin.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span><span>Ingresando...</span>';
+            btnText.classList.add('flex', 'items-center', 'gap-2');
+
+            // Simulate login delay (2 seconds)
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Save session to localStorage
+            const sesion = {
+                email: email,
+                token: 'token_' + Date.now(),
+                timestamp: Date.now()
+            };
+            localStorage.setItem('sesion', JSON.stringify(sesion));
+
+            // Handle "Remember me"
+            if (recordarme.checked) {
+                localStorage.setItem('recordarme', email);
+            } else {
+                localStorage.removeItem('recordarme');
+            }
+
+            // Redirect to main page
+            window.location.href = 'index.html';
+        });
+
+        // Forgot password modal
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            forgotPasswordModal.classList.add('active');
+        });
+
+        closeModal.addEventListener('click', () => {
+            forgotPasswordModal.classList.remove('active');
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            forgotPasswordModal.classList.remove('active');
+        });
+
+        // Close modal when clicking outside
+        forgotPasswordModal.addEventListener('click', (e) => {
+            if (e.target === forgotPasswordModal) {
+                forgotPasswordModal.classList.remove('active');
+            }
+        });
+
+        // Helper functions
+        function showError(message) {
+            errorText.textContent = message;
+            errorMessage.classList.remove('hidden');
+        }
+
+        function hideError() {
+            errorMessage.classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
