@@ -136,6 +136,27 @@
 
             <!-- Form -->
             <form id="formSolicitud" class="bg-white dark:bg-[#1a202c] rounded-xl shadow-sm border border-[#e2e8f0] dark:border-gray-700 overflow-hidden">
+                <!-- Nombre del Proyecto -->
+                <div class="p-6 md:p-8 border-b border-[#f0f2f4] dark:border-gray-700 bg-primary/5">
+                    <div class="flex items-center gap-2 mb-6 text-primary">
+                        <span class="material-symbols-outlined">folder_open</span>
+                        <h3 class="text-lg font-bold text-[#111418] dark:text-white">Identificación del Proyecto</h3>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <label class="text-sm font-medium text-[#111418] dark:text-gray-200" for="project_name">
+                            Nombre del Proyecto <span class="text-red-500">*</span>
+                        </label>
+                        <input
+                            class="w-full rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-[#2d3748] text-[#111418] dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-gray-400"
+                            id="project_name"
+                            placeholder="Ej. Capacitación Anual 2024 - Área Operaciones"
+                            type="text"
+                            required
+                        />
+                        <span class="error-message" id="projectNameError">El nombre del proyecto debe tener al menos 5 caracteres</span>
+                    </div>
+                </div>
+
                 <!-- Datos del Solicitante -->
                 <div class="p-6 md:p-8 border-b border-[#f0f2f4] dark:border-gray-700">
                     <div class="flex items-center gap-2 mb-6 text-primary">
@@ -268,6 +289,22 @@
                                 </select>
                                 <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none">expand_more</span>
                             </div>
+                        </div>
+                        <div class="md:col-span-12 flex flex-col gap-2" id="lugarEjecucionContainer">
+                            <label class="text-sm font-medium text-[#111418] dark:text-gray-200" for="lugar_ejecucion">
+                                Lugar de Ejecución
+                                <span class="text-gray-400 font-normal ml-1">(Opcional)</span>
+                            </label>
+                            <input
+                                class="w-full rounded-lg border border-[#dbe0e6] dark:border-gray-600 bg-white dark:bg-[#2d3748] text-[#111418] dark:text-white h-12 px-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all placeholder:text-gray-400"
+                                id="lugar_ejecucion"
+                                placeholder="Ej. Sala de capacitación Edificio Central, Av. Providencia 1234"
+                                type="text"
+                            />
+                            <p class="text-xs text-amber-600 dark:text-amber-400 flex items-center gap-1">
+                                <span class="material-symbols-outlined text-[14px]">info</span>
+                                Solo aplica para cursos en modalidad presencial
+                            </p>
                         </div>
                         <div class="md:col-span-6 flex flex-col gap-2">
                             <label class="text-sm font-medium text-[#111418] dark:text-gray-200" for="hours_qty">
@@ -653,6 +690,10 @@
             let errorEl = null;
 
             switch(fieldId) {
+                case 'project_name':
+                    errorEl = document.getElementById('projectNameError');
+                    isValid = value.length >= 5;
+                    break;
                 case 'name':
                     errorEl = document.getElementById('nameError');
                     isValid = value.length >= 3;
@@ -683,7 +724,7 @@
         }
 
         // Add blur validators
-        ['name', 'email', 'cost_center'].forEach(fieldId => {
+        ['project_name', 'name', 'email', 'cost_center'].forEach(fieldId => {
             document.getElementById(fieldId).addEventListener('blur', () => {
                 validateField(fieldId);
                 updateProgress();
@@ -798,7 +839,7 @@
         // Update progress bar
         function updateProgress() {
             const requiredFields = [
-                'name', 'email', 'holding', 'cost_center',
+                'project_name', 'name', 'email', 'holding', 'cost_center',
                 'course_name', 'training_type', 'modality', 'hours_qty',
                 'participants', 'start_date', 'end_date'
             ];
@@ -826,6 +867,7 @@
 
         // Validate all fields
         function validateAllFields() {
+            const projectName = validateField('project_name');
             const name = validateField('name');
             const email = validateField('email');
             const costCenter = validateField('cost_center');
@@ -844,7 +886,7 @@
                 hoursValid = customHours && customHours % 4 === 0;
             }
 
-            return name && email && costCenter && participantsValid && datesValid && hoursValid && archivoSubido;
+            return projectName && name && email && costCenter && participantsValid && datesValid && hoursValid && archivoSubido;
         }
 
         // Auto-save to localStorage
@@ -907,6 +949,7 @@
                 const formData = new FormData(e.target);
                 const solicitud = {
                     id: Date.now(),
+                    nombreProyecto: document.getElementById('project_name').value,
                     nombre: formData.get('name') || document.getElementById('name').value,
                     email: formData.get('email') || document.getElementById('email').value,
                     empresa: mockEmpresas.find(e => e.id == document.getElementById('holding').value)?.nombre,
@@ -921,6 +964,7 @@
                     fechaInicio: document.getElementById('start_date').value,
                     fechaTermino: document.getElementById('end_date').value,
                     horario: document.getElementById('schedule').value,
+                    lugarEjecucion: document.getElementById('lugar_ejecucion').value || null,
                     archivo: archivoSubido?.name,
                     fecha: new Date().toISOString(),
                     estado: 'pendiente'
