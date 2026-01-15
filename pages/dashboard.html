@@ -328,13 +328,13 @@
         document.getElementById('current-date').textContent = dateStr;
 
         // Format time
-        const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        const timeStr = now.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
         document.getElementById('current-time').textContent = timeStr;
     }
 
-    // Update immediately and every second
+    // Update immediately and every minute
     updateDateTime();
-    setInterval(updateDateTime, 1000);
+    setInterval(updateDateTime, 60000);
 </script>
 </body>
 </html>

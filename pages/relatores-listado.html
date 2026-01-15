@@ -421,26 +421,13 @@
     </div>
 
     <script>
-        // Mock Data
+        // Mock Data - Solo relatores con datos de detalle completos
         const mockRelatores = [
             { id: 1, nombre: "María González Pérez", email: "maria.gonzalez@otec.cl", telefono: "+56 9 8765 4321", especialidades: ["Minería", "Seguridad", "Prevención de Riesgos"], tarifa: 45000, cursos: 24, disponibilidad: "disponible", estado: "activo" },
             { id: 2, nombre: "Juan Carlos Rojas", email: "juan.rojas@otec.cl", telefono: "+56 9 7654 3210", especialidades: ["Construcción", "Andamios"], tarifa: 38000, cursos: 18, disponibilidad: "en_curso", estado: "activo" },
             { id: 3, nombre: "Patricia Silva Muñoz", email: "patricia.silva@otec.cl", telefono: "+56 9 6543 2109", especialidades: ["Primeros Auxilios", "RCP", "Salud Ocupacional"], tarifa: 42000, cursos: 31, disponibilidad: "disponible", estado: "activo" },
             { id: 4, nombre: "Roberto Fernández", email: "roberto.fernandez@otec.cl", telefono: "+56 9 5432 1098", especialidades: ["Electricidad", "Alta Tensión"], tarifa: 52000, cursos: 15, disponibilidad: "vacaciones", estado: "activo" },
             { id: 5, nombre: "Carmen Torres López", email: "carmen.torres@otec.cl", telefono: "+56 9 4321 0987", especialidades: ["Operación Maquinaria", "Grúas", "Transporte"], tarifa: 48000, cursos: 22, disponibilidad: "disponible", estado: "activo" },
-            { id: 6, nombre: "Diego Morales", email: "diego.morales@otec.cl", telefono: "+56 9 3210 9876", especialidades: ["Soldadura", "Corte"], tarifa: 41000, cursos: 19, disponibilidad: "en_curso", estado: "activo" },
-            { id: 7, nombre: "Fernanda Campos", email: "fernanda.campos@otec.cl", telefono: "+56 9 2109 8765", especialidades: ["Recursos Humanos", "Liderazgo"], tarifa: 46000, cursos: 27, disponibilidad: "no_disponible", estado: "inactivo" },
-            { id: 8, nombre: "Andrés Valenzuela", email: "andres.valenzuela@otec.cl", telefono: "+56 9 1098 7654", especialidades: ["Trabajo en Altura", "Arnés", "Espacios Confinados"], tarifa: 44000, cursos: 29, disponibilidad: "disponible", estado: "activo" },
-            { id: 9, nombre: "Mónica Herrera", email: "monica.herrera@otec.cl", telefono: "+56 9 9876 5432", especialidades: ["Medio Ambiente", "Gestión de Residuos"], tarifa: 39000, cursos: 16, disponibilidad: "disponible", estado: "activo" },
-            { id: 10, nombre: "Luis Castillo", email: "luis.castillo@otec.cl", telefono: "+56 9 8765 4320", especialidades: ["Mecánica Industrial", "Mantención"], tarifa: 47000, cursos: 21, disponibilidad: "en_curso", estado: "activo" },
-            { id: 11, nombre: "Valeria Soto", email: "valeria.soto@otec.cl", telefono: "+56 9 7654 3219", especialidades: ["Logística", "Almacenamiento"], tarifa: 40000, cursos: 14, disponibilidad: "disponible", estado: "activo" },
-            { id: 12, nombre: "Pablo Núñez", email: "pablo.nunez@otec.cl", telefono: "+56 9 6543 2108", especialidades: ["Gestión de Calidad", "ISO 9001"], tarifa: 50000, cursos: 25, disponibilidad: "vacaciones", estado: "activo" },
-            { id: 13, nombre: "Claudia Ramírez", email: "claudia.ramirez@otec.cl", telefono: "+56 9 5432 1097", especialidades: ["Excel Avanzado", "Power BI"], tarifa: 43000, cursos: 20, disponibilidad: "disponible", estado: "activo" },
-            { id: 14, nombre: "Héctor Bravo", email: "hector.bravo@otec.cl", telefono: "+56 9 4321 0986", especialidades: ["Seguridad Vial", "Manejo Defensivo"], tarifa: 37000, cursos: 17, disponibilidad: "no_disponible", estado: "inactivo" },
-            { id: 15, nombre: "Daniela Pizarro", email: "daniela.pizarro@otec.cl", telefono: "+56 9 3210 9875", especialidades: ["Atención al Cliente", "Ventas"], tarifa: 35000, cursos: 12, disponibilidad: "disponible", estado: "activo" },
-            { id: 16, nombre: "Rodrigo Espinoza", email: "rodrigo.espinoza@otec.cl", telefono: "+56 9 2109 8764", especialidades: ["Incendio Forestal", "Manejo de Extintores"], tarifa: 41000, cursos: 23, disponibilidad: "en_curso", estado: "activo" },
-            { id: 17, nombre: "Alejandra Muñoz", email: "alejandra.munoz@otec.cl", telefono: "+56 9 1098 7653", especialidades: ["Coaching", "Desarrollo Personal"], tarifa: 49000, cursos: 26, disponibilidad: "disponible", estado: "activo" },
-            { id: 18, nombre: "Sebastián Vargas", email: "sebastian.vargas@otec.cl", telefono: "+56 9 9876 5431", especialidades: ["Operación de Montacargas", "Almacén"], tarifa: 36000, cursos: 13, disponibilidad: "disponible", estado: "activo" },
         ];
 
         // State
