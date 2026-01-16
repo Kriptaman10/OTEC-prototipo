@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Certificados - Sistema OTEC</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111621",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style type="text/tailwindcss">
+        body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .filled-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        .active-nav {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: #2563EB;
+            border-right: 4px solid #2563EB;
+        }
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 200ms;
+        }
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    </style>
+    <script>
+        // Verificar sesión antes de cargar la página
+        (function() {
+            const sesion = localStorage.getItem('sesion');
+            if (!sesion) {
+                window.location.href = '../login.html';
+            }
+        })();
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111318] dark:text-white antialiased">
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white dark:bg-[#1a202c] border-r border-[#dbdee6] dark:border-gray-800 flex flex-col shrink-0">
+            <div class="p-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary rounded-lg p-2 text-white">
+                        <span class="material-symbols-outlined">analytics</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">Sistema OTEC</h1>
+                        <p class="text-[#616e89] text-xs font-normal">Gestión Corporativa</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 px-3 space-y-1" id="sidebar-nav">
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="dashboard.html" data-page="inicio">
+                    <span class="material-symbols-outlined text-[24px]">house</span>
+                    <span class="text-sm font-medium">Inicio</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="solicitudes-listado.html" data-page="solicitudes">
+                    <span class="material-symbols-outlined text-[24px]">assignment</span>
+                    <span class="text-sm font-medium">Solicitudes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="relatores-listado.html" data-page="relatores">
+                    <span class="material-symbols-outlined text-[24px]">group</span>
+                    <span class="text-sm font-medium">Relatores</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="certificados.html" data-page="certificados">
+                    <span class="material-symbols-outlined text-[24px]">verified</span>
+                    <span class="text-sm font-medium">Certificados</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="reportes.html" data-page="reportes">
+                    <span class="material-symbols-outlined text-[24px]">bar_chart</span>
+                    <span class="text-sm font-medium">Reportes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="empresas-listado.html" data-page="empresas">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Empresas</span>
+                </a>
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Configuración</p>
+                </div>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors" href="configuracion.html" data-page="ajustes">
+                    <span class="material-symbols-outlined text-[24px]">settings</span>
+                    <span class="text-sm font-medium">Ajustes</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-[#dbdee6] dark:border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-full bg-cover bg-center bg-[#f0f1f4]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC-6tHnHvQxxeZTxX5s6Jd7E_e55EY5P3DsG4Jg_agoNay0YiYJi-JpBWPpJkuuIF_w6K8wNoXohF3bheUc9JW7zCIyTqf_20YZ9lRVXuoy3T4mtKPm-kGXFu2o1WzB7dgtm3UWw5Hjjfe9_RE4DZiaeLJWs5vL-lEJesEsPMwCO0XtwOBUq_2MJiRr2-Y5wVavMbuD6kBtITm13tHUaWUggxhNnISk9Z-0e615BLhVcObxT8UbKcX0lAoom-Jnw2rqGSvNHOFfIZQ')"></div>
+                    <div class="flex flex-col">
+                        <p class="text-xs font-bold dark:text-white">Admin OTEC</p>
+                        <p class="text-[10px] text-[#616e89]">admin@otec.cl</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col overflow-y-auto">
+            <!-- Header -->
+            <header class="bg-white dark:bg-[#111621] px-8 py-6 border-b border-[#dbdee6] dark:border-gray-800 sticky top-0 z-10">
+                <!-- Breadcrumbs -->
+                <nav class="flex items-center gap-2 mb-4 text-sm text-gray-500 dark:text-gray-400">
+                    <a class="hover:text-primary transition-colors" href="dashboard.html">Inicio</a>
+                    <span class="material-symbols-outlined text-sm">chevron_right</span>
+                    <span class="text-[#111318] dark:text-white font-medium">Certificados</span>
+                </nav>
+
+                <div class="flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-[#111318] dark:text-white text-2xl font-black tracking-tight">Certificados de Capacitación</h2>
+                        <p class="text-[#616e89] text-sm mt-1">Administra y emite certificados oficiales para los participantes.</p>
+                    </div>
+                    <button id="btnGenerarCertificados" class="flex items-center gap-2 bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm transition-all shadow-sm">
+                        <span class="material-symbols-outlined text-lg">add_circle</span>
+                        <span>Generar Certificados</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Content Area -->
+            <div class="p-8">
+                <!-- KPI Stats Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                    <div class="bg-white dark:bg-gray-900 border border-[#dbdee6] dark:border-gray-800 p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Total Generados</p>
+                            <span class="material-symbols-outlined text-primary">verified</span>
+                        </div>
+                        <p class="text-2xl font-bold">2,563</p>
+                        <div class="flex items-center gap-1 mt-2 text-xs font-semibold text-emerald-500">
+                            <span class="material-symbols-outlined text-xs">trending_up</span>
+                            <span>+12.5% este mes</span>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-900 border border-[#dbdee6] dark:border-gray-800 p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Pendientes</p>
+                            <span class="material-symbols-outlined text-[#F59E0B]">pending_actions</span>
+                        </div>
+                        <p class="text-2xl font-bold">42</p>
+                        <div class="flex items-center gap-1 mt-2 text-xs font-semibold text-[#F59E0B]">
+                            <span class="material-symbols-outlined text-xs">schedule</span>
+                            <span>Requiere atención</span>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-900 border border-[#dbdee6] dark:border-gray-800 p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Enviados este Mes</p>
+                            <span class="material-symbols-outlined text-[#10B981]">mail_outline</span>
+                        </div>
+                        <p class="text-2xl font-bold">315</p>
+                        <div class="flex items-center gap-1 mt-2 text-xs font-semibold text-[#10B981]">
+                            <span class="material-symbols-outlined text-xs">done_all</span>
+                            <span>Meta cumplida</span>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-900 border border-[#dbdee6] dark:border-gray-800 p-6 rounded-xl shadow-sm">
+                        <div class="flex justify-between items-start mb-2">
+                            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Cursos Finalizados</p>
+                            <span class="material-symbols-outlined text-[#9333EA]">assignment_turned_in</span>
+                        </div>
+                        <p class="text-2xl font-bold">89</p>
+                        <div class="flex items-center gap-1 mt-2 text-xs font-semibold text-[#9333EA]">
+                            <span class="material-symbols-outlined text-xs">auto_awesome</span>
+                            <span>Listos para emitir</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filters Bar -->
+                <div class="bg-white dark:bg-gray-900 border border-[#dbdee6] dark:border-gray-800 rounded-xl p-4 mb-6 shadow-sm">
+                    <div class="flex flex-wrap items-center gap-4">
+                        <div class="relative w-full max-w-[400px]">
+                            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">search</span>
+                            <input id="searchInput" class="w-full bg-gray-50 dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Buscar por curso o código SENCE..." type="text"/>
+                        </div>
+                        <select id="filterEstado" class="bg-gray-50 dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">Estado</option>
+                            <option value="pendiente">Pendiente</option>
+                            <option value="generado">Generado</option>
+                            <option value="enviado">Enviado</option>
+                        </select>
+                        <select id="filterCurso" class="bg-gray-50 dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">Filtrar por Curso</option>
+                            <option>Técnicas de Liderazgo</option>
+                            <option>Excel Avanzado</option>
+                            <option>Seguridad Industrial</option>
+                        </select>
+                        <input id="filterFecha" class="bg-gray-50 dark:bg-gray-800 border border-[#dbdee6] dark:border-gray-700 rounded-lg text-sm px-4 py-2 focus:ring-2 focus:ring-primary focus:border-primary" type="date"/>
+                        <button id="btnLimpiarFiltros" class="text-sm font-medium text-gray-500 hover:text-primary transition-colors ml-auto">
+                            Limpiar filtros
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="bg-white dark:bg-gray-900 border border-[#dbdee6] dark:border-gray-800 rounded-xl shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-gray-50 dark:bg-gray-800/50 border-b border-[#dbdee6] dark:border-gray-700">
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider w-16 text-center">#</th>
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Curso</th>
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Código SENCE</th>
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Fecha Término</th>
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Part.</th>
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Aprobados</th>
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Estado</th>
+                                    <th class="px-4 py-4 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider text-right">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tableBody" class="divide-y divide-gray-100 dark:divide-gray-800">
+                                <!-- Row 1 -->
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                                    <td class="px-4 py-4 text-sm font-medium text-gray-500 text-center">1024</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-semibold">Técnicas de Liderazgo para Mandos Medios</span>
+                                            <span class="text-[10px] text-gray-400 uppercase">Modalidad: E-Learning</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm font-mono text-gray-600 dark:text-gray-300">1234567890</td>
+                                    <td class="px-4 py-4 text-sm">15/05/2024</td>
+                                    <td class="px-4 py-4 text-sm">25</td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            24 de 25
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400">
+                                            Pendiente
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button class="btn-ver-participantes p-1.5 text-gray-400 hover:text-primary transition-colors" title="Ver Participantes" data-curso-id="1024">
+                                                <span class="material-symbols-outlined text-lg">visibility</span>
+                                            </button>
+                                            <button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Generar">
+                                                <span class="material-symbols-outlined text-lg">description</span>
+                                            </button>
+                                            <button class="p-1.5 text-gray-300 cursor-not-allowed" disabled title="Enviar (No disponible)">
+                                                <span class="material-symbols-outlined text-lg">mail</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Row 2 -->
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                                    <td class="px-4 py-4 text-sm font-medium text-gray-500 text-center">1023</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-semibold">Excel Avanzado para Finanzas Corporativas</span>
+                                            <span class="text-[10px] text-gray-400 uppercase">Modalidad: Presencial</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm font-mono text-gray-600 dark:text-gray-300">0987654321</td>
+                                    <td class="px-4 py-4 text-sm">12/05/2024</td>
+                                    <td class="px-4 py-4 text-sm">18</td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            18 de 18
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-primary/10 text-primary dark:bg-primary/20">
+                                            Generado
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button class="btn-ver-participantes p-1.5 text-gray-400 hover:text-primary transition-colors" data-curso-id="1023">
+                                                <span class="material-symbols-outlined text-lg">visibility</span>
+                                            </button>
+                                            <button class="p-1.5 text-primary transition-colors">
+                                                <span class="material-symbols-outlined text-lg filled-icon">task_alt</span>
+                                            </button>
+                                            <button class="p-1.5 text-gray-400 hover:text-primary transition-colors" title="Enviar Certificados">
+                                                <span class="material-symbols-outlined text-lg">mail</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Row 3 -->
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                                    <td class="px-4 py-4 text-sm font-medium text-gray-500 text-center">1022</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-semibold">Seguridad e Higiene Industrial (Nivel 1)</span>
+                                            <span class="text-[10px] text-gray-400 uppercase">Modalidad: Mixta</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm font-mono text-gray-600 dark:text-gray-300">5544332211</td>
+                                    <td class="px-4 py-4 text-sm">10/05/2024</td>
+                                    <td class="px-4 py-4 text-sm">40</td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            38 de 40
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            Enviado
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button class="btn-ver-participantes p-1.5 text-gray-400 hover:text-primary transition-colors" data-curso-id="1022">
+                                                <span class="material-symbols-outlined text-lg">visibility</span>
+                                            </button>
+                                            <button class="p-1.5 text-primary">
+                                                <span class="material-symbols-outlined text-lg filled-icon">task_alt</span>
+                                            </button>
+                                            <button class="p-1.5 text-emerald-500">
+                                                <span class="material-symbols-outlined text-lg filled-icon">mark_email_read</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <!-- Row 4 -->
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/30 transition-colors">
+                                    <td class="px-4 py-4 text-sm font-medium text-gray-500 text-center">1021</td>
+                                    <td class="px-4 py-4">
+                                        <div class="flex flex-col">
+                                            <span class="text-sm font-semibold">Gestión de Residuos Peligrosos</span>
+                                            <span class="text-[10px] text-gray-400 uppercase">Modalidad: E-Learning</span>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm font-mono text-gray-600 dark:text-gray-300">8877665544</td>
+                                    <td class="px-4 py-4 text-sm">05/05/2024</td>
+                                    <td class="px-4 py-4 text-sm">12</td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            12 de 12
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4">
+                                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400">
+                                            Enviado
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-4 text-right">
+                                        <div class="flex justify-end gap-2">
+                                            <button class="btn-ver-participantes p-1.5 text-gray-400 hover:text-primary transition-colors" data-curso-id="1021">
+                                                <span class="material-symbols-outlined text-lg">visibility</span>
+                                            </button>
+                                            <button class="p-1.5 text-primary">
+                                                <span class="material-symbols-outlined text-lg filled-icon">task_alt</span>
+                                            </button>
+                                            <button class="p-1.5 text-emerald-500">
+                                                <span class="material-symbols-outlined text-lg filled-icon">mark_email_read</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="px-6 py-4 border-t border-gray-100 dark:border-gray-800 flex items-center justify-between">
+                        <p class="text-xs text-gray-500">Mostrando 1 a 4 de 89 cursos finalizados</p>
+                        <div class="flex gap-2">
+                            <button class="p-2 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                <span class="material-symbols-outlined text-sm">chevron_left</span>
+                            </button>
+                            <button class="p-2 border border-primary bg-primary/10 text-primary rounded font-bold text-xs px-4">1</button>
+                            <button class="p-2 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-bold text-xs px-4">2</button>
+                            <button class="p-2 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors font-bold text-xs px-4">3</button>
+                            <button class="p-2 border border-gray-200 dark:border-gray-700 rounded hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                                <span class="material-symbols-outlined text-sm">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal Participantes -->
+    <div id="modalParticipantes" class="modal">
+        <div class="bg-white dark:bg-gray-900 rounded-xl shadow-2xl w-full max-w-3xl mx-4 max-h-[90vh] overflow-hidden">
+            <div class="sticky top-0 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between">
+                <div>
+                    <h3 class="text-xl font-black text-[#111318] dark:text-white">Participantes del Curso</h3>
+                    <p id="modalCursoNombre" class="text-sm text-gray-500 mt-1">Técnicas de Liderazgo para Mandos Medios</p>
+                </div>
+                <button id="btnCloseModal" class="text-gray-400 hover:text-gray-600 transition-colors">
+                    <span class="material-symbols-outlined text-[24px]">close</span>
+                </button>
+            </div>
+
+            <div class="p-6 overflow-y-auto max-h-[60vh]">
+                <!-- Resumen -->
+                <div class="flex flex-wrap gap-4 mb-6">
+                    <div class="bg-gray-50 dark:bg-gray-800 px-4 py-2 rounded-lg">
+                        <p class="text-xs text-gray-500">Total Participantes</p>
+                        <p class="text-lg font-bold">25</p>
+                    </div>
+                    <div class="bg-emerald-50 dark:bg-emerald-900/20 px-4 py-2 rounded-lg">
+                        <p class="text-xs text-emerald-600">Aprobados</p>
+                        <p class="text-lg font-bold text-emerald-700">24</p>
+                    </div>
+                    <div class="bg-red-50 dark:bg-red-900/20 px-4 py-2 rounded-lg">
+                        <p class="text-xs text-red-600">Reprobados</p>
+                        <p class="text-lg font-bold text-red-700">1</p>
+                    </div>
+                </div>
+
+                <!-- Acciones -->
+                <div class="flex items-center gap-3 mb-4">
+                    <button id="seleccionarAprobados" class="text-sm font-medium text-primary hover:underline">
+                        Seleccionar todos los aprobados
+                    </button>
+                    <span class="text-gray-300">|</span>
+                    <button id="deseleccionarTodos" class="text-sm font-medium text-gray-500 hover:text-gray-700">
+                        Deseleccionar todos
+                    </button>
+                </div>
+
+                <!-- Lista de participantes -->
+                <div class="space-y-2">
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <input type="checkbox" class="checkbox-participante rounded border-gray-300 text-primary focus:ring-primary" checked>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold">María González Pérez</p>
+                            <p class="text-xs text-gray-500">RUT: 12.345.678-9</p>
+                        </div>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700">Aprobado</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <input type="checkbox" class="checkbox-participante rounded border-gray-300 text-primary focus:ring-primary" checked>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold">Juan Carlos Rodríguez</p>
+                            <p class="text-xs text-gray-500">RUT: 11.222.333-4</p>
+                        </div>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700">Aprobado</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <input type="checkbox" class="checkbox-participante rounded border-gray-300 text-primary focus:ring-primary" checked>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold">Ana María López</p>
+                            <p class="text-xs text-gray-500">RUT: 15.666.777-8</p>
+                        </div>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700">Aprobado</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-red-50 dark:bg-red-900/10 rounded-lg">
+                        <input type="checkbox" class="checkbox-participante rounded border-gray-300 text-primary focus:ring-primary" disabled>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold text-gray-400">Pedro Sánchez Muñoz</p>
+                            <p class="text-xs text-gray-400">RUT: 16.888.999-0</p>
+                        </div>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-red-100 text-red-700">Reprobado</span>
+                    </div>
+                    <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <input type="checkbox" class="checkbox-participante rounded border-gray-300 text-primary focus:ring-primary" checked>
+                        <div class="flex-1">
+                            <p class="text-sm font-semibold">Carolina Fernández Silva</p>
+                            <p class="text-xs text-gray-500">RUT: 17.111.222-3</p>
+                        </div>
+                        <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-bold bg-emerald-100 text-emerald-700">Aprobado</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sticky bottom-0 bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 px-6 py-4 flex justify-end gap-3">
+                <button id="btnCancelarModal" class="px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 rounded-lg font-bold text-sm hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    Cancelar
+                </button>
+                <button id="btnGenerarCertificadosModal" class="px-4 py-2 bg-primary text-white rounded-lg font-bold text-sm hover:bg-primary/90 transition-colors flex items-center gap-2">
+                    <span class="material-symbols-outlined text-lg">verified</span>
+                    Generar Certificados
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast de notificación -->
+    <div id="toast" class="fixed top-6 right-6 z-[100] transform translate-x-full opacity-0 transition-all duration-300">
+        <div class="bg-white dark:bg-gray-800 rounded-xl shadow-2xl border border-gray-200 dark:border-gray-700 p-4 flex items-start gap-3 max-w-md">
+            <div id="toastIcon" class="size-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0">
+                <span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400">check_circle</span>
+            </div>
+            <div class="flex-1">
+                <p id="toastTitle" class="font-bold text-[#111318] dark:text-white">Certificados Generados</p>
+                <p id="toastMessage" class="text-sm text-gray-500 dark:text-gray-400 mt-0.5">Se generaron 4 certificados con éxito.</p>
+            </div>
+            <button id="toastClose" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                <span class="material-symbols-outlined text-[20px]">close</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script>
+        // Modal functionality
+        const modal = document.getElementById('modalParticipantes');
+        const btnCloseModal = document.getElementById('btnCloseModal');
+        const btnCancelarModal = document.getElementById('btnCancelarModal');
+
+        // Abrir modal al hacer clic en icono de ojo
+        document.querySelectorAll('.btn-ver-participantes').forEach(btn => {
+            btn.addEventListener('click', function() {
+                modal.classList.add('active');
+            });
+        });
+
+        // Cerrar modal
+        function closeModal() {
+            modal.classList.remove('active');
+        }
+
+        btnCloseModal?.addEventListener('click', closeModal);
+        btnCancelarModal?.addEventListener('click', closeModal);
+
+        // Cerrar modal al hacer clic fuera
+        modal?.addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Seleccionar todos los aprobados
+        document.getElementById('seleccionarAprobados')?.addEventListener('click', function() {
+            document.querySelectorAll('.checkbox-participante:not(:disabled)').forEach(cb => {
+                cb.checked = true;
+            });
+        });
+
+        // Deseleccionar todos
+        document.getElementById('deseleccionarTodos')?.addEventListener('click', function() {
+            document.querySelectorAll('.checkbox-participante').forEach(cb => {
+                cb.checked = false;
+            });
+        });
+
+        // Limpiar filtros
+        document.getElementById('btnLimpiarFiltros')?.addEventListener('click', function() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterEstado').value = '';
+            document.getElementById('filterCurso').value = '';
+            document.getElementById('filterFecha').value = '';
+        });
+
+        // Toast functionality
+        const toast = document.getElementById('toast');
+        const toastTitle = document.getElementById('toastTitle');
+        const toastMessage = document.getElementById('toastMessage');
+        const toastClose = document.getElementById('toastClose');
+
+        function showToast(title, message, duration = 5000) {
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+
+            // Mostrar toast
+            toast.classList.remove('translate-x-full', 'opacity-0');
+            toast.classList.add('translate-x-0', 'opacity-100');
+
+            // Auto-ocultar después de la duración
+            setTimeout(() => {
+                hideToast();
+            }, duration);
+        }
+
+        function hideToast() {
+            toast.classList.remove('translate-x-0', 'opacity-100');
+            toast.classList.add('translate-x-full', 'opacity-0');
+        }
+
+        // Cerrar toast manualmente
+        toastClose?.addEventListener('click', hideToast);
+
+        // Generar certificados desde el modal
+        document.getElementById('btnGenerarCertificadosModal')?.addEventListener('click', function() {
+            // Contar checkboxes seleccionados
+            const checkboxes = document.querySelectorAll('.checkbox-participante:checked');
+            const cantidad = checkboxes.length;
+
+            if (cantidad === 0) {
+                // Si no hay seleccionados, mostrar mensaje de error
+                toastTitle.textContent = 'Sin selección';
+                toastMessage.textContent = 'Debe seleccionar al menos un participante.';
+                document.querySelector('#toastIcon').innerHTML = '<span class="material-symbols-outlined text-amber-600 dark:text-amber-400">warning</span>';
+                document.querySelector('#toastIcon').className = 'size-10 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0';
+
+                toast.classList.remove('translate-x-full', 'opacity-0');
+                toast.classList.add('translate-x-0', 'opacity-100');
+
+                setTimeout(hideToast, 4000);
+                return;
+            }
+
+            // Cerrar modal
+            closeModal();
+
+            // Restaurar icono de éxito
+            document.querySelector('#toastIcon').innerHTML = '<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400">check_circle</span>';
+            document.querySelector('#toastIcon').className = 'size-10 rounded-full bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center flex-shrink-0';
+
+            // Mostrar toast de éxito
+            const mensaje = cantidad === 1
+                ? 'Se generó 1 certificado con éxito.'
+                : `Se generaron ${cantidad} certificados con éxito.`;
+
+            showToast('Certificados Generados', mensaje);
+        });
+    </script>
+</body>
+</html>
