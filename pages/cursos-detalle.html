@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Detalle de Curso - Sistema OTEC</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #2563EB;
+            --secondary: #64748B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --background-light: #f8fafc;
+        }
+        @layer base {
+            body {
+                font-size: 16px;
+                font-family: "Inter", sans-serif;
+            }
+            .bg-primary { background-color: var(--primary); }
+            .text-primary { color: var(--primary); }
+            .text-secondary { color: var(--secondary); }
+            .bg-success { background-color: var(--success); }
+            .bg-warning { background-color: var(--warning); }
+            .bg-danger { background-color: var(--danger); }
+        }
+        .tab-active {
+            border-bottom: 3px solid var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+        }
+        .tab-inactive {
+            border-bottom: 3px solid transparent;
+            color: var(--secondary);
+        }
+        .tab-inactive:hover {
+            color: var(--primary);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "secondary": "#64748B",
+                        "success": "#10B981",
+                        "warning": "#F59E0B",
+                        "danger": "#EF4444",
+                        "background-light": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light text-[#1e293b] antialiased overflow-hidden">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar"
+            class="fixed md:static inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#1a202c] border-r border-[#dbdee6] dark:border-gray-800 flex flex-col shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <!-- Close button for mobile -->
+            <div class="md:hidden flex justify-end p-4">
+                <button id="close-menu-button"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary rounded-lg p-2 text-white">
+                        <span class="material-symbols-outlined">analytics</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">Sistema OTEC</h1>
+                        <p class="text-[#616e89] text-xs font-normal">Gestión Corporativa</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 px-3 space-y-1" id="sidebar-nav">
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="dashboard.html" data-page="inicio">
+                    <span class="material-symbols-outlined text-[24px]">house</span>
+                    <span class="text-sm font-medium">Inicio</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="solicitudes-listado.html" data-page="solicitudes">
+                    <span class="material-symbols-outlined text-[24px]">assignment</span>
+                    <span class="text-sm font-medium">Solicitudes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="cursos-listado.html" data-page="cursos">
+                    <span class="material-symbols-outlined text-[24px]">book_5</span>
+                    <span class="text-sm font-medium">Cursos</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="relatores-listado.html" data-page="relatores">
+                    <span class="material-symbols-outlined text-[24px]">group</span>
+                    <span class="text-sm font-medium">Relatores</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="certificados.html" data-page="certificados">
+                    <span class="material-symbols-outlined text-[24px]">verified</span>
+                    <span class="text-sm font-medium">Certificados</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="reportes.html" data-page="reportes">
+                    <span class="material-symbols-outlined text-[24px]">bar_chart</span>
+                    <span class="text-sm font-medium">Reportes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="empresas-listado.html" data-page="empresas">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Empresas</span>
+                </a>
+
+                <!-- Separador: Portales por Rol (solo visibles según rol en producción) -->
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Portales</p>
+                </div>
+
+                <!-- Solo visible para rol: Relator -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-relator.html" data-page="portal-relator">
+                    <span class="material-symbols-outlined text-[24px]">school</span>
+                    <span class="text-sm font-medium">Portal Relator</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-bold">Relator</span>
+                </a>
+
+                <!-- Solo visible para rol: OTIC -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-otic.html" data-page="portal-otic">
+                    <span class="material-symbols-outlined text-[24px]">task_alt</span>
+                    <span class="text-sm font-medium">Aprobación OTIC</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-bold">OTIC</span>
+                </a>
+
+                <!-- Solo visible para rol: Cliente -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-cliente.html" data-page="portal-cliente">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Portal Cliente</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold">Cliente</span>
+                </a>
+
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Configuración</p>
+                </div>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="configuracion.html" data-page="ajustes">
+                    <span class="material-symbols-outlined text-[24px]">settings</span>
+                    <span class="text-sm font-medium">Ajustes</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-[#dbdee6] dark:border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-full bg-cover bg-center bg-[#f0f1f4]"
+                        data-alt="Avatar de usuario administrador"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiz4oKSzbq6_6G2zUileRWNM9J7ejhCs5U-9EIAXmhnLS6y-nF-i4LltyKkFjZQsFJgfaQjHHgapYjJdtue70IS_lPZJJ796EP7u2zDdPssJltnYqlRE-PVauNDy4PQN8AFzvNt9wprW4_qqLW7mQZKaOEakUJP9W3byeOmZ7l0OVFe-RYFtFggRa7BoW91YRZeZE_-0Wg0EAfa1LUUtkfGAfRTpyAmLaBojspSPBmmbauygCC66nf7G1wSulHg80z0wEsYHiv6HU')">
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-xs font-bold dark:text-white">Admin OTEC</p>
+                        <p class="text-[10px] text-[#616e89]">admin@otec.cl</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-[#f8fafc]">
+            <!-- Mobile Header -->
+            <div class="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200">
+                <div class="font-bold text-slate-900">OTEC Manager</div>
+                <button class="text-secondary" id="mobile-menu-button">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 space-y-6">
+                <!-- Breadcrumbs -->
+                <div class="flex items-center gap-2 text-sm">
+                    <a href="dashboard.html" class="text-secondary hover:text-primary transition-colors">Gestión</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <a href="cursos-listado.html" class="text-secondary hover:text-primary transition-colors">Cursos</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <span class="text-slate-900 font-medium">Detalle de Curso</span>
+                </div>
+
+                <!-- Course Header Card -->
+                <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                    <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                        <div class="space-y-3">
+                            <div class="flex flex-wrap items-center gap-3">
+                                <h1 id="curso-titulo" class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Excel Avanzado para Empresas</h1>
+                                <span id="curso-estado-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200 uppercase tracking-wider">Publicado</span>
+                            </div>
+                            <div class="flex flex-wrap items-center gap-4 text-sm text-secondary">
+                                <p class="flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-lg">qr_code</span>
+                                    Código SENCE: <span id="curso-sence" class="font-semibold text-slate-700 ml-1">1234567890</span>
+                                </p>
+                                <p class="flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-lg">calendar_today</span>
+                                    Vigencia: <span id="curso-vigencia" class="font-semibold text-slate-700 ml-1">31 Dic 2024</span>
+                                </p>
+                                <p class="flex items-center gap-1.5">
+                                    <span class="material-symbols-outlined text-lg">schedule</span>
+                                    <span id="curso-horas" class="font-semibold text-slate-700">40 Horas</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 flex-shrink-0">
+                            <button id="btn-editar-curso" class="flex items-center gap-2 h-11 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-sm transition-colors">
+                                <span class="material-symbols-outlined text-lg">edit</span>
+                                <span>Editar Curso</span>
+                            </button>
+                            <button id="btn-vista-previa" class="flex items-center gap-2 h-11 px-4 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm transition-colors shadow-sm">
+                                <span class="material-symbols-outlined text-lg">visibility</span>
+                                <span>Vista Previa</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="border-b border-slate-200 flex gap-6 overflow-x-auto">
+                    <button class="tab-btn tab-inactive flex items-center gap-2 pb-3 pt-2 text-sm whitespace-nowrap transition-colors" data-tab="info">
+                        <span class="material-symbols-outlined text-lg">info</span>
+                        Información General
+                    </button>
+                    <button class="tab-btn tab-active flex items-center gap-2 pb-3 pt-2 text-sm whitespace-nowrap transition-colors" data-tab="pruebas">
+                        <span class="material-symbols-outlined text-lg">quiz</span>
+                        Pruebas de Conocimiento
+                    </button>
+                    <button class="tab-btn tab-inactive flex items-center gap-2 pb-3 pt-2 text-sm whitespace-nowrap transition-colors" data-tab="historial">
+                        <span class="material-symbols-outlined text-lg">history</span>
+                        Historial
+                    </button>
+                </div>
+
+                <!-- Tab Content: Información General -->
+                <div id="tab-info" class="tab-content hidden space-y-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Datos del Curso -->
+                        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">description</span>
+                                Datos del Curso
+                            </h3>
+                            <div class="space-y-4">
+                                <div class="flex justify-between py-2 border-b border-slate-100">
+                                    <span class="text-secondary text-sm">Nombre</span>
+                                    <span class="text-slate-900 font-medium text-sm">Excel Avanzado para Empresas</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-100">
+                                    <span class="text-secondary text-sm">Categoría</span>
+                                    <span class="text-slate-900 font-medium text-sm">TI y Software</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-100">
+                                    <span class="text-secondary text-sm">Modalidad</span>
+                                    <span class="text-slate-900 font-medium text-sm">E-learning</span>
+                                </div>
+                                <div class="flex justify-between py-2 border-b border-slate-100">
+                                    <span class="text-secondary text-sm">Duración</span>
+                                    <span class="text-slate-900 font-medium text-sm">40 Horas Cronológicas</span>
+                                </div>
+                                <div class="flex justify-between py-2">
+                                    <span class="text-secondary text-sm">Estado</span>
+                                    <span class="px-2 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700">Activo</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Descripción -->
+                        <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">article</span>
+                                Descripción
+                            </h3>
+                            <p class="text-secondary text-sm leading-relaxed">
+                                Curso avanzado de Microsoft Excel orientado a profesionales que buscan optimizar
+                                sus procesos de gestión empresarial. Incluye manejo de tablas dinámicas, fórmulas
+                                avanzadas, macros básicas y análisis de datos para la toma de decisiones.
+                            </p>
+                            <div class="mt-4 pt-4 border-t border-slate-100">
+                                <h4 class="text-sm font-bold text-slate-700 mb-2">Objetivos de Aprendizaje:</h4>
+                                <ul class="space-y-2 text-sm text-secondary">
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>
+                                        Dominar funciones avanzadas de Excel
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>
+                                        Crear y gestionar tablas dinámicas
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>
+                                        Automatizar tareas con macros básicas
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Pruebas de Conocimiento -->
+                <div id="tab-pruebas" class="tab-content space-y-6">
+                    <!-- Section Header -->
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <h2 class="text-xl font-bold text-slate-900">Gestión de Evaluaciones</h2>
+                        <button id="btn-nueva-prueba" class="flex items-center justify-center gap-2 h-11 px-5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm transition-colors shadow-sm">
+                            <span class="material-symbols-outlined text-lg">add</span>
+                            <span>Nueva Prueba</span>
+                        </button>
+                    </div>
+
+                    <!-- Evaluations Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="pruebas-grid">
+                        <!-- Assessment Card 1 -->
+                        <div class="prueba-card bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-primary/50 transition-colors" data-id="1">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-900">Prueba Diagnóstica</h3>
+                                    <p class="text-xs text-secondary mt-1">Creado el 12 de Mayo, 2024</p>
+                                </div>
+                                <span class="status-badge px-3 py-1 rounded-lg text-xs font-bold bg-blue-100 text-blue-700 border border-blue-200 uppercase tracking-wider">Activa</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 py-3">
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">format_list_numbered</span>
+                                    <span>10 Preguntas</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">grade</span>
+                                    <span>70% Mínimo</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">timer</span>
+                                    <span>30 Minutos</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">replay</span>
+                                    <span>1 Intento</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-3">
+                                <div class="flex gap-2">
+                                    <button class="btn-preview flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-secondary hover:text-primary hover:bg-slate-200 transition-colors" title="Vista Previa">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                    <button class="btn-edit-prueba flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-secondary hover:text-primary hover:bg-slate-200 transition-colors" title="Editar">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                    <button class="btn-stats flex items-center justify-center w-10 h-10 rounded-lg bg-primary/10 text-primary hover:bg-primary hover:text-white transition-colors" title="Ver Resultados">
+                                        <span class="material-symbols-outlined">bar_chart</span>
+                                    </button>
+                                </div>
+                                <button class="btn-delete-prueba flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-red-500 hover:bg-red-50 transition-colors" title="Eliminar">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Assessment Card 2 -->
+                        <div class="prueba-card bg-white rounded-xl border border-slate-200 p-5 shadow-sm hover:border-primary/50 transition-colors" data-id="2">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-slate-900">Evaluación Final</h3>
+                                    <p class="text-xs text-secondary mt-1">Última edición hoy, 10:45 AM</p>
+                                </div>
+                                <span class="status-badge px-3 py-1 rounded-lg text-xs font-bold bg-orange-100 text-orange-700 border border-orange-200 uppercase tracking-wider">En Edición</span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3 py-3">
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">format_list_numbered</span>
+                                    <span>25 Preguntas</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">grade</span>
+                                    <span>85% Mínimo</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">timer</span>
+                                    <span>60 Minutos</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-sm text-secondary">
+                                    <span class="material-symbols-outlined text-lg text-primary">replay</span>
+                                    <span>2 Intentos</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between pt-4 border-t border-slate-100 mt-3">
+                                <div class="flex gap-2">
+                                    <button class="btn-preview flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-secondary hover:text-primary hover:bg-slate-200 transition-colors" title="Vista Previa">
+                                        <span class="material-symbols-outlined">visibility</span>
+                                    </button>
+                                    <button class="btn-edit-prueba flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-secondary hover:text-primary hover:bg-slate-200 transition-colors" title="Editar">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </button>
+                                    <button class="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-slate-300 cursor-not-allowed" title="Resultados no disponibles" disabled>
+                                        <span class="material-symbols-outlined">bar_chart</span>
+                                    </button>
+                                </div>
+                                <button class="btn-delete-prueba flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-red-500 hover:bg-red-50 transition-colors" title="Eliminar">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Add New Card Placeholder -->
+                        <button id="btn-add-prueba-card" class="group border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center gap-3 hover:border-primary/50 hover:bg-primary/5 transition-all min-h-[200px]">
+                            <div class="w-14 h-14 rounded-full bg-slate-100 flex items-center justify-center text-secondary group-hover:bg-primary/20 group-hover:text-primary transition-colors">
+                                <span class="material-symbols-outlined text-3xl">add</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-slate-900 font-bold">Agregar nueva prueba</p>
+                                <p class="text-secondary text-sm mt-1">Crea una evaluación de conocimiento para este curso</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Help Tip -->
+                    <div class="mt-6 p-4 bg-primary/5 rounded-xl border border-primary/20 flex items-start gap-4">
+                        <span class="material-symbols-outlined text-primary text-xl flex-shrink-0">info</span>
+                        <div>
+                            <p class="text-sm font-bold text-slate-900">Consejo de Gestión</p>
+                            <p class="text-sm text-secondary mt-1">Las pruebas en estado "En Edición" no serán visibles para los alumnos. Asegúrate de publicarlas una vez que hayas terminado de cargar todas las preguntas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Historial -->
+                <div id="tab-historial" class="tab-content hidden space-y-6">
+                    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">history</span>
+                            Historial de Cambios
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="flex gap-4 pb-4 border-b border-slate-100">
+                                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-blue-600 text-lg">edit</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-slate-900">Curso actualizado</p>
+                                    <p class="text-xs text-secondary mt-1">Se modificó la descripción del curso</p>
+                                    <p class="text-xs text-slate-400 mt-2">Hoy, 10:45 AM - Admin User</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 pb-4 border-b border-slate-100">
+                                <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-green-600 text-lg">add_circle</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-slate-900">Prueba agregada</p>
+                                    <p class="text-xs text-secondary mt-1">Se creó "Evaluación Final"</p>
+                                    <p class="text-xs text-slate-400 mt-2">Ayer, 3:30 PM - Admin User</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4 pb-4 border-b border-slate-100">
+                                <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-purple-600 text-lg">publish</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-slate-900">Curso publicado</p>
+                                    <p class="text-xs text-secondary mt-1">El curso pasó a estado "Publicado"</p>
+                                    <p class="text-xs text-slate-400 mt-2">12 May 2024, 9:00 AM - Admin User</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-4">
+                                <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center flex-shrink-0">
+                                    <span class="material-symbols-outlined text-slate-600 text-lg">note_add</span>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm font-medium text-slate-900">Curso creado</p>
+                                    <p class="text-xs text-secondary mt-1">Se creó el curso "Excel Avanzado para Empresas"</p>
+                                    <p class="text-xs text-slate-400 mt-2">10 May 2024, 2:15 PM - Admin User</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Nueva/Editar Prueba -->
+    <div id="modal-prueba" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 id="modal-prueba-titulo" class="text-xl font-bold text-slate-900">Nueva Prueba</h3>
+                    <button id="modal-prueba-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Tipo de Prueba *</label>
+                    <select id="prueba-tipo" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                        <option value="">Seleccionar tipo</option>
+                        <option value="diagnostica">Prueba Diagnóstica</option>
+                        <option value="intermedia">Evaluación Intermedia</option>
+                        <option value="final">Evaluación Final</option>
+                        <option value="salida">Evaluación de Salida</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Nombre de la Prueba *</label>
+                    <input type="text" id="prueba-nombre" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Ej: Evaluación de conocimientos módulo 1">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Tiempo (minutos) *</label>
+                        <input type="number" id="prueba-tiempo" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="30" min="1" value="30">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Intentos permitidos</label>
+                        <input type="number" id="prueba-intentos" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="1" min="1" value="1">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Puntaje Mínimo Aprobación (%)</label>
+                    <input type="number" id="prueba-puntaje" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="60" min="0" max="100" value="60">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Estado</label>
+                    <select id="prueba-estado" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                        <option value="edicion">En Edición</option>
+                        <option value="activa">Activa</option>
+                    </select>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="modal-prueba-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-prueba-guardar" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Guardar Prueba
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmar Eliminación -->
+    <div id="modal-eliminar" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-5">
+            <div class="flex items-center gap-4">
+                <div class="size-14 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-danger text-3xl">warning</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Eliminar Prueba</h3>
+                    <p class="text-sm text-secondary mt-1" id="modal-eliminar-mensaje">¿Estás seguro de eliminar esta prueba? Esta acción no se puede deshacer.</p>
+                </div>
+            </div>
+            <div class="flex gap-3 justify-end">
+                <button id="modal-eliminar-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-eliminar-confirmar" class="px-5 py-2.5 rounded-lg bg-danger hover:bg-danger/90 text-white font-bold text-sm transition-colors">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Resultados -->
+    <div id="modal-resultados" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-slate-900">Resultados: Prueba Diagnóstica</h3>
+                    <button id="modal-resultados-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-6">
+                <!-- Stats Summary -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="bg-slate-50 rounded-lg p-4 text-center">
+                        <p class="text-3xl font-black text-primary">45</p>
+                        <p class="text-sm text-secondary mt-1">Participantes</p>
+                    </div>
+                    <div class="bg-green-50 rounded-lg p-4 text-center">
+                        <p class="text-3xl font-black text-green-600">87%</p>
+                        <p class="text-sm text-secondary mt-1">Tasa Aprobación</p>
+                    </div>
+                    <div class="bg-blue-50 rounded-lg p-4 text-center">
+                        <p class="text-3xl font-black text-blue-600">78%</p>
+                        <p class="text-sm text-secondary mt-1">Promedio</p>
+                    </div>
+                </div>
+                <!-- Recent Results Table -->
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-3">Últimos Resultados</h4>
+                    <div class="border border-slate-200 rounded-lg overflow-hidden">
+                        <table class="w-full text-sm">
+                            <thead class="bg-slate-50">
+                                <tr>
+                                    <th class="text-left px-4 py-3 font-bold text-slate-700">Participante</th>
+                                    <th class="text-left px-4 py-3 font-bold text-slate-700">Fecha</th>
+                                    <th class="text-left px-4 py-3 font-bold text-slate-700">Puntaje</th>
+                                    <th class="text-left px-4 py-3 font-bold text-slate-700">Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100">
+                                <tr>
+                                    <td class="px-4 py-3">María González</td>
+                                    <td class="px-4 py-3 text-secondary">Hoy, 9:30 AM</td>
+                                    <td class="px-4 py-3 font-semibold">85%</td>
+                                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700">Aprobado</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">Juan Pérez</td>
+                                    <td class="px-4 py-3 text-secondary">Hoy, 8:15 AM</td>
+                                    <td class="px-4 py-3 font-semibold">92%</td>
+                                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700">Aprobado</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">Carlos Ruiz</td>
+                                    <td class="px-4 py-3 text-secondary">Ayer, 4:20 PM</td>
+                                    <td class="px-4 py-3 font-semibold">65%</td>
+                                    <td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">Reprobado</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="btn-ver-todos-resultados" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Ver Todos
+                </button>
+                <button id="btn-exportar-resultados" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Exportar Resultados
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Editar Curso -->
+    <div id="modal-editar-curso" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-slate-900">Editar Curso</h3>
+                    <button id="modal-editar-curso-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Nombre del Curso *</label>
+                        <input type="text" id="edit-curso-nombre" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="Excel Avanzado para Empresas">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Código SENCE *</label>
+                        <input type="text" id="edit-curso-sence" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="1234567890">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Categoría *</label>
+                        <select id="edit-curso-categoria" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="ti-software" selected>TI y Software</option>
+                            <option value="gestion">Gestión</option>
+                            <option value="habilidades-blandas">Habilidades Blandas</option>
+                            <option value="seguridad">Seguridad</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Horas Cronológicas *</label>
+                        <input type="number" id="edit-curso-horas" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="40" min="1">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Modalidad *</label>
+                        <select id="edit-curso-modalidad" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="e-learning" selected>E-learning</option>
+                            <option value="presencial">Presencial</option>
+                            <option value="mixta">Mixta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Vigencia</label>
+                        <input type="date" id="edit-curso-vigencia" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="2024-12-31">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Estado</label>
+                        <select id="edit-curso-estado" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="borrador">Borrador</option>
+                            <option value="activo" selected>Publicado</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Descripción</label>
+                        <textarea id="edit-curso-descripcion" rows="3" class="w-full px-4 py-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary resize-none">Curso avanzado de Microsoft Excel orientado a profesionales que buscan optimizar sus procesos de gestión empresarial.</textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="modal-editar-curso-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-editar-curso-guardar" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Vista Previa Curso -->
+    <div id="modal-preview-curso" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-primary text-2xl">visibility</span>
+                        <h3 class="text-xl font-bold text-slate-900">Vista Previa del Curso</h3>
+                    </div>
+                    <button id="modal-preview-curso-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="bg-gradient-to-r from-primary to-blue-700 rounded-xl p-8 text-white mb-6">
+                    <h1 class="text-3xl font-black mb-2">Excel Avanzado para Empresas</h1>
+                    <p class="opacity-90">Domina las herramientas avanzadas de Excel para optimizar tu gestión empresarial</p>
+                    <div class="flex flex-wrap gap-4 mt-4">
+                        <span class="flex items-center gap-1 text-sm bg-white/20 px-3 py-1 rounded-full">
+                            <span class="material-symbols-outlined text-base">schedule</span> 40 Horas
+                        </span>
+                        <span class="flex items-center gap-1 text-sm bg-white/20 px-3 py-1 rounded-full">
+                            <span class="material-symbols-outlined text-base">computer</span> E-learning
+                        </span>
+                        <span class="flex items-center gap-1 text-sm bg-white/20 px-3 py-1 rounded-full">
+                            <span class="material-symbols-outlined text-base">verified</span> Certificado SENCE
+                        </span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 space-y-4">
+                        <h3 class="font-bold text-slate-900">Descripción del Curso</h3>
+                        <p class="text-secondary text-sm leading-relaxed">
+                            Curso avanzado de Microsoft Excel orientado a profesionales que buscan optimizar
+                            sus procesos de gestión empresarial. Incluye manejo de tablas dinámicas, fórmulas
+                            avanzadas, macros básicas y análisis de datos para la toma de decisiones.
+                        </p>
+                        <h3 class="font-bold text-slate-900 pt-4">Lo que Aprenderás</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-start gap-2 text-sm text-secondary">
+                                <span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>
+                                Dominar funciones avanzadas de Excel
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-secondary">
+                                <span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>
+                                Crear y gestionar tablas dinámicas
+                            </li>
+                            <li class="flex items-start gap-2 text-sm text-secondary">
+                                <span class="material-symbols-outlined text-green-500 text-base mt-0.5">check_circle</span>
+                                Automatizar tareas con macros básicas
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-5">
+                        <h3 class="font-bold text-slate-900 mb-4">Evaluaciones</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-secondary">Prueba Diagnóstica</span>
+                                <span class="text-green-600 font-medium">Activa</span>
+                            </div>
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-secondary">Evaluación Final</span>
+                                <span class="text-orange-600 font-medium">En Edición</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end">
+                <button id="modal-preview-curso-ok" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Cerrar Vista Previa
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50">
+        <div class="bg-slate-900 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3">
+            <span id="toast-icon" class="material-symbols-outlined text-green-400">check_circle</span>
+            <span id="toast-message" class="text-sm font-medium">Operación exitosa</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script src="../assets/js/components/mobile-menu.js"></script>
+    <script>
+        // ============================================
+        // DETALLE DE CURSO - FUNCIONALIDAD INTERACTIVA
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referencias a elementos del DOM
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const modalPrueba = document.getElementById('modal-prueba');
+            const modalEliminar = document.getElementById('modal-eliminar');
+            const modalResultados = document.getElementById('modal-resultados');
+            const toast = document.getElementById('toast');
+
+            let currentPruebaId = null;
+
+            // ============================================
+            // TABS FUNCTIONALITY
+            // ============================================
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetTab = this.dataset.tab;
+
+                    // Update tab buttons
+                    tabBtns.forEach(b => {
+                        b.classList.remove('tab-active');
+                        b.classList.add('tab-inactive');
+                    });
+                    this.classList.remove('tab-inactive');
+                    this.classList.add('tab-active');
+
+                    // Update tab content
+                    tabContents.forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    document.getElementById(`tab-${targetTab}`).classList.remove('hidden');
+                });
+            });
+
+            // ============================================
+            // MODAL NUEVA PRUEBA
+            // ============================================
+            function openPruebaModal(isEdit = false, data = {}) {
+                document.getElementById('modal-prueba-titulo').textContent = isEdit ? 'Editar Prueba' : 'Nueva Prueba';
+                document.getElementById('prueba-tipo').value = data.tipo || '';
+                document.getElementById('prueba-nombre').value = data.nombre || '';
+                document.getElementById('prueba-tiempo').value = data.tiempo || '30';
+                document.getElementById('prueba-intentos').value = data.intentos || '1';
+                document.getElementById('prueba-puntaje').value = data.puntaje || '60';
+                document.getElementById('prueba-estado').value = data.estado || 'edicion';
+                currentPruebaId = data.id || null;
+                modalPrueba.classList.remove('hidden');
+            }
+
+            // Navegar directamente a configuración de prueba (nueva)
+            function navigateToNewPrueba() {
+                const urlParams = new URLSearchParams(window.location.search);
+                const cursoId = urlParams.get('id') || '1';
+                const newPruebaId = Date.now(); // Generar ID único
+                window.location.href = `cursos-prueba-config.html?cursoId=${cursoId}&pruebaId=${newPruebaId}&new=true`;
+            }
+
+            document.getElementById('btn-nueva-prueba').addEventListener('click', navigateToNewPrueba);
+            document.getElementById('btn-add-prueba-card').addEventListener('click', navigateToNewPrueba);
+
+            // Editar prueba - navegar a página de configuración
+            document.querySelectorAll('.btn-edit-prueba').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.prueba-card');
+                    const pruebaId = card.dataset.id;
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const cursoId = urlParams.get('id') || '1';
+                    window.location.href = `cursos-prueba-config.html?cursoId=${cursoId}&pruebaId=${pruebaId}`;
+                });
+            });
+
+            // ============================================
+            // MODAL ELIMINAR
+            // ============================================
+            document.querySelectorAll('.btn-delete-prueba').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.prueba-card');
+                    currentPruebaId = card.dataset.id;
+                    const nombre = card.querySelector('h3').textContent;
+                    document.getElementById('modal-eliminar-mensaje').textContent =
+                        `¿Estás seguro de eliminar "${nombre}"? Esta acción no se puede deshacer.`;
+                    modalEliminar.classList.remove('hidden');
+                });
+            });
+
+            document.getElementById('modal-eliminar-cancelar').addEventListener('click', () => {
+                modalEliminar.classList.add('hidden');
+            });
+
+            document.getElementById('modal-eliminar-confirmar').addEventListener('click', function() {
+                const card = document.querySelector(`.prueba-card[data-id="${currentPruebaId}"]`);
+                if (card) {
+                    card.remove();
+                }
+                modalEliminar.classList.add('hidden');
+                showToast('Prueba eliminada correctamente', 'success');
+            });
+
+            // ============================================
+            // VER RESULTADOS - NAVEGAR A PÁGINA DE ESTADÍSTICAS
+            // ============================================
+            document.querySelectorAll('.btn-stats').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.prueba-card');
+                    const pruebaId = card.dataset.id;
+                    const pruebaName = card.querySelector('h3').textContent;
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const cursoId = urlParams.get('id') || '1';
+                    window.location.href = `cursos-prueba-resultados.html?cursoId=${cursoId}&pruebaId=${pruebaId}&nombre=${encodeURIComponent(pruebaName)}`;
+                });
+            });
+
+            document.getElementById('modal-resultados-cerrar').addEventListener('click', () => {
+                modalResultados.classList.add('hidden');
+            });
+
+            // Exportar resultados
+            document.getElementById('btn-exportar-resultados').addEventListener('click', function() {
+                showToast('Exportando resultados a Excel...', 'info');
+                setTimeout(() => {
+                    showToast('Archivo descargado: resultados_prueba.xlsx', 'success');
+                }, 1500);
+            });
+
+            // Ver todos los resultados - navegar a página completa
+            document.getElementById('btn-ver-todos-resultados').addEventListener('click', function() {
+                modalResultados.classList.add('hidden');
+                const urlParams = new URLSearchParams(window.location.search);
+                const cursoId = urlParams.get('id') || '1';
+                window.location.href = `cursos-prueba-resultados.html?cursoId=${cursoId}&pruebaId=1&nombre=${encodeURIComponent('Prueba Diagnóstica')}`;
+            });
+
+            // ============================================
+            // VISTA PREVIA PRUEBA
+            // ============================================
+            document.querySelectorAll('.btn-preview').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.prueba-card');
+                    const pruebaId = card.dataset.id;
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const cursoId = urlParams.get('id') || '1';
+                    window.location.href = `cursos-prueba-config.html?cursoId=${cursoId}&pruebaId=${pruebaId}&mode=preview`;
+                });
+            });
+
+            // ============================================
+            // MODAL EDITAR CURSO
+            // ============================================
+            const modalEditarCurso = document.getElementById('modal-editar-curso');
+
+            document.getElementById('btn-editar-curso').addEventListener('click', function() {
+                modalEditarCurso.classList.remove('hidden');
+            });
+
+            ['modal-editar-curso-cerrar', 'modal-editar-curso-cancelar'].forEach(id => {
+                document.getElementById(id).addEventListener('click', () => {
+                    modalEditarCurso.classList.add('hidden');
+                });
+            });
+
+            document.getElementById('modal-editar-curso-guardar').addEventListener('click', function() {
+                // Obtener valores del formulario
+                const nombre = document.getElementById('edit-curso-nombre').value;
+                const sence = document.getElementById('edit-curso-sence').value;
+                const horas = document.getElementById('edit-curso-horas').value;
+                const estado = document.getElementById('edit-curso-estado');
+                const estadoTexto = estado.options[estado.selectedIndex].text;
+                const vigencia = document.getElementById('edit-curso-vigencia').value;
+
+                // Validación básica
+                if (!nombre || !sence) {
+                    showToast('Por favor completa los campos requeridos', 'error');
+                    return;
+                }
+
+                // Actualizar la UI del header
+                document.getElementById('curso-titulo').textContent = nombre;
+                document.getElementById('curso-sence').textContent = sence;
+                document.getElementById('curso-horas').textContent = `${horas} Horas`;
+
+                // Actualizar badge de estado
+                const estadoBadge = document.getElementById('curso-estado-badge');
+                estadoBadge.textContent = estadoTexto;
+                if (estado.value === 'activo') {
+                    estadoBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700 border border-green-200 uppercase tracking-wider';
+                } else if (estado.value === 'borrador') {
+                    estadoBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-700 border border-orange-200 uppercase tracking-wider';
+                } else {
+                    estadoBadge.className = 'px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200 uppercase tracking-wider';
+                }
+
+                // Formatear y actualizar vigencia
+                if (vigencia) {
+                    const fechaVigencia = new Date(vigencia);
+                    const opciones = { day: 'numeric', month: 'short', year: 'numeric' };
+                    document.getElementById('curso-vigencia').textContent = fechaVigencia.toLocaleDateString('es-CL', opciones);
+                }
+
+                modalEditarCurso.classList.add('hidden');
+                showToast('Curso actualizado correctamente', 'success');
+            });
+
+            // ============================================
+            // MODAL VISTA PREVIA CURSO
+            // ============================================
+            const modalPreviewCurso = document.getElementById('modal-preview-curso');
+
+            document.getElementById('btn-vista-previa').addEventListener('click', function() {
+                modalPreviewCurso.classList.remove('hidden');
+            });
+
+            ['modal-preview-curso-cerrar', 'modal-preview-curso-ok'].forEach(id => {
+                document.getElementById(id).addEventListener('click', () => {
+                    modalPreviewCurso.classList.add('hidden');
+                });
+            });
+
+            // ============================================
+            // TOAST NOTIFICATIONS
+            // ============================================
+            function showToast(message, type = 'success') {
+                const toastIcon = document.getElementById('toast-icon');
+                const toastMessage = document.getElementById('toast-message');
+
+                toastMessage.textContent = message;
+
+                if (type === 'success') {
+                    toastIcon.textContent = 'check_circle';
+                    toastIcon.className = 'material-symbols-outlined text-green-400';
+                } else if (type === 'error') {
+                    toastIcon.textContent = 'error';
+                    toastIcon.className = 'material-symbols-outlined text-red-400';
+                } else {
+                    toastIcon.textContent = 'info';
+                    toastIcon.className = 'material-symbols-outlined text-blue-400';
+                }
+
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3000);
+            }
+
+            // ============================================
+            // CERRAR MODALES
+            // ============================================
+            const allModals = [modalPrueba, modalEliminar, modalResultados, modalEditarCurso, modalPreviewCurso];
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    allModals.forEach(modal => modal.classList.add('hidden'));
+                }
+            });
+
+            allModals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('hidden');
+                    }
+                });
+            });
+
+            // ============================================
+            // CARGAR DATOS DE URL
+            // ============================================
+            const urlParams = new URLSearchParams(window.location.search);
+            const cursoId = urlParams.get('id');
+            const tabParam = urlParams.get('tab');
+
+            // Si hay un parámetro tab, activar esa pestaña
+            if (tabParam) {
+                const targetBtn = document.querySelector(`.tab-btn[data-tab="${tabParam}"]`);
+                if (targetBtn) {
+                    targetBtn.click();
+                }
+            }
+            // En producción, aquí cargarías los datos del curso desde el servidor
+        });
+    </script>
+</body>
+
+</html>

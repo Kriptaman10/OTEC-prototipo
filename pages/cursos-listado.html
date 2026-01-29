@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gestión de Cursos - Sistema OTEC</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #2563EB;
+            --secondary: #64748B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --background-light: #f8fafc;
+        }
+        @layer base {
+            body {
+                font-size: 16px;
+                font-family: "Inter", sans-serif;
+            }
+            .bg-primary { background-color: var(--primary); }
+            .text-primary { color: var(--primary); }
+            .text-secondary { color: var(--secondary); }
+            .bg-success { background-color: var(--success); }
+            .bg-warning { background-color: var(--warning); }
+            .bg-danger { background-color: var(--danger); }
+        }
+        /* Dropdown menu animation */
+        .dropdown-menu {
+            transform-origin: top right;
+            animation: dropdownEnter 0.15s ease-out;
+        }
+        @keyframes dropdownEnter {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "secondary": "#64748B",
+                        "success": "#10B981",
+                        "warning": "#F59E0B",
+                        "danger": "#EF4444",
+                        "background-light": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light text-[#1e293b] antialiased overflow-hidden">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar"
+            class="fixed md:static inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#1a202c] border-r border-[#dbdee6] dark:border-gray-800 flex flex-col shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <!-- Close button for mobile -->
+            <div class="md:hidden flex justify-end p-4">
+                <button id="close-menu-button"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary rounded-lg p-2 text-white">
+                        <span class="material-symbols-outlined">analytics</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">Sistema OTEC</h1>
+                        <p class="text-[#616e89] text-xs font-normal">Gestión Corporativa</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 px-3 space-y-1" id="sidebar-nav">
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="dashboard.html" data-page="inicio">
+                    <span class="material-symbols-outlined text-[24px]">house</span>
+                    <span class="text-sm font-medium">Inicio</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="solicitudes-listado.html" data-page="solicitudes">
+                    <span class="material-symbols-outlined text-[24px]">assignment</span>
+                    <span class="text-sm font-medium">Solicitudes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="cursos-listado.html" data-page="cursos">
+                    <span class="material-symbols-outlined text-[24px]">book_5</span>
+                    <span class="text-sm font-medium">Cursos</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="relatores-listado.html" data-page="relatores">
+                    <span class="material-symbols-outlined text-[24px]">group</span>
+                    <span class="text-sm font-medium">Relatores</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="certificados.html" data-page="certificados">
+                    <span class="material-symbols-outlined text-[24px]">verified</span>
+                    <span class="text-sm font-medium">Certificados</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="reportes.html" data-page="reportes">
+                    <span class="material-symbols-outlined text-[24px]">bar_chart</span>
+                    <span class="text-sm font-medium">Reportes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="empresas-listado.html" data-page="empresas">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Empresas</span>
+                </a>
+
+                <!-- Separador: Portales por Rol (solo visibles según rol en producción) -->
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Portales</p>
+                </div>
+
+                <!-- Solo visible para rol: Relator -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-relator.html" data-page="portal-relator">
+                    <span class="material-symbols-outlined text-[24px]">school</span>
+                    <span class="text-sm font-medium">Portal Relator</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-bold">Relator</span>
+                </a>
+
+                <!-- Solo visible para rol: OTIC -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-otic.html" data-page="portal-otic">
+                    <span class="material-symbols-outlined text-[24px]">task_alt</span>
+                    <span class="text-sm font-medium">Aprobación OTIC</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-bold">OTIC</span>
+                </a>
+
+                <!-- Solo visible para rol: Cliente -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-cliente.html" data-page="portal-cliente">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Portal Cliente</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold">Cliente</span>
+                </a>
+
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Configuración</p>
+                </div>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="configuracion.html" data-page="ajustes">
+                    <span class="material-symbols-outlined text-[24px]">settings</span>
+                    <span class="text-sm font-medium">Ajustes</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-[#dbdee6] dark:border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-full bg-cover bg-center bg-[#f0f1f4]"
+                        data-alt="Avatar de usuario administrador"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiz4oKSzbq6_6G2zUileRWNM9J7ejhCs5U-9EIAXmhnLS6y-nF-i4LltyKkFjZQsFJgfaQjHHgapYjJdtue70IS_lPZJJ796EP7u2zDdPssJltnYqlRE-PVauNDy4PQN8AFzvNt9wprW4_qqLW7mQZKaOEakUJP9W3byeOmZ7l0OVFe-RYFtFggRa7BoW91YRZeZE_-0Wg0EAfa1LUUtkfGAfRTpyAmLaBojspSPBmmbauygCC66nf7G1wSulHg80z0wEsYHiv6HU')">
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-xs font-bold dark:text-white">Admin OTEC</p>
+                        <p class="text-[10px] text-[#616e89]">admin@otec.cl</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-[#f8fafc]">
+            <!-- Mobile Header -->
+            <div class="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200">
+                <div class="font-bold text-slate-900">OTEC Manager</div>
+                <button class="text-secondary" id="mobile-menu-button">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 space-y-6">
+                <!-- Page Header -->
+                <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div class="space-y-1">
+                        <div
+                            class="flex items-center gap-2 text-sm font-medium text-secondary uppercase tracking-wider">
+                            <a href="dashboard.html" class="hover:text-primary transition-colors">Gestión</a>
+                            <span class="material-symbols-outlined text-base">chevron_right</span>
+                            <span class="text-slate-900">Cursos</span>
+                        </div>
+                        <h1 class="text-slate-900 text-2xl md:text-3xl font-black tracking-tight">Gestión de Cursos</h1>
+                        <p class="text-secondary text-base">Administra y monitorea el catálogo de capacitación activa.</p>
+                    </div>
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <button id="btn-nuevo-curso"
+                            class="flex items-center justify-center gap-2 h-11 px-5 bg-primary hover:bg-primary/90 text-white rounded-lg transition-colors font-bold text-sm shadow-sm w-full md:w-auto">
+                            <span class="material-symbols-outlined text-[20px]">add</span>
+                            <span>Nuevo Curso</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Filter Bar -->
+                <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <!-- Buscar -->
+                        <div class="flex flex-col gap-2 lg:col-span-1">
+                            <label class="text-slate-700 text-xs font-bold uppercase tracking-wider">Buscar</label>
+                            <div class="relative">
+                                <span
+                                    class="absolute left-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-secondary text-[20px]">search</span>
+                                <input id="filter-search"
+                                    class="w-full h-10 pl-10 pr-4 rounded-lg border border-slate-200 bg-slate-50 text-sm focus:ring-2 focus:ring-primary focus:border-primary placeholder:text-slate-400"
+                                    placeholder="Buscar por nombre o código SENCE..." type="text" />
+                            </div>
+                        </div>
+
+                        <!-- Estado -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-slate-700 text-xs font-bold uppercase tracking-wider">Estado</label>
+                            <select id="filter-estado"
+                                class="w-full h-10 px-3 rounded-lg border border-slate-200 bg-slate-50 text-sm focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+                                <option value="">Todos los Estados</option>
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                                <option value="borrador">Borrador</option>
+                            </select>
+                        </div>
+
+                        <!-- Categoría -->
+                        <div class="flex flex-col gap-2">
+                            <label class="text-slate-700 text-xs font-bold uppercase tracking-wider">Categoría</label>
+                            <select id="filter-categoria"
+                                class="w-full h-10 px-3 rounded-lg border border-slate-200 bg-slate-50 text-sm focus:ring-2 focus:ring-primary focus:border-primary appearance-none cursor-pointer">
+                                <option value="">Todas las Categorías</option>
+                                <option value="ti-software">TI y Software</option>
+                                <option value="gestion">Gestión</option>
+                                <option value="habilidades-blandas">Habilidades Blandas</option>
+                                <option value="seguridad">Seguridad</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results count -->
+                <div class="flex items-center justify-between">
+                    <p class="text-secondary text-sm" id="results-count">Mostrando <span class="font-semibold text-slate-900">4</span> cursos</p>
+                </div>
+
+                <!-- Course Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6" id="courses-grid">
+                    <!-- Card 1: Excel Avanzado -->
+                    <div class="curso-card bg-white rounded-xl border border-slate-200 flex flex-col shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
+                        data-id="1"
+                        data-nombre="Excel Avanzado para Empresas"
+                        data-sence="1234567890"
+                        data-estado="activo"
+                        data-categoria="ti-software">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="status-badge px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider">Activo</span>
+                                <div class="relative">
+                                    <button class="btn-menu text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors">
+                                        <span class="material-symbols-outlined">more_vert</span>
+                                    </button>
+                                    <div class="dropdown-menu hidden absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-10">
+                                        <button class="menu-activar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 hidden">
+                                            <span class="material-symbols-outlined text-lg text-green-500">check_circle</span>
+                                            Activar
+                                        </button>
+                                        <button class="menu-desactivar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-amber-500">pause_circle</span>
+                                            Desactivar
+                                        </button>
+                                        <button class="menu-duplicar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-primary">content_copy</span>
+                                            Duplicar
+                                        </button>
+                                        <hr class="my-1 border-slate-100">
+                                        <button class="menu-eliminar w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="curso-nombre text-xl font-bold text-slate-900 leading-tight mb-2">Excel Avanzado para Empresas</h3>
+                            <p class="curso-sence text-sm font-mono text-slate-400 mb-4 bg-slate-50 inline-block px-2 py-1 rounded">SENCE: 1234567890</p>
+                            <div class="space-y-2.5 mb-6">
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">category</span>
+                                    <span class="curso-categoria">TI y Software</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">schedule</span>
+                                    <span>40 Horas Cronológicas</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">computer</span>
+                                    <span>Modalidad: E-learning</span>
+                                </div>
+                            </div>
+                            <!-- Knowledge Test Sub-card -->
+                            <div class="bg-slate-50 rounded-lg p-4 border border-slate-100">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Pruebas de Conocimiento</p>
+                                <ul class="space-y-2 mb-3">
+                                    <li class="flex items-center gap-2 text-sm text-slate-700">
+                                        <span class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+                                        <span>Prueba Diagnóstica</span>
+                                    </li>
+                                    <li class="flex items-center gap-2 text-sm text-slate-700">
+                                        <span class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+                                        <span>Evaluación Final</span>
+                                    </li>
+                                </ul>
+                                <button class="btn-agregar-prueba text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                                    <span class="material-symbols-outlined text-base">add_circle</span>
+                                    Agregar Prueba
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-auto grid grid-cols-3 border-t border-slate-100">
+                            <button class="btn-detalle py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">DETALLE</button>
+                            <button class="btn-editar py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">EDITAR</button>
+                            <button class="btn-pruebas py-3.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">PRUEBAS</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Gestión de Proyectos Ágiles -->
+                    <div class="curso-card bg-white rounded-xl border border-slate-200 flex flex-col shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
+                        data-id="2"
+                        data-nombre="Gestión de Proyectos Ágiles"
+                        data-sence="0987654321"
+                        data-estado="borrador"
+                        data-categoria="gestion">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="status-badge px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-xs font-bold uppercase tracking-wider">Borrador</span>
+                                <div class="relative">
+                                    <button class="btn-menu text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors">
+                                        <span class="material-symbols-outlined">more_vert</span>
+                                    </button>
+                                    <div class="dropdown-menu hidden absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-10">
+                                        <button class="menu-activar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-green-500">check_circle</span>
+                                            Activar
+                                        </button>
+                                        <button class="menu-desactivar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 hidden">
+                                            <span class="material-symbols-outlined text-lg text-amber-500">pause_circle</span>
+                                            Desactivar
+                                        </button>
+                                        <button class="menu-duplicar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-primary">content_copy</span>
+                                            Duplicar
+                                        </button>
+                                        <hr class="my-1 border-slate-100">
+                                        <button class="menu-eliminar w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="curso-nombre text-xl font-bold text-slate-900 leading-tight mb-2">Gestión de Proyectos Ágiles</h3>
+                            <p class="curso-sence text-sm font-mono text-slate-400 mb-4 bg-slate-50 inline-block px-2 py-1 rounded">SENCE: 0987654321</p>
+                            <div class="space-y-2.5 mb-6">
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">category</span>
+                                    <span class="curso-categoria">Gestión</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">schedule</span>
+                                    <span>24 Horas Cronológicas</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">groups</span>
+                                    <span>Modalidad: Presencial</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 rounded-lg p-4 border border-slate-100">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Pruebas de Conocimiento</p>
+                                <ul class="space-y-2 mb-3">
+                                    <li class="flex items-center gap-2 text-sm text-slate-400">
+                                        <span class="material-symbols-outlined text-slate-300 text-base">radio_button_unchecked</span>
+                                        <span>Sin pruebas configuradas</span>
+                                    </li>
+                                </ul>
+                                <button class="btn-agregar-prueba text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                                    <span class="material-symbols-outlined text-base">add_circle</span>
+                                    Agregar Prueba
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-auto grid grid-cols-3 border-t border-slate-100">
+                            <button class="btn-detalle py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">DETALLE</button>
+                            <button class="btn-editar py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">EDITAR</button>
+                            <button class="btn-pruebas py-3.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">PRUEBAS</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Liderazgo y Equipos -->
+                    <div class="curso-card bg-white rounded-xl border border-slate-200 flex flex-col shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
+                        data-id="3"
+                        data-nombre="Liderazgo y Equipos"
+                        data-sence="1122334455"
+                        data-estado="activo"
+                        data-categoria="habilidades-blandas">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="status-badge px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider">Activo</span>
+                                <div class="relative">
+                                    <button class="btn-menu text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors">
+                                        <span class="material-symbols-outlined">more_vert</span>
+                                    </button>
+                                    <div class="dropdown-menu hidden absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-10">
+                                        <button class="menu-activar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 hidden">
+                                            <span class="material-symbols-outlined text-lg text-green-500">check_circle</span>
+                                            Activar
+                                        </button>
+                                        <button class="menu-desactivar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-amber-500">pause_circle</span>
+                                            Desactivar
+                                        </button>
+                                        <button class="menu-duplicar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-primary">content_copy</span>
+                                            Duplicar
+                                        </button>
+                                        <hr class="my-1 border-slate-100">
+                                        <button class="menu-eliminar w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="curso-nombre text-xl font-bold text-slate-900 leading-tight mb-2">Liderazgo y Equipos</h3>
+                            <p class="curso-sence text-sm font-mono text-slate-400 mb-4 bg-slate-50 inline-block px-2 py-1 rounded">SENCE: 1122334455</p>
+                            <div class="space-y-2.5 mb-6">
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">category</span>
+                                    <span class="curso-categoria">Habilidades Blandas</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">schedule</span>
+                                    <span>16 Horas Cronológicas</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">shuffle</span>
+                                    <span>Modalidad: Mixta</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 rounded-lg p-4 border border-slate-100">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Pruebas de Conocimiento</p>
+                                <ul class="space-y-2 mb-3">
+                                    <li class="flex items-center gap-2 text-sm text-slate-700">
+                                        <span class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+                                        <span>Evaluación de Salida</span>
+                                    </li>
+                                </ul>
+                                <button class="btn-agregar-prueba text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                                    <span class="material-symbols-outlined text-base">add_circle</span>
+                                    Agregar Prueba
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-auto grid grid-cols-3 border-t border-slate-100">
+                            <button class="btn-detalle py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">DETALLE</button>
+                            <button class="btn-editar py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">EDITAR</button>
+                            <button class="btn-pruebas py-3.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">PRUEBAS</button>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Seguridad Industrial -->
+                    <div class="curso-card bg-white rounded-xl border border-slate-200 flex flex-col shadow-sm hover:shadow-md transition-shadow overflow-hidden group"
+                        data-id="4"
+                        data-nombre="Seguridad Industrial"
+                        data-sence="5566778899"
+                        data-estado="inactivo"
+                        data-categoria="seguridad">
+                        <div class="p-5">
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="status-badge px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider">Inactivo</span>
+                                <div class="relative">
+                                    <button class="btn-menu text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors">
+                                        <span class="material-symbols-outlined">more_vert</span>
+                                    </button>
+                                    <div class="dropdown-menu hidden absolute right-0 top-full mt-1 w-48 bg-white rounded-lg shadow-lg border border-slate-200 py-1 z-10">
+                                        <button class="menu-activar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-green-500">check_circle</span>
+                                            Activar
+                                        </button>
+                                        <button class="menu-desactivar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 hidden">
+                                            <span class="material-symbols-outlined text-lg text-amber-500">pause_circle</span>
+                                            Desactivar
+                                        </button>
+                                        <button class="menu-duplicar w-full px-4 py-2 text-left text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg text-primary">content_copy</span>
+                                            Duplicar
+                                        </button>
+                                        <hr class="my-1 border-slate-100">
+                                        <button class="menu-eliminar w-full px-4 py-2 text-left text-sm text-red-600 hover:bg-red-50 flex items-center gap-2">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                            Eliminar
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="curso-nombre text-xl font-bold text-slate-900 leading-tight mb-2">Seguridad Industrial</h3>
+                            <p class="curso-sence text-sm font-mono text-slate-400 mb-4 bg-slate-50 inline-block px-2 py-1 rounded">SENCE: 5566778899</p>
+                            <div class="space-y-2.5 mb-6">
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">category</span>
+                                    <span class="curso-categoria">Seguridad</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">schedule</span>
+                                    <span>30 Horas Cronológicas</span>
+                                </div>
+                                <div class="flex items-center gap-2 text-slate-600 text-sm">
+                                    <span class="material-symbols-outlined text-base">computer</span>
+                                    <span>Modalidad: E-learning</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 rounded-lg p-4 border border-slate-100">
+                                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Pruebas de Conocimiento</p>
+                                <ul class="space-y-2 mb-3">
+                                    <li class="flex items-center gap-2 text-sm text-slate-700">
+                                        <span class="material-symbols-outlined text-green-500 text-base">check_circle</span>
+                                        <span>Examen Final</span>
+                                    </li>
+                                </ul>
+                                <button class="btn-agregar-prueba text-primary text-sm font-bold flex items-center gap-1 hover:underline">
+                                    <span class="material-symbols-outlined text-base">add_circle</span>
+                                    Agregar Prueba
+                                </button>
+                            </div>
+                        </div>
+                        <div class="mt-auto grid grid-cols-3 border-t border-slate-100">
+                            <button class="btn-detalle py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">DETALLE</button>
+                            <button class="btn-editar py-3.5 text-sm font-bold text-slate-600 hover:bg-slate-50 border-r border-slate-100 transition-colors">EDITAR</button>
+                            <button class="btn-pruebas py-3.5 text-sm font-bold text-primary hover:bg-primary/5 transition-colors">PRUEBAS</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty state (hidden by default) -->
+                <div id="empty-state" class="hidden text-center py-12">
+                    <span class="material-symbols-outlined text-6xl text-slate-300 mb-4">search_off</span>
+                    <h3 class="text-lg font-bold text-slate-700 mb-2">No se encontraron cursos</h3>
+                    <p class="text-secondary">Intenta ajustar los filtros de búsqueda</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Nuevo/Editar Curso -->
+    <div id="modal-curso" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 id="modal-curso-titulo" class="text-xl font-bold text-slate-900">Nuevo Curso</h3>
+                    <button id="modal-curso-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Nombre del Curso *</label>
+                        <input type="text" id="curso-nombre" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Ej: Excel Avanzado para Empresas">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Código SENCE *</label>
+                        <input type="text" id="curso-sence" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Ej: 1234567890">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Categoría *</label>
+                        <select id="curso-categoria" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">Seleccionar categoría</option>
+                            <option value="ti-software">TI y Software</option>
+                            <option value="gestion">Gestión</option>
+                            <option value="habilidades-blandas">Habilidades Blandas</option>
+                            <option value="seguridad">Seguridad</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Horas Cronológicas *</label>
+                        <input type="number" id="curso-horas" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Ej: 40" min="1">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Modalidad *</label>
+                        <select id="curso-modalidad" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="">Seleccionar modalidad</option>
+                            <option value="e-learning">E-learning</option>
+                            <option value="presencial">Presencial</option>
+                            <option value="mixta">Mixta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Estado</label>
+                        <select id="curso-estado" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                            <option value="borrador">Borrador</option>
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-bold text-slate-700 mb-2">Descripción</label>
+                        <textarea id="curso-descripcion" rows="3" class="w-full px-4 py-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary resize-none" placeholder="Descripción del curso..."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="modal-curso-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-curso-guardar" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Guardar Curso
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmar Eliminación -->
+    <div id="modal-eliminar" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-5">
+            <div class="flex items-center gap-4">
+                <div class="size-14 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-danger text-3xl">warning</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Eliminar Curso</h3>
+                    <p class="text-sm text-secondary mt-1" id="modal-eliminar-mensaje">¿Estás seguro de eliminar este curso? Esta acción no se puede deshacer.</p>
+                </div>
+            </div>
+            <div class="flex gap-3 justify-end">
+                <button id="modal-eliminar-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-eliminar-confirmar" class="px-5 py-2.5 rounded-lg bg-danger hover:bg-danger/90 text-white font-bold text-sm transition-colors">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Agregar Prueba -->
+    <div id="modal-prueba" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-slate-900">Agregar Prueba</h3>
+                    <button id="modal-prueba-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Tipo de Prueba *</label>
+                    <select id="prueba-tipo" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                        <option value="">Seleccionar tipo</option>
+                        <option value="diagnostica">Prueba Diagnóstica</option>
+                        <option value="intermedia">Evaluación Intermedia</option>
+                        <option value="final">Evaluación Final</option>
+                        <option value="salida">Evaluación de Salida</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Nombre de la Prueba</label>
+                    <input type="text" id="prueba-nombre" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Ej: Evaluación de conocimientos módulo 1">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Puntaje Mínimo Aprobación (%)</label>
+                    <input type="number" id="prueba-puntaje" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Ej: 60" min="0" max="100" value="60">
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="modal-prueba-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-prueba-guardar" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Agregar Prueba
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50">
+        <div class="bg-slate-900 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3">
+            <span id="toast-icon" class="material-symbols-outlined text-green-400">check_circle</span>
+            <span id="toast-message" class="text-sm font-medium">Operación exitosa</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script src="../assets/js/components/mobile-menu.js"></script>
+    <script>
+        // ============================================
+        // GESTIÓN DE CURSOS - FUNCIONALIDAD INTERACTIVA
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referencias a elementos del DOM
+            const filterSearch = document.getElementById('filter-search');
+            const filterEstado = document.getElementById('filter-estado');
+            const filterCategoria = document.getElementById('filter-categoria');
+            const coursesGrid = document.getElementById('courses-grid');
+            const resultsCount = document.getElementById('results-count');
+            const emptyState = document.getElementById('empty-state');
+
+            // Modales
+            const modalCurso = document.getElementById('modal-curso');
+            const modalEliminar = document.getElementById('modal-eliminar');
+            const modalPrueba = document.getElementById('modal-prueba');
+            const toast = document.getElementById('toast');
+
+            let currentCursoId = null;
+
+            // ============================================
+            // FILTROS
+            // ============================================
+            function filterCourses() {
+                const searchTerm = filterSearch.value.toLowerCase();
+                const estadoFilter = filterEstado.value;
+                const categoriaFilter = filterCategoria.value;
+
+                const cards = document.querySelectorAll('.curso-card');
+                let visibleCount = 0;
+
+                cards.forEach(card => {
+                    const nombre = card.dataset.nombre.toLowerCase();
+                    const sence = card.dataset.sence.toLowerCase();
+                    const estado = card.dataset.estado;
+                    const categoria = card.dataset.categoria;
+
+                    const matchesSearch = nombre.includes(searchTerm) || sence.includes(searchTerm);
+                    const matchesEstado = !estadoFilter || estado === estadoFilter;
+                    const matchesCategoria = !categoriaFilter || categoria === categoriaFilter;
+
+                    if (matchesSearch && matchesEstado && matchesCategoria) {
+                        card.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                // Actualizar contador de resultados
+                resultsCount.innerHTML = `Mostrando <span class="font-semibold text-slate-900">${visibleCount}</span> curso${visibleCount !== 1 ? 's' : ''}`;
+
+                // Mostrar/ocultar estado vacío
+                if (visibleCount === 0) {
+                    emptyState.classList.remove('hidden');
+                    coursesGrid.classList.add('hidden');
+                } else {
+                    emptyState.classList.add('hidden');
+                    coursesGrid.classList.remove('hidden');
+                }
+            }
+
+            filterSearch.addEventListener('input', filterCourses);
+            filterEstado.addEventListener('change', filterCourses);
+            filterCategoria.addEventListener('change', filterCourses);
+
+            // ============================================
+            // DROPDOWN MENUS
+            // ============================================
+            document.querySelectorAll('.btn-menu').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Cerrar otros dropdowns
+                    document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                        if (menu !== this.nextElementSibling) {
+                            menu.classList.add('hidden');
+                        }
+                    });
+                    // Toggle este dropdown
+                    const dropdown = this.nextElementSibling;
+                    dropdown.classList.toggle('hidden');
+                });
+            });
+
+            // Cerrar dropdowns al hacer clic fuera
+            document.addEventListener('click', function() {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.add('hidden');
+                });
+            });
+
+            // ============================================
+            // MODAL NUEVO/EDITAR CURSO
+            // ============================================
+            document.getElementById('btn-nuevo-curso').addEventListener('click', function() {
+                document.getElementById('modal-curso-titulo').textContent = 'Nuevo Curso';
+                document.getElementById('curso-nombre').value = '';
+                document.getElementById('curso-sence').value = '';
+                document.getElementById('curso-categoria').value = '';
+                document.getElementById('curso-horas').value = '';
+                document.getElementById('curso-modalidad').value = '';
+                document.getElementById('curso-estado').value = 'borrador';
+                document.getElementById('curso-descripcion').value = '';
+                currentCursoId = null;
+                modalCurso.classList.remove('hidden');
+            });
+
+            // Botones de editar
+            document.querySelectorAll('.btn-editar').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.curso-card');
+                    document.getElementById('modal-curso-titulo').textContent = 'Editar Curso';
+                    document.getElementById('curso-nombre').value = card.dataset.nombre;
+                    document.getElementById('curso-sence').value = card.dataset.sence;
+                    document.getElementById('curso-categoria').value = card.dataset.categoria;
+                    document.getElementById('curso-estado').value = card.dataset.estado;
+                    currentCursoId = card.dataset.id;
+                    modalCurso.classList.remove('hidden');
+                });
+            });
+
+            // Cerrar modal curso
+            ['modal-curso-cerrar', 'modal-curso-cancelar'].forEach(id => {
+                document.getElementById(id).addEventListener('click', function() {
+                    modalCurso.classList.add('hidden');
+                });
+            });
+
+            // Guardar curso
+            document.getElementById('modal-curso-guardar').addEventListener('click', function() {
+                const nombre = document.getElementById('curso-nombre').value;
+                if (!nombre) {
+                    showToast('Por favor completa los campos requeridos', 'error');
+                    return;
+                }
+                modalCurso.classList.add('hidden');
+                showToast(currentCursoId ? 'Curso actualizado correctamente' : 'Curso creado correctamente', 'success');
+            });
+
+            // ============================================
+            // MODAL ELIMINAR
+            // ============================================
+            document.querySelectorAll('.menu-eliminar').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.curso-card');
+                    currentCursoId = card.dataset.id;
+                    document.getElementById('modal-eliminar-mensaje').textContent =
+                        `¿Estás seguro de eliminar "${card.dataset.nombre}"? Esta acción no se puede deshacer.`;
+                    this.closest('.dropdown-menu').classList.add('hidden');
+                    modalEliminar.classList.remove('hidden');
+                });
+            });
+
+            document.getElementById('modal-eliminar-cancelar').addEventListener('click', function() {
+                modalEliminar.classList.add('hidden');
+            });
+
+            document.getElementById('modal-eliminar-confirmar').addEventListener('click', function() {
+                const card = document.querySelector(`.curso-card[data-id="${currentCursoId}"]`);
+                if (card) {
+                    card.remove();
+                    filterCourses(); // Actualizar contador
+                }
+                modalEliminar.classList.add('hidden');
+                showToast('Curso eliminado correctamente', 'success');
+            });
+
+            // ============================================
+            // ACCIONES DE MENÚ (Activar/Desactivar/Duplicar)
+            // ============================================
+            document.querySelectorAll('.menu-activar').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.curso-card');
+                    updateCardStatus(card, 'activo');
+                    this.closest('.dropdown-menu').classList.add('hidden');
+                    showToast('Curso activado correctamente', 'success');
+                });
+            });
+
+            document.querySelectorAll('.menu-desactivar').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.curso-card');
+                    updateCardStatus(card, 'inactivo');
+                    this.closest('.dropdown-menu').classList.add('hidden');
+                    showToast('Curso desactivado correctamente', 'success');
+                });
+            });
+
+            document.querySelectorAll('.menu-duplicar').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.dropdown-menu').classList.add('hidden');
+                    showToast('Curso duplicado correctamente', 'success');
+                });
+            });
+
+            function updateCardStatus(card, newStatus) {
+                card.dataset.estado = newStatus;
+                const badge = card.querySelector('.status-badge');
+                const menuActivar = card.querySelector('.menu-activar');
+                const menuDesactivar = card.querySelector('.menu-desactivar');
+
+                if (newStatus === 'activo') {
+                    badge.className = 'status-badge px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold uppercase tracking-wider';
+                    badge.textContent = 'Activo';
+                    menuActivar.classList.add('hidden');
+                    menuDesactivar.classList.remove('hidden');
+                } else if (newStatus === 'inactivo') {
+                    badge.className = 'status-badge px-3 py-1 rounded-full bg-slate-100 text-slate-500 text-xs font-bold uppercase tracking-wider';
+                    badge.textContent = 'Inactivo';
+                    menuActivar.classList.remove('hidden');
+                    menuDesactivar.classList.add('hidden');
+                }
+                filterCourses();
+            }
+
+            // ============================================
+            // AGREGAR PRUEBA - Navegar a configuración
+            // ============================================
+            document.querySelectorAll('.btn-agregar-prueba').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.curso-card');
+                    const cursoId = card.dataset.id;
+                    const newPruebaId = Date.now(); // Generar ID único
+                    window.location.href = `cursos-prueba-config.html?cursoId=${cursoId}&pruebaId=${newPruebaId}&new=true`;
+                });
+            });
+
+            // ============================================
+            // BOTONES DETALLE Y PRUEBAS
+            // ============================================
+            document.querySelectorAll('.btn-detalle').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.curso-card');
+                    window.location.href = `cursos-detalle.html?id=${card.dataset.id}`;
+                });
+            });
+
+            document.querySelectorAll('.btn-pruebas').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const card = this.closest('.curso-card');
+                    // Navegar a la pestaña de pruebas en el detalle del curso
+                    window.location.href = `cursos-detalle.html?id=${card.dataset.id}&tab=pruebas`;
+                });
+            });
+
+            // ============================================
+            // TOAST NOTIFICATIONS
+            // ============================================
+            function showToast(message, type = 'success') {
+                const toastIcon = document.getElementById('toast-icon');
+                const toastMessage = document.getElementById('toast-message');
+
+                toastMessage.textContent = message;
+
+                if (type === 'success') {
+                    toastIcon.textContent = 'check_circle';
+                    toastIcon.className = 'material-symbols-outlined text-green-400';
+                } else if (type === 'error') {
+                    toastIcon.textContent = 'error';
+                    toastIcon.className = 'material-symbols-outlined text-red-400';
+                } else {
+                    toastIcon.textContent = 'info';
+                    toastIcon.className = 'material-symbols-outlined text-blue-400';
+                }
+
+                toast.classList.remove('hidden');
+                setTimeout(() => {
+                    toast.classList.add('hidden');
+                }, 3000);
+            }
+
+            // Cerrar modales con Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modalCurso.classList.add('hidden');
+                    modalEliminar.classList.add('hidden');
+                    modalPrueba.classList.add('hidden');
+                }
+            });
+
+            // Cerrar modales al hacer clic fuera
+            [modalCurso, modalEliminar, modalPrueba].forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

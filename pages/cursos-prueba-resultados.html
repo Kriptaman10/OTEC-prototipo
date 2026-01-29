@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Resultados de Evaluación - Sistema OTEC</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #2563EB;
+            --secondary: #64748B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --background-light: #f8fafc;
+        }
+        @layer base {
+            body {
+                font-size: 16px;
+                font-family: "Inter", sans-serif;
+            }
+            .bg-primary { background-color: var(--primary); }
+            .text-primary { color: var(--primary); }
+            .text-secondary { color: var(--secondary); }
+            .bg-success { background-color: var(--success); }
+            .bg-warning { background-color: var(--warning); }
+            .bg-danger { background-color: var(--danger); }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "secondary": "#64748B",
+                        "success": "#10B981",
+                        "warning": "#F59E0B",
+                        "danger": "#EF4444",
+                        "background-light": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light text-[#1e293b] antialiased overflow-hidden">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar"
+            class="fixed md:static inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#1a202c] border-r border-[#dbdee6] dark:border-gray-800 flex flex-col shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <!-- Close button for mobile -->
+            <div class="md:hidden flex justify-end p-4">
+                <button id="close-menu-button"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary rounded-lg p-2 text-white">
+                        <span class="material-symbols-outlined">analytics</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">Sistema OTEC</h1>
+                        <p class="text-[#616e89] text-xs font-normal">Gestión Corporativa</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 px-3 space-y-1" id="sidebar-nav">
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="dashboard.html" data-page="inicio">
+                    <span class="material-symbols-outlined text-[24px]">house</span>
+                    <span class="text-sm font-medium">Inicio</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="solicitudes-listado.html" data-page="solicitudes">
+                    <span class="material-symbols-outlined text-[24px]">assignment</span>
+                    <span class="text-sm font-medium">Solicitudes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="cursos-listado.html" data-page="cursos">
+                    <span class="material-symbols-outlined text-[24px]">book_5</span>
+                    <span class="text-sm font-medium">Cursos</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="relatores-listado.html" data-page="relatores">
+                    <span class="material-symbols-outlined text-[24px]">group</span>
+                    <span class="text-sm font-medium">Relatores</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="certificados.html" data-page="certificados">
+                    <span class="material-symbols-outlined text-[24px]">verified</span>
+                    <span class="text-sm font-medium">Certificados</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="reportes.html" data-page="reportes">
+                    <span class="material-symbols-outlined text-[24px]">bar_chart</span>
+                    <span class="text-sm font-medium">Reportes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="empresas-listado.html" data-page="empresas">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Empresas</span>
+                </a>
+
+                <!-- Separador: Portales por Rol (solo visibles según rol en producción) -->
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Portales</p>
+                </div>
+
+                <!-- Solo visible para rol: Relator -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-relator.html" data-page="portal-relator">
+                    <span class="material-symbols-outlined text-[24px]">school</span>
+                    <span class="text-sm font-medium">Portal Relator</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-bold">Relator</span>
+                </a>
+
+                <!-- Solo visible para rol: OTIC -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-otic.html" data-page="portal-otic">
+                    <span class="material-symbols-outlined text-[24px]">task_alt</span>
+                    <span class="text-sm font-medium">Aprobación OTIC</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-bold">OTIC</span>
+                </a>
+
+                <!-- Solo visible para rol: Cliente -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-cliente.html" data-page="portal-cliente">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Portal Cliente</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold">Cliente</span>
+                </a>
+
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Configuración</p>
+                </div>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="configuracion.html" data-page="ajustes">
+                    <span class="material-symbols-outlined text-[24px]">settings</span>
+                    <span class="text-sm font-medium">Ajustes</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-[#dbdee6] dark:border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-full bg-cover bg-center bg-[#f0f1f4]"
+                        data-alt="Avatar de usuario administrador"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiz4oKSzbq6_6G2zUileRWNM9J7ejhCs5U-9EIAXmhnLS6y-nF-i4LltyKkFjZQsFJgfaQjHHgapYjJdtue70IS_lPZJJ796EP7u2zDdPssJltnYqlRE-PVauNDy4PQN8AFzvNt9wprW4_qqLW7mQZKaOEakUJP9W3byeOmZ7l0OVFe-RYFtFggRa7BoW91YRZeZE_-0Wg0EAfa1LUUtkfGAfRTpyAmLaBojspSPBmmbauygCC66nf7G1wSulHg80z0wEsYHiv6HU')">
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-xs font-bold dark:text-white">Admin OTEC</p>
+                        <p class="text-[10px] text-[#616e89]">admin@otec.cl</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-[#f8fafc]">
+            <!-- Mobile Header -->
+            <div class="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200">
+                <div class="font-bold text-slate-900">OTEC Manager</div>
+                <button class="text-secondary" id="mobile-menu-button">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 space-y-6">
+                <!-- Breadcrumbs -->
+                <div class="flex items-center gap-2 text-sm">
+                    <a href="dashboard.html" class="text-secondary hover:text-primary transition-colors">Gestión</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <a href="cursos-listado.html" class="text-secondary hover:text-primary transition-colors">Cursos</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <a id="breadcrumb-curso" href="cursos-detalle.html?id=1" class="text-secondary hover:text-primary transition-colors">Excel Avanzado</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <span class="text-slate-900 font-medium">Resultados</span>
+                </div>
+
+                <!-- Header -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <button id="btn-volver" class="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-primary hover:border-primary transition-colors">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <div>
+                            <h1 id="prueba-titulo" class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Resultados: Prueba Diagnóstica</h1>
+                            <p class="text-secondary text-sm mt-1">Informe de Desempeño - Sistema de Gestión OTEC</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="btn-filtrar" class="flex items-center gap-2 h-11 px-4 bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 rounded-lg font-bold text-sm transition-colors">
+                            <span class="material-symbols-outlined text-lg">filter_list</span>
+                            <span>Filtrar</span>
+                        </button>
+                        <button id="btn-exportar" class="flex items-center gap-2 h-11 px-5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm transition-colors shadow-sm">
+                            <span class="material-symbols-outlined text-lg">download</span>
+                            <span>Exportar Excel</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- KPI Cards -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                        <p class="text-secondary text-sm font-medium">Total Intentos</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <p id="kpi-intentos" class="text-3xl font-black text-slate-900">154</p>
+                            <span class="text-xs font-bold text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+12%</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                        <p class="text-secondary text-sm font-medium">Promedio General</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <p id="kpi-promedio" class="text-3xl font-black text-slate-900">78.5%</p>
+                            <span class="text-xs font-bold text-green-600 bg-green-100 px-1.5 py-0.5 rounded">+5%</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                        <p class="text-secondary text-sm font-medium">Aprobados</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <p id="kpi-aprobados" class="text-3xl font-black text-green-600">128</p>
+                            <span class="text-xs font-medium text-slate-500">83%</span>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                        <p class="text-secondary text-sm font-medium">Reprobados</p>
+                        <div class="flex items-baseline gap-2 mt-2">
+                            <p id="kpi-reprobados" class="text-3xl font-black text-red-500">26</p>
+                            <span class="text-xs font-bold text-red-600 bg-red-100 px-1.5 py-0.5 rounded">17%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Grid -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Distribución de Notas -->
+                    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">leaderboard</span>
+                            Distribución de Notas
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-slate-600 uppercase tracking-wide">
+                                    <span>90-100% (Sobresaliente)</span>
+                                    <span id="dist-90">25%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-green-500 h-full rounded-full transition-all" style="width: 25%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-slate-600 uppercase tracking-wide">
+                                    <span>80-89% (Muy Bueno)</span>
+                                    <span id="dist-80">35%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-green-400 h-full rounded-full transition-all" style="width: 35%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-slate-600 uppercase tracking-wide">
+                                    <span>70-79% (Aprobado)</span>
+                                    <span id="dist-70">23%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-primary h-full rounded-full transition-all" style="width: 23%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-slate-600 uppercase tracking-wide">
+                                    <span>60-69% (En Riesgo)</span>
+                                    <span id="dist-60">10%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-orange-400 h-full rounded-full transition-all" style="width: 10%"></div>
+                                </div>
+                            </div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between text-xs font-bold text-slate-600 uppercase tracking-wide">
+                                    <span>&lt; 60% (Reprobado)</span>
+                                    <span id="dist-bajo">7%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                                    <div class="bg-red-500 h-full rounded-full transition-all" style="width: 7%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Preguntas más falladas -->
+                    <div class="bg-white rounded-xl border border-slate-200 p-6 shadow-sm">
+                        <h3 class="text-lg font-bold text-slate-900 mb-5 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-red-500">error</span>
+                            Preguntas más Falladas
+                        </h3>
+                        <div class="space-y-3" id="preguntas-falladas">
+                            <!-- Se genera dinámicamente -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Últimos Intentos Table -->
+                <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                    <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                            <span class="material-symbols-outlined text-primary">group</span>
+                            Últimos Intentos
+                        </h3>
+                        <div class="flex gap-2">
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                                <input type="text" id="search-participante" placeholder="Buscar participante..." class="h-10 pl-10 pr-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary w-full sm:w-64">
+                            </div>
+                            <select id="filter-estado" class="h-10 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                                <option value="">Todos</option>
+                                <option value="aprobado">Aprobados</option>
+                                <option value="reprobado">Reprobados</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-slate-50 text-xs uppercase tracking-wider text-slate-500 font-bold">
+                                <tr>
+                                    <th class="px-6 py-4 text-left">Participante</th>
+                                    <th class="px-6 py-4 text-left">Fecha</th>
+                                    <th class="px-6 py-4 text-left">Tiempo</th>
+                                    <th class="px-6 py-4 text-left">Puntaje</th>
+                                    <th class="px-6 py-4 text-center">Estado</th>
+                                    <th class="px-6 py-4 text-center">Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabla-intentos" class="divide-y divide-slate-100">
+                                <!-- Se genera dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-4 border-t border-slate-200 flex items-center justify-between">
+                        <p class="text-sm text-slate-500">Mostrando <span id="showing-count">10</span> de <span id="total-count">154</span> resultados</p>
+                        <div class="flex gap-2">
+                            <button id="btn-prev" class="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                                Anterior
+                            </button>
+                            <button id="btn-next" class="px-3 py-1.5 rounded-lg border border-slate-200 text-sm font-medium text-slate-600 hover:bg-slate-50">
+                                Siguiente
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Detalle de Intento -->
+    <div id="modal-detalle" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Detalle del Intento</h3>
+                        <p id="detalle-participante" class="text-sm text-secondary mt-1">Participante</p>
+                    </div>
+                    <button id="modal-detalle-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-6">
+                <!-- Resumen -->
+                <div class="grid grid-cols-3 gap-4">
+                    <div class="text-center p-4 bg-slate-50 rounded-lg">
+                        <p id="detalle-puntaje" class="text-3xl font-black text-primary">85%</p>
+                        <p class="text-xs text-secondary mt-1">Puntaje</p>
+                    </div>
+                    <div class="text-center p-4 bg-slate-50 rounded-lg">
+                        <p id="detalle-correctas" class="text-3xl font-black text-green-600">8/10</p>
+                        <p class="text-xs text-secondary mt-1">Correctas</p>
+                    </div>
+                    <div class="text-center p-4 bg-slate-50 rounded-lg">
+                        <p id="detalle-tiempo" class="text-3xl font-black text-slate-700">18:42</p>
+                        <p class="text-xs text-secondary mt-1">Tiempo</p>
+                    </div>
+                </div>
+                <!-- Respuestas -->
+                <div>
+                    <h4 class="font-bold text-slate-900 mb-3">Respuestas por Pregunta</h4>
+                    <div id="detalle-respuestas" class="space-y-2">
+                        <!-- Se genera dinámicamente -->
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="btn-detalle-cerrar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Detalle de Pregunta Fallada -->
+    <div id="modal-pregunta" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-lg w-full">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-slate-900">Análisis de Pregunta</h3>
+                    <button id="modal-pregunta-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-4">
+                <div class="p-4 bg-red-50 rounded-lg border border-red-200">
+                    <p id="modal-pregunta-texto" class="text-slate-900 font-medium">¿Cuál es el protocolo de seguridad nivel 4?</p>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="text-center p-3 bg-slate-50 rounded-lg">
+                        <p id="modal-pregunta-error" class="text-2xl font-black text-red-500">68%</p>
+                        <p class="text-xs text-secondary">Tasa de Error</p>
+                    </div>
+                    <div class="text-center p-3 bg-slate-50 rounded-lg">
+                        <p id="modal-pregunta-intentos" class="text-2xl font-black text-slate-700">154</p>
+                        <p class="text-xs text-secondary">Total Intentos</p>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-700 mb-2">Respuesta Correcta:</p>
+                    <p id="modal-pregunta-correcta" class="text-sm text-green-600 bg-green-50 p-3 rounded-lg">Nivel 4 requiere autenticación de dos factores y verificación biométrica</p>
+                </div>
+                <div>
+                    <p class="text-sm font-bold text-slate-700 mb-2">Respuesta más elegida (incorrecta):</p>
+                    <p id="modal-pregunta-elegida" class="text-sm text-red-600 bg-red-50 p-3 rounded-lg">Nivel 4 solo requiere contraseña segura</p>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end">
+                <button id="btn-pregunta-cerrar" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Filtros Avanzados -->
+    <div id="modal-filtros" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-bold text-slate-900">Filtros Avanzados</h3>
+                    <button id="modal-filtros-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Rango de Fechas</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="date" id="filtro-fecha-desde" class="h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary">
+                        <input type="date" id="filtro-fecha-hasta" class="h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Rango de Puntaje</label>
+                    <div class="grid grid-cols-2 gap-3">
+                        <input type="number" id="filtro-puntaje-min" placeholder="Mín %" class="h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary" min="0" max="100">
+                        <input type="number" id="filtro-puntaje-max" placeholder="Máx %" class="h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary" min="0" max="100">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Estado</label>
+                    <select id="filtro-estado-modal" class="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary">
+                        <option value="">Todos</option>
+                        <option value="aprobado">Solo Aprobados</option>
+                        <option value="reprobado">Solo Reprobados</option>
+                    </select>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="btn-limpiar-filtros" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Limpiar
+                </button>
+                <button id="btn-aplicar-filtros" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Aplicar Filtros
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50">
+        <div class="bg-slate-900 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3">
+            <span id="toast-icon" class="material-symbols-outlined text-green-400">check_circle</span>
+            <span id="toast-message" class="text-sm font-medium">Operación exitosa</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script src="../assets/js/components/mobile-menu.js"></script>
+    <script>
+        // ============================================
+        // RESULTADOS DE EVALUACIÓN - FUNCIONALIDAD
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referencias DOM
+            const modalDetalle = document.getElementById('modal-detalle');
+            const modalPregunta = document.getElementById('modal-pregunta');
+            const modalFiltros = document.getElementById('modal-filtros');
+            const toast = document.getElementById('toast');
+
+            // ============================================
+            // DATOS SIMULADOS
+            // ============================================
+            const nombres = ['Alejandro Silva', 'María Castro', 'Ricardo Morales', 'Carolina Vega', 'Pedro Sánchez',
+                           'Ana López', 'Diego Fernández', 'Valentina Ruiz', 'Sebastián Torres', 'Camila Ortiz',
+                           'Andrés Muñoz', 'Francisca Rojas', 'Nicolás Espinoza', 'Javiera Soto', 'Matías González'];
+
+            const preguntasFalladas = [
+                { texto: '¿Cuál es el protocolo de seguridad nivel 4?', error: 68, correcta: 'Nivel 4 requiere autenticación de dos factores', elegida: 'Solo contraseña segura' },
+                { texto: 'Normativa vigente para el manejo de residuos industriales', error: 54, correcta: 'NCh 2190 y DS 148', elegida: 'Solo NCh 2190' },
+                { texto: 'Cálculo de retención porcentual en facturación', error: 42, correcta: 'Base imponible × tasa vigente', elegida: 'Monto total × tasa' },
+                { texto: 'Identificación de riesgos ergonómicos tipo B', error: 38, correcta: 'Evaluación postural y repetitividad', elegida: 'Solo evaluación postural' },
+                { texto: 'Procedimiento de evacuación en caso de emergencia', error: 31, correcta: 'Punto de encuentro designado', elegida: 'Salir por cualquier puerta' }
+            ];
+
+            // Generar intentos aleatorios
+            let intentos = [];
+            for (let i = 0; i < 50; i++) {
+                const puntaje = Math.floor(Math.random() * 50) + 50; // 50-100
+                const fecha = new Date();
+                fecha.setDate(fecha.getDate() - Math.floor(Math.random() * 30));
+                const minutos = Math.floor(Math.random() * 20) + 10;
+                const segundos = Math.floor(Math.random() * 60);
+
+                intentos.push({
+                    id: i + 1,
+                    nombre: nombres[Math.floor(Math.random() * nombres.length)],
+                    fecha: fecha,
+                    tiempo: `${minutos}:${segundos.toString().padStart(2, '0')}`,
+                    puntaje: puntaje,
+                    estado: puntaje >= 70 ? 'aprobado' : 'reprobado',
+                    correctas: Math.floor(puntaje / 10),
+                    total: 10
+                });
+            }
+
+            // Ordenar por fecha descendente
+            intentos.sort((a, b) => b.fecha - a.fecha);
+
+            let currentPage = 0;
+            const itemsPerPage = 10;
+            let filteredIntentos = [...intentos];
+
+            // ============================================
+            // CARGAR PARÁMETROS URL
+            // ============================================
+            const urlParams = new URLSearchParams(window.location.search);
+            const cursoId = urlParams.get('cursoId') || '1';
+            const pruebaId = urlParams.get('pruebaId') || '1';
+            const pruebaNombre = urlParams.get('nombre') || 'Prueba Diagnóstica';
+
+            document.getElementById('breadcrumb-curso').href = `cursos-detalle.html?id=${cursoId}&tab=pruebas`;
+            document.getElementById('prueba-titulo').textContent = `Resultados: ${decodeURIComponent(pruebaNombre)}`;
+
+            // ============================================
+            // NAVEGACIÓN
+            // ============================================
+            document.getElementById('btn-volver').addEventListener('click', function() {
+                window.location.href = `cursos-detalle.html?id=${cursoId}&tab=pruebas`;
+            });
+
+            // ============================================
+            // RENDERIZAR PREGUNTAS FALLADAS
+            // ============================================
+            function renderPreguntasFalladas() {
+                const container = document.getElementById('preguntas-falladas');
+                container.innerHTML = '';
+
+                preguntasFalladas.forEach((p, index) => {
+                    const bgColor = p.error >= 50 ? 'bg-red-100 text-red-600' : 'bg-orange-100 text-orange-600';
+                    const div = document.createElement('div');
+                    div.className = 'pregunta-fallada flex items-center justify-between p-4 rounded-lg border border-slate-200 hover:border-primary/50 cursor-pointer transition-colors';
+                    div.dataset.index = index;
+                    div.innerHTML = `
+                        <div class="flex items-center gap-3 overflow-hidden flex-1">
+                            <span class="${bgColor} text-xs font-bold px-2 py-1 rounded whitespace-nowrap">${p.error}% Error</span>
+                            <p class="text-sm text-slate-700 truncate">${p.texto}</p>
+                        </div>
+                        <span class="material-symbols-outlined text-slate-400 flex-shrink-0">chevron_right</span>
+                    `;
+                    container.appendChild(div);
+                });
+
+                // Bind click events
+                container.querySelectorAll('.pregunta-fallada').forEach(el => {
+                    el.addEventListener('click', function() {
+                        const index = parseInt(this.dataset.index);
+                        openPreguntaModal(preguntasFalladas[index]);
+                    });
+                });
+            }
+
+            // ============================================
+            // RENDERIZAR TABLA DE INTENTOS
+            // ============================================
+            function renderIntentos() {
+                const tbody = document.getElementById('tabla-intentos');
+                tbody.innerHTML = '';
+
+                const start = currentPage * itemsPerPage;
+                const end = Math.min(start + itemsPerPage, filteredIntentos.length);
+                const pageData = filteredIntentos.slice(start, end);
+
+                pageData.forEach((intento) => {
+                    const iniciales = intento.nombre.split(' ').map(n => n[0]).join('');
+                    const fechaStr = intento.fecha.toLocaleDateString('es-CL', { day: '2-digit', month: 'short', year: 'numeric' });
+                    const horaStr = intento.fecha.toLocaleTimeString('es-CL', { hour: '2-digit', minute: '2-digit' });
+
+                    const estadoBadge = intento.estado === 'aprobado'
+                        ? '<span class="inline-flex items-center rounded-full bg-green-100 px-2.5 py-0.5 text-xs font-semibold text-green-700">Aprobado</span>'
+                        : '<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-semibold text-red-700">Reprobado</span>';
+
+                    const tr = document.createElement('tr');
+                    tr.className = 'hover:bg-slate-50 transition-colors intento-row';
+                    tr.dataset.id = intento.id;
+                    tr.innerHTML = `
+                        <td class="px-6 py-4">
+                            <div class="flex items-center gap-3">
+                                <div class="h-9 w-9 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                                    <span class="text-primary text-xs font-bold">${iniciales}</span>
+                                </div>
+                                <span class="text-sm font-medium text-slate-900">${intento.nombre}</span>
+                            </div>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-slate-500">${fechaStr} - ${horaStr}</td>
+                        <td class="px-6 py-4 text-sm text-slate-500">${intento.tiempo}</td>
+                        <td class="px-6 py-4 text-sm font-bold ${intento.puntaje >= 70 ? 'text-green-600' : 'text-red-500'}">${intento.puntaje}%</td>
+                        <td class="px-6 py-4 text-center">${estadoBadge}</td>
+                        <td class="px-6 py-4 text-center">
+                            <button class="btn-ver-detalle p-2 rounded-lg hover:bg-slate-100 text-slate-500 hover:text-primary transition-colors" title="Ver detalle">
+                                <span class="material-symbols-outlined text-lg">visibility</span>
+                            </button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
+                // Update counts
+                document.getElementById('showing-count').textContent = pageData.length;
+                document.getElementById('total-count').textContent = filteredIntentos.length;
+
+                // Update pagination buttons
+                document.getElementById('btn-prev').disabled = currentPage === 0;
+                document.getElementById('btn-next').disabled = end >= filteredIntentos.length;
+
+                // Bind detail buttons
+                tbody.querySelectorAll('.btn-ver-detalle').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        const id = parseInt(this.closest('.intento-row').dataset.id);
+                        const intento = intentos.find(i => i.id === id);
+                        if (intento) openDetalleModal(intento);
+                    });
+                });
+            }
+
+            // ============================================
+            // MODAL DETALLE DE INTENTO
+            // ============================================
+            function openDetalleModal(intento) {
+                document.getElementById('detalle-participante').textContent = intento.nombre;
+                document.getElementById('detalle-puntaje').textContent = intento.puntaje + '%';
+                document.getElementById('detalle-correctas').textContent = `${intento.correctas}/${intento.total}`;
+                document.getElementById('detalle-tiempo').textContent = intento.tiempo;
+
+                // Generar respuestas simuladas
+                const respuestasContainer = document.getElementById('detalle-respuestas');
+                respuestasContainer.innerHTML = '';
+                for (let i = 1; i <= intento.total; i++) {
+                    const correcto = i <= intento.correctas;
+                    const div = document.createElement('div');
+                    div.className = `flex items-center justify-between p-3 rounded-lg ${correcto ? 'bg-green-50 border border-green-200' : 'bg-red-50 border border-red-200'}`;
+                    div.innerHTML = `
+                        <span class="text-sm font-medium ${correcto ? 'text-green-700' : 'text-red-700'}">Pregunta ${i}</span>
+                        <span class="material-symbols-outlined text-lg ${correcto ? 'text-green-600' : 'text-red-500'}">${correcto ? 'check_circle' : 'cancel'}</span>
+                    `;
+                    respuestasContainer.appendChild(div);
+                }
+
+                modalDetalle.classList.remove('hidden');
+            }
+
+            ['modal-detalle-cerrar', 'btn-detalle-cerrar'].forEach(id => {
+                document.getElementById(id).addEventListener('click', () => {
+                    modalDetalle.classList.add('hidden');
+                });
+            });
+
+            // ============================================
+            // MODAL PREGUNTA FALLADA
+            // ============================================
+            function openPreguntaModal(pregunta) {
+                document.getElementById('modal-pregunta-texto').textContent = pregunta.texto;
+                document.getElementById('modal-pregunta-error').textContent = pregunta.error + '%';
+                document.getElementById('modal-pregunta-intentos').textContent = intentos.length;
+                document.getElementById('modal-pregunta-correcta').textContent = pregunta.correcta;
+                document.getElementById('modal-pregunta-elegida').textContent = pregunta.elegida;
+                modalPregunta.classList.remove('hidden');
+            }
+
+            ['modal-pregunta-cerrar', 'btn-pregunta-cerrar'].forEach(id => {
+                document.getElementById(id).addEventListener('click', () => {
+                    modalPregunta.classList.add('hidden');
+                });
+            });
+
+            // ============================================
+            // MODAL FILTROS
+            // ============================================
+            document.getElementById('btn-filtrar').addEventListener('click', () => {
+                modalFiltros.classList.remove('hidden');
+            });
+
+            document.getElementById('modal-filtros-cerrar').addEventListener('click', () => {
+                modalFiltros.classList.add('hidden');
+            });
+
+            document.getElementById('btn-limpiar-filtros').addEventListener('click', () => {
+                document.getElementById('filtro-fecha-desde').value = '';
+                document.getElementById('filtro-fecha-hasta').value = '';
+                document.getElementById('filtro-puntaje-min').value = '';
+                document.getElementById('filtro-puntaje-max').value = '';
+                document.getElementById('filtro-estado-modal').value = '';
+                filteredIntentos = [...intentos];
+                currentPage = 0;
+                renderIntentos();
+                modalFiltros.classList.add('hidden');
+                showToast('Filtros limpiados', 'info');
+            });
+
+            document.getElementById('btn-aplicar-filtros').addEventListener('click', () => {
+                const fechaDesde = document.getElementById('filtro-fecha-desde').value;
+                const fechaHasta = document.getElementById('filtro-fecha-hasta').value;
+                const puntajeMin = parseInt(document.getElementById('filtro-puntaje-min').value) || 0;
+                const puntajeMax = parseInt(document.getElementById('filtro-puntaje-max').value) || 100;
+                const estado = document.getElementById('filtro-estado-modal').value;
+
+                filteredIntentos = intentos.filter(i => {
+                    let pass = true;
+                    if (fechaDesde) pass = pass && i.fecha >= new Date(fechaDesde);
+                    if (fechaHasta) pass = pass && i.fecha <= new Date(fechaHasta + 'T23:59:59');
+                    pass = pass && i.puntaje >= puntajeMin && i.puntaje <= puntajeMax;
+                    if (estado) pass = pass && i.estado === estado;
+                    return pass;
+                });
+
+                currentPage = 0;
+                renderIntentos();
+                modalFiltros.classList.add('hidden');
+                showToast(`${filteredIntentos.length} resultados encontrados`, 'success');
+            });
+
+            // ============================================
+            // BÚSQUEDA Y FILTRO RÁPIDO
+            // ============================================
+            document.getElementById('search-participante').addEventListener('input', function() {
+                const query = this.value.toLowerCase();
+                const estado = document.getElementById('filter-estado').value;
+
+                filteredIntentos = intentos.filter(i => {
+                    let pass = i.nombre.toLowerCase().includes(query);
+                    if (estado) pass = pass && i.estado === estado;
+                    return pass;
+                });
+                currentPage = 0;
+                renderIntentos();
+            });
+
+            document.getElementById('filter-estado').addEventListener('change', function() {
+                const estado = this.value;
+                const query = document.getElementById('search-participante').value.toLowerCase();
+
+                filteredIntentos = intentos.filter(i => {
+                    let pass = i.nombre.toLowerCase().includes(query);
+                    if (estado) pass = pass && i.estado === estado;
+                    return pass;
+                });
+                currentPage = 0;
+                renderIntentos();
+            });
+
+            // ============================================
+            // PAGINACIÓN
+            // ============================================
+            document.getElementById('btn-prev').addEventListener('click', () => {
+                if (currentPage > 0) {
+                    currentPage--;
+                    renderIntentos();
+                }
+            });
+
+            document.getElementById('btn-next').addEventListener('click', () => {
+                if ((currentPage + 1) * itemsPerPage < filteredIntentos.length) {
+                    currentPage++;
+                    renderIntentos();
+                }
+            });
+
+            // ============================================
+            // EXPORTAR
+            // ============================================
+            document.getElementById('btn-exportar').addEventListener('click', function() {
+                showToast('Generando archivo Excel...', 'info');
+                setTimeout(() => {
+                    showToast('Archivo descargado: resultados_evaluacion.xlsx', 'success');
+                }, 1500);
+            });
+
+            // ============================================
+            // TOAST
+            // ============================================
+            function showToast(message, type = 'success') {
+                const toastIcon = document.getElementById('toast-icon');
+                const toastMessage = document.getElementById('toast-message');
+
+                toastMessage.textContent = message;
+
+                const iconConfig = {
+                    success: { icon: 'check_circle', class: 'text-green-400' },
+                    error: { icon: 'error', class: 'text-red-400' },
+                    info: { icon: 'info', class: 'text-blue-400' }
+                };
+
+                const config = iconConfig[type] || iconConfig.info;
+                toastIcon.textContent = config.icon;
+                toastIcon.className = `material-symbols-outlined ${config.class}`;
+
+                toast.classList.remove('hidden');
+                setTimeout(() => toast.classList.add('hidden'), 3000);
+            }
+
+            // ============================================
+            // CERRAR MODALES
+            // ============================================
+            const allModals = [modalDetalle, modalPregunta, modalFiltros];
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    allModals.forEach(modal => modal.classList.add('hidden'));
+                }
+            });
+
+            allModals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('hidden');
+                    }
+                });
+            });
+
+            // ============================================
+            // INICIALIZAR
+            // ============================================
+            renderPreguntasFalladas();
+            renderIntentos();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Configurar Prueba - Sistema OTEC</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link rel="stylesheet" href="../assets/css/global.css">
+    <style type="text/tailwindcss">
+        :root {
+            --primary: #2563EB;
+            --secondary: #64748B;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --background-light: #f8fafc;
+        }
+        @layer base {
+            body {
+                font-size: 16px;
+                font-family: "Inter", sans-serif;
+            }
+            .bg-primary { background-color: var(--primary); }
+            .text-primary { color: var(--primary); }
+            .text-secondary { color: var(--secondary); }
+            .bg-success { background-color: var(--success); }
+            .bg-warning { background-color: var(--warning); }
+            .bg-danger { background-color: var(--danger); }
+        }
+        .question-card {
+            transition: all 0.2s ease;
+        }
+        .question-card:hover {
+            border-color: var(--primary);
+        }
+        .question-card.dragging {
+            opacity: 0.5;
+            transform: scale(0.98);
+        }
+        .option-correct {
+            border-color: var(--success) !important;
+            background-color: rgb(16 185 129 / 0.1);
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2563EB",
+                        "secondary": "#64748B",
+                        "success": "#10B981",
+                        "warning": "#F59E0B",
+                        "danger": "#EF4444",
+                        "background-light": "#f8fafc",
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body class="bg-background-light text-[#1e293b] antialiased overflow-hidden">
+    <!-- Mobile Overlay -->
+    <div id="mobile-overlay" class="hidden fixed inset-0 bg-black/50 z-40 md:hidden"></div>
+
+    <div class="flex h-screen w-full overflow-hidden">
+        <!-- Sidebar Navigation -->
+        <aside id="sidebar"
+            class="fixed md:static inset-y-0 left-0 z-50 w-64 bg-white dark:bg-[#1a202c] border-r border-[#dbdee6] dark:border-gray-800 flex flex-col shrink-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
+            <!-- Close button for mobile -->
+            <div class="md:hidden flex justify-end p-4">
+                <button id="close-menu-button"
+                    class="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="flex items-center gap-3">
+                    <div class="bg-primary rounded-lg p-2 text-white">
+                        <span class="material-symbols-outlined">analytics</span>
+                    </div>
+                    <div class="flex flex-col">
+                        <h1 class="text-[#111318] dark:text-white text-base font-bold leading-tight">Sistema OTEC</h1>
+                        <p class="text-[#616e89] text-xs font-normal">Gestión Corporativa</p>
+                    </div>
+                </div>
+            </div>
+            <nav class="flex-1 px-3 space-y-1" id="sidebar-nav">
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="dashboard.html" data-page="inicio">
+                    <span class="material-symbols-outlined text-[24px]">house</span>
+                    <span class="text-sm font-medium">Inicio</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="solicitudes-listado.html" data-page="solicitudes">
+                    <span class="material-symbols-outlined text-[24px]">assignment</span>
+                    <span class="text-sm font-medium">Solicitudes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="cursos-listado.html" data-page="cursos">
+                    <span class="material-symbols-outlined text-[24px]">book_5</span>
+                    <span class="text-sm font-medium">Cursos</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="relatores-listado.html" data-page="relatores">
+                    <span class="material-symbols-outlined text-[24px]">group</span>
+                    <span class="text-sm font-medium">Relatores</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="certificados.html" data-page="certificados">
+                    <span class="material-symbols-outlined text-[24px]">verified</span>
+                    <span class="text-sm font-medium">Certificados</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="reportes.html" data-page="reportes">
+                    <span class="material-symbols-outlined text-[24px]">bar_chart</span>
+                    <span class="text-sm font-medium">Reportes</span>
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="empresas-listado.html" data-page="empresas">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Empresas</span>
+                </a>
+
+                <!-- Separador: Portales por Rol (solo visibles según rol en producción) -->
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Portales</p>
+                </div>
+
+                <!-- Solo visible para rol: Relator -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-relator.html" data-page="portal-relator">
+                    <span class="material-symbols-outlined text-[24px]">school</span>
+                    <span class="text-sm font-medium">Portal Relator</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-bold">Relator</span>
+                </a>
+
+                <!-- Solo visible para rol: OTIC -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-otic.html" data-page="portal-otic">
+                    <span class="material-symbols-outlined text-[24px]">task_alt</span>
+                    <span class="text-sm font-medium">Aprobación OTIC</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-purple-100 text-purple-700 font-bold">OTIC</span>
+                </a>
+
+                <!-- Solo visible para rol: Cliente -->
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="portal-cliente.html" data-page="portal-cliente">
+                    <span class="material-symbols-outlined text-[24px]">business</span>
+                    <span class="text-sm font-medium">Portal Cliente</span>
+                    <span
+                        class="ml-auto text-[10px] px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold">Cliente</span>
+                </a>
+
+                <div class="pt-4 pb-2 px-3">
+                    <p class="text-[10px] uppercase tracking-wider text-[#616e89] font-bold">Configuración</p>
+                </div>
+                <a class="flex items-center gap-3 px-3 py-2 text-[#616e89] hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
+                    href="configuracion.html" data-page="ajustes">
+                    <span class="material-symbols-outlined text-[24px]">settings</span>
+                    <span class="text-sm font-medium">Ajustes</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-[#dbdee6] dark:border-gray-800">
+                <div class="flex items-center gap-3">
+                    <div class="size-10 rounded-full bg-cover bg-center bg-[#f0f1f4]"
+                        data-alt="Avatar de usuario administrador"
+                        style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDiz4oKSzbq6_6G2zUileRWNM9J7ejhCs5U-9EIAXmhnLS6y-nF-i4LltyKkFjZQsFJgfaQjHHgapYjJdtue70IS_lPZJJ796EP7u2zDdPssJltnYqlRE-PVauNDy4PQN8AFzvNt9wprW4_qqLW7mQZKaOEakUJP9W3byeOmZ7l0OVFe-RYFtFggRa7BoW91YRZeZE_-0Wg0EAfa1LUUtkfGAfRTpyAmLaBojspSPBmmbauygCC66nf7G1wSulHg80z0wEsYHiv6HU')">
+                    </div>
+                    <div class="flex flex-col">
+                        <p class="text-xs font-bold dark:text-white">Admin OTEC</p>
+                        <p class="text-[10px] text-[#616e89]">admin@otec.cl</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col h-full relative overflow-hidden bg-[#f8fafc]">
+            <!-- Mobile Header -->
+            <div class="md:hidden flex items-center justify-between p-4 bg-white border-b border-slate-200">
+                <div class="font-bold text-slate-900">OTEC Manager</div>
+                <button class="text-secondary" id="mobile-menu-button">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+            </div>
+
+            <!-- Content Area -->
+            <div class="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8 space-y-6">
+                <!-- Breadcrumbs -->
+                <div class="flex items-center gap-2 text-sm">
+                    <a href="dashboard.html" class="text-secondary hover:text-primary transition-colors">Gestión</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <a href="cursos-listado.html" class="text-secondary hover:text-primary transition-colors">Cursos</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <a id="breadcrumb-curso" href="cursos-detalle.html?id=1" class="text-secondary hover:text-primary transition-colors">Excel Avanzado</a>
+                    <span class="material-symbols-outlined text-secondary text-base">chevron_right</span>
+                    <span class="text-slate-900 font-medium">Configurar Prueba</span>
+                </div>
+
+                <!-- Header with Back Button -->
+                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div class="flex items-center gap-4">
+                        <button id="btn-volver" class="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-primary hover:border-primary transition-colors">
+                            <span class="material-symbols-outlined">arrow_back</span>
+                        </button>
+                        <div>
+                            <h1 id="prueba-titulo" class="text-2xl md:text-3xl font-black text-slate-900 tracking-tight">Prueba Diagnóstica</h1>
+                            <p class="text-secondary text-sm mt-1">Configuración de preguntas y opciones</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button id="btn-preview-prueba" class="flex items-center gap-2 h-11 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-sm transition-colors">
+                            <span class="material-symbols-outlined text-lg">visibility</span>
+                            <span>Vista Previa</span>
+                        </button>
+                        <button id="btn-guardar-prueba" class="flex items-center gap-2 h-11 px-5 bg-primary hover:bg-primary/90 text-white rounded-lg font-bold text-sm transition-colors shadow-sm">
+                            <span class="material-symbols-outlined text-lg">save</span>
+                            <span>Guardar Cambios</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Preview Mode Banner (hidden by default) -->
+                <div id="preview-mode-banner" class="hidden bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-amber-600 text-2xl">visibility</span>
+                        <div>
+                            <p class="font-bold text-amber-900">Modo Vista Previa</p>
+                            <p class="text-sm text-amber-700">Estás viendo la prueba como la verán los alumnos</p>
+                        </div>
+                    </div>
+                    <button id="btn-exit-preview" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-bold text-sm transition-colors">
+                        Salir de Vista Previa
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+                    <!-- Main Content: Questions -->
+                    <div class="xl:col-span-2 space-y-4">
+                        <!-- Questions List -->
+                        <div id="questions-container" class="space-y-4">
+                            <!-- Question 1 -->
+                            <div class="question-card bg-white rounded-xl border border-slate-200 p-5 shadow-sm" data-question="1">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                            <span class="text-primary font-bold text-sm">1</span>
+                                        </div>
+                                        <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-700">Selección Múltiple</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <button class="btn-move-up p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover arriba">
+                                            <span class="material-symbols-outlined text-lg">expand_less</span>
+                                        </button>
+                                        <button class="btn-move-down p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover abajo">
+                                            <span class="material-symbols-outlined text-lg">expand_more</span>
+                                        </button>
+                                        <button class="btn-edit-question p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-primary transition-colors" title="Editar">
+                                            <span class="material-symbols-outlined text-lg">edit</span>
+                                        </button>
+                                        <button class="btn-delete-question p-1.5 rounded hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors" title="Eliminar">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-slate-900 font-medium mb-4">¿Cuál de las siguientes funciones se utiliza para buscar un valor en una tabla?</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">SUMA</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-green-300 bg-green-50 option-correct">
+                                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                        <span class="text-sm text-slate-700 font-medium">BUSCARV</span>
+                                        <span class="ml-auto text-xs font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded">Correcta</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">CONTAR</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">PROMEDIO</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question 2 -->
+                            <div class="question-card bg-white rounded-xl border border-slate-200 p-5 shadow-sm" data-question="2">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                            <span class="text-primary font-bold text-sm">2</span>
+                                        </div>
+                                        <span class="px-2 py-0.5 rounded text-xs font-bold bg-purple-100 text-purple-700">Verdadero/Falso</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <button class="btn-move-up p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover arriba">
+                                            <span class="material-symbols-outlined text-lg">expand_less</span>
+                                        </button>
+                                        <button class="btn-move-down p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover abajo">
+                                            <span class="material-symbols-outlined text-lg">expand_more</span>
+                                        </button>
+                                        <button class="btn-edit-question p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-primary transition-colors" title="Editar">
+                                            <span class="material-symbols-outlined text-lg">edit</span>
+                                        </button>
+                                        <button class="btn-delete-question p-1.5 rounded hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors" title="Eliminar">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-slate-900 font-medium mb-4">Las tablas dinámicas permiten resumir y analizar grandes cantidades de datos.</p>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-green-300 bg-green-50 option-correct">
+                                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                        <span class="text-sm text-slate-700 font-medium">Verdadero</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">Falso</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Question 3 -->
+                            <div class="question-card bg-white rounded-xl border border-slate-200 p-5 shadow-sm" data-question="3">
+                                <div class="flex items-start justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                            <span class="text-primary font-bold text-sm">3</span>
+                                        </div>
+                                        <span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-700">Selección Múltiple</span>
+                                    </div>
+                                    <div class="flex items-center gap-1">
+                                        <button class="btn-move-up p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover arriba">
+                                            <span class="material-symbols-outlined text-lg">expand_less</span>
+                                        </button>
+                                        <button class="btn-move-down p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover abajo">
+                                            <span class="material-symbols-outlined text-lg">expand_more</span>
+                                        </button>
+                                        <button class="btn-edit-question p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-primary transition-colors" title="Editar">
+                                            <span class="material-symbols-outlined text-lg">edit</span>
+                                        </button>
+                                        <button class="btn-delete-question p-1.5 rounded hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors" title="Eliminar">
+                                            <span class="material-symbols-outlined text-lg">delete</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <p class="text-slate-900 font-medium mb-4">¿Qué atajo de teclado se utiliza para abrir el cuadro de diálogo "Ir a"?</p>
+                                <div class="space-y-2">
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">Ctrl + F</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-green-300 bg-green-50 option-correct">
+                                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                        <span class="text-sm text-slate-700 font-medium">Ctrl + G</span>
+                                        <span class="ml-auto text-xs font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded">Correcta</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">Ctrl + H</span>
+                                    </div>
+                                    <div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">Ctrl + P</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Add Question Button -->
+                        <button id="btn-agregar-pregunta" class="w-full group border-2 border-dashed border-slate-300 rounded-xl p-6 flex items-center justify-center gap-3 hover:border-primary/50 hover:bg-primary/5 transition-all">
+                            <div class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-secondary group-hover:bg-primary/20 group-hover:text-primary transition-colors">
+                                <span class="material-symbols-outlined">add</span>
+                            </div>
+                            <div class="text-left">
+                                <p class="text-slate-900 font-bold">Agregar Pregunta</p>
+                                <p class="text-secondary text-sm">Selección múltiple, verdadero/falso o respuesta corta</p>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Sidebar: Test Settings -->
+                    <div class="space-y-4">
+                        <!-- Test Info Card -->
+                        <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">settings</span>
+                                Configuración
+                            </h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Nombre de la Prueba</label>
+                                    <input type="text" id="config-nombre" class="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="Prueba Diagnóstica">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 mb-2">Tiempo (min)</label>
+                                        <input type="number" id="config-tiempo" class="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="30" min="1">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-slate-700 mb-2">Intentos</label>
+                                        <input type="number" id="config-intentos" class="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="1" min="1">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Puntaje Mínimo (%)</label>
+                                    <input type="number" id="config-puntaje" class="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" value="70" min="0" max="100">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-slate-700 mb-2">Estado</label>
+                                    <select id="config-estado" class="w-full h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                                        <option value="edicion">En Edición</option>
+                                        <option value="activa" selected>Activa</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Stats Card -->
+                        <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">analytics</span>
+                                Resumen
+                            </h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                                    <span class="text-sm text-secondary">Total Preguntas</span>
+                                    <span id="stat-preguntas" class="text-sm font-bold text-slate-900">3</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                                    <span class="text-sm text-secondary">Selección Múltiple</span>
+                                    <span id="stat-multiple" class="text-sm font-medium text-slate-700">2</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2 border-b border-slate-100">
+                                    <span class="text-sm text-secondary">Verdadero/Falso</span>
+                                    <span id="stat-vf" class="text-sm font-medium text-slate-700">1</span>
+                                </div>
+                                <div class="flex items-center justify-between py-2">
+                                    <span class="text-sm text-secondary">Tiempo Total</span>
+                                    <span id="stat-tiempo" class="text-sm font-bold text-primary">30 min</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Actions -->
+                        <div class="bg-white rounded-xl border border-slate-200 p-5 shadow-sm">
+                            <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center gap-2">
+                                <span class="material-symbols-outlined text-primary">bolt</span>
+                                Acciones Rápidas
+                            </h3>
+                            <div class="space-y-2">
+                                <button id="btn-importar" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm">
+                                    <span class="material-symbols-outlined text-lg">upload_file</span>
+                                    Importar Preguntas
+                                </button>
+                                <button id="btn-duplicar" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm">
+                                    <span class="material-symbols-outlined text-lg">content_copy</span>
+                                    Duplicar Prueba
+                                </button>
+                                <button id="btn-descargar" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 transition-colors text-sm">
+                                    <span class="material-symbols-outlined text-lg">download</span>
+                                    Descargar PDF
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal: Nueva/Editar Pregunta -->
+    <div id="modal-pregunta" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="p-6 border-b border-slate-200">
+                <div class="flex items-center justify-between">
+                    <h3 id="modal-pregunta-titulo" class="text-xl font-bold text-slate-900">Nueva Pregunta</h3>
+                    <button id="modal-pregunta-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-5">
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Tipo de Pregunta *</label>
+                    <select id="pregunta-tipo" class="w-full h-11 px-4 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary">
+                        <option value="multiple">Selección Múltiple</option>
+                        <option value="verdadero-falso">Verdadero / Falso</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Enunciado de la Pregunta *</label>
+                    <textarea id="pregunta-enunciado" rows="3" class="w-full px-4 py-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary resize-none" placeholder="Escribe el enunciado de la pregunta..."></textarea>
+                </div>
+
+                <!-- Opciones para Selección Múltiple -->
+                <div id="opciones-multiple" class="space-y-3">
+                    <label class="block text-sm font-bold text-slate-700">Opciones de Respuesta *</label>
+                    <p class="text-xs text-secondary -mt-1 mb-2">Selecciona el círculo de la opción correcta</p>
+                    <div class="space-y-2" id="opciones-container">
+                        <!-- Options will be added dynamically -->
+                    </div>
+                    <button type="button" id="btn-add-opcion" class="flex items-center gap-2 text-sm text-primary font-medium hover:text-primary/80 transition-colors">
+                        <span class="material-symbols-outlined text-lg">add</span>
+                        Agregar Opción
+                    </button>
+                </div>
+
+                <!-- Opciones para Verdadero/Falso -->
+                <div id="opciones-vf" class="hidden space-y-3">
+                    <label class="block text-sm font-bold text-slate-700">Respuesta Correcta *</label>
+                    <div class="flex gap-4">
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="respuesta-vf" value="verdadero" class="w-4 h-4 text-primary focus:ring-primary">
+                            <span class="text-sm text-slate-700">Verdadero</span>
+                        </label>
+                        <label class="flex items-center gap-2 cursor-pointer">
+                            <input type="radio" name="respuesta-vf" value="falso" class="w-4 h-4 text-primary focus:ring-primary">
+                            <span class="text-sm text-slate-700">Falso</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Retroalimentación -->
+                <div>
+                    <label class="block text-sm font-bold text-slate-700 mb-2">Retroalimentación (Opcional)</label>
+                    <textarea id="pregunta-feedback" rows="2" class="w-full px-4 py-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary resize-none" placeholder="Explica la respuesta correcta..."></textarea>
+                </div>
+            </div>
+            <div class="p-6 border-t border-slate-200 flex justify-end gap-3">
+                <button id="modal-pregunta-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-pregunta-guardar" class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors">
+                    Guardar Pregunta
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Confirmar Eliminación -->
+    <div id="modal-eliminar" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-md w-full p-6 space-y-5">
+            <div class="flex items-center gap-4">
+                <div class="size-14 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <span class="material-symbols-outlined text-danger text-3xl">warning</span>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Eliminar Pregunta</h3>
+                    <p class="text-sm text-secondary mt-1">¿Estás seguro de eliminar esta pregunta? Esta acción no se puede deshacer.</p>
+                </div>
+            </div>
+            <div class="flex gap-3 justify-end">
+                <button id="modal-eliminar-cancelar" class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors">
+                    Cancelar
+                </button>
+                <button id="modal-eliminar-confirmar" class="px-5 py-2.5 rounded-lg bg-danger hover:bg-danger/90 text-white font-bold text-sm transition-colors">
+                    Eliminar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Vista Previa Prueba -->
+    <div id="modal-preview" class="hidden fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl shadow-xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white p-6 border-b border-slate-200 z-10">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Vista Previa: Prueba Diagnóstica</h3>
+                        <p class="text-sm text-secondary mt-1">Así verán los alumnos esta evaluación</p>
+                    </div>
+                    <button id="modal-preview-cerrar" class="text-slate-400 hover:text-slate-600 p-1">
+                        <span class="material-symbols-outlined">close</span>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <!-- Preview Header -->
+                <div class="bg-primary/5 rounded-xl p-6 mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-xl font-bold text-slate-900">Prueba Diagnóstica</h2>
+                        <div class="flex items-center gap-2 text-primary">
+                            <span class="material-symbols-outlined">timer</span>
+                            <span class="font-bold">30:00</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap gap-4 text-sm text-secondary">
+                        <span class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-base">quiz</span>
+                            3 Preguntas
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-base">grade</span>
+                            Mínimo: 70%
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <span class="material-symbols-outlined text-base">replay</span>
+                            1 Intento
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Preview Questions -->
+                <div class="space-y-6">
+                    <div class="bg-slate-50 rounded-xl p-5">
+                        <p class="text-sm text-primary font-bold mb-2">Pregunta 1 de 3</p>
+                        <p class="text-slate-900 font-medium mb-4">¿Cuál de las siguientes funciones se utiliza para buscar un valor en una tabla?</p>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-primary/50 transition-colors">
+                                <input type="radio" name="preview-q1" class="w-4 h-4 text-primary focus:ring-primary">
+                                <span class="text-sm">SUMA</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-primary/50 transition-colors">
+                                <input type="radio" name="preview-q1" class="w-4 h-4 text-primary focus:ring-primary">
+                                <span class="text-sm">BUSCARV</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-primary/50 transition-colors">
+                                <input type="radio" name="preview-q1" class="w-4 h-4 text-primary focus:ring-primary">
+                                <span class="text-sm">CONTAR</span>
+                            </label>
+                            <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-primary/50 transition-colors">
+                                <input type="radio" name="preview-q1" class="w-4 h-4 text-primary focus:ring-primary">
+                                <span class="text-sm">PROMEDIO</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sticky bottom-0 bg-white p-6 border-t border-slate-200 flex justify-between">
+                <button class="px-5 py-2.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-50 font-medium text-sm transition-colors flex items-center gap-2" disabled>
+                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                    Anterior
+                </button>
+                <button class="px-5 py-2.5 rounded-lg bg-primary hover:bg-primary/90 text-white font-bold text-sm transition-colors flex items-center gap-2">
+                    Siguiente
+                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="hidden fixed bottom-6 right-6 z-50">
+        <div class="bg-slate-900 text-white px-5 py-3 rounded-lg shadow-lg flex items-center gap-3">
+            <span id="toast-icon" class="material-symbols-outlined text-green-400">check_circle</span>
+            <span id="toast-message" class="text-sm font-medium">Operación exitosa</span>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script src="../assets/js/components/mobile-menu.js"></script>
+    <script>
+        // ============================================
+        // CONFIGURACIÓN DE PRUEBA - FUNCIONALIDAD COMPLETA
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referencias DOM
+            const modalPregunta = document.getElementById('modal-pregunta');
+            const modalEliminar = document.getElementById('modal-eliminar');
+            const modalPreview = document.getElementById('modal-preview');
+            const toast = document.getElementById('toast');
+            const questionsContainer = document.getElementById('questions-container');
+            const opcionesContainer = document.getElementById('opciones-container');
+
+            // Estado de la aplicación
+            let questions = [];
+            let currentEditIndex = null;
+            let questionIdCounter = 4; // Ya hay 3 preguntas de ejemplo
+
+            // ============================================
+            // INICIALIZAR - Cargar preguntas existentes
+            // ============================================
+            function initializeQuestions() {
+                // Cargar las preguntas existentes del DOM
+                const existingCards = questionsContainer.querySelectorAll('.question-card');
+                existingCards.forEach((card, index) => {
+                    const tipo = card.querySelector('.bg-blue-100') ? 'multiple' : 'verdadero-falso';
+                    const enunciado = card.querySelector('p.text-slate-900.font-medium').textContent;
+                    const opciones = [];
+                    let correctIndex = 0;
+
+                    if (tipo === 'multiple') {
+                        card.querySelectorAll('.space-y-2 > div').forEach((opt, i) => {
+                            const texto = opt.querySelector('span.text-sm').textContent;
+                            opciones.push(texto);
+                            if (opt.classList.contains('option-correct')) {
+                                correctIndex = i;
+                            }
+                        });
+                    } else {
+                        const vOpt = card.querySelector('.grid-cols-2 > div:first-child');
+                        correctIndex = vOpt.classList.contains('option-correct') ? 0 : 1;
+                    }
+
+                    questions.push({
+                        id: index + 1,
+                        tipo: tipo,
+                        enunciado: enunciado,
+                        opciones: opciones,
+                        correcta: correctIndex
+                    });
+                });
+                updateStats();
+            }
+
+            // ============================================
+            // CARGAR PARÁMETROS DE URL
+            // ============================================
+            const urlParams = new URLSearchParams(window.location.search);
+            const cursoId = urlParams.get('cursoId') || '1';
+            const pruebaId = urlParams.get('pruebaId');
+            const mode = urlParams.get('mode');
+            const isNew = urlParams.get('new') === 'true';
+
+            document.getElementById('breadcrumb-curso').href = `cursos-detalle.html?id=${cursoId}&tab=pruebas`;
+
+            if (mode === 'preview') {
+                document.getElementById('preview-mode-banner').classList.remove('hidden');
+            }
+
+            // Si es una prueba nueva, limpiar todo
+            if (isNew) {
+                questionsContainer.innerHTML = '';
+                document.getElementById('config-nombre').value = 'Nueva Prueba';
+                document.getElementById('prueba-titulo').textContent = 'Nueva Prueba';
+                document.getElementById('config-estado').value = 'edicion';
+            }
+
+            // ============================================
+            // NAVEGACIÓN
+            // ============================================
+            document.getElementById('btn-volver').addEventListener('click', function() {
+                window.location.href = `cursos-detalle.html?id=${cursoId}&tab=pruebas`;
+            });
+
+            document.getElementById('btn-exit-preview').addEventListener('click', function() {
+                const newUrl = new URL(window.location.href);
+                newUrl.searchParams.delete('mode');
+                window.location.href = newUrl.toString();
+            });
+
+            // ============================================
+            // GESTIÓN DE OPCIONES EN EL MODAL
+            // ============================================
+            function createOptionRow(value = '', index = 0, isCorrect = false) {
+                const row = document.createElement('div');
+                row.className = 'opcion-row flex items-center gap-2';
+                row.innerHTML = `
+                    <input type="radio" name="opcion-correcta" value="${index}" class="w-4 h-4 text-primary focus:ring-primary cursor-pointer" ${isCorrect ? 'checked' : ''}>
+                    <input type="text" class="opcion-texto flex-1 h-10 px-3 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-primary focus:border-primary" placeholder="Escribe la opción..." value="${value}">
+                    <button type="button" class="btn-remove-option p-2 text-slate-400 hover:text-red-500 transition-colors" title="Eliminar opción">
+                        <span class="material-symbols-outlined text-lg">close</span>
+                    </button>
+                `;
+                return row;
+            }
+
+            function resetOptionsContainer(opciones = ['', '', '', ''], correcta = -1) {
+                opcionesContainer.innerHTML = '';
+                opciones.forEach((opcion, index) => {
+                    const row = createOptionRow(opcion, index, index === correcta);
+                    opcionesContainer.appendChild(row);
+                });
+                bindOptionEvents();
+            }
+
+            function bindOptionEvents() {
+                // Eliminar opción
+                opcionesContainer.querySelectorAll('.btn-remove-option').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const rows = opcionesContainer.querySelectorAll('.opcion-row');
+                        if (rows.length > 2) {
+                            this.closest('.opcion-row').remove();
+                            // Renumerar los radios
+                            opcionesContainer.querySelectorAll('.opcion-row').forEach((row, i) => {
+                                row.querySelector('input[type="radio"]').value = i;
+                            });
+                        } else {
+                            showToast('Debe haber al menos 2 opciones', 'error');
+                        }
+                    });
+                });
+            }
+
+            // Agregar nueva opción
+            document.getElementById('btn-add-opcion').addEventListener('click', function() {
+                const rows = opcionesContainer.querySelectorAll('.opcion-row');
+                if (rows.length < 6) {
+                    const newRow = createOptionRow('', rows.length);
+                    opcionesContainer.appendChild(newRow);
+                    bindOptionEvents();
+                    newRow.querySelector('.opcion-texto').focus();
+                } else {
+                    showToast('Máximo 6 opciones permitidas', 'error');
+                }
+            });
+
+            // ============================================
+            // MODAL PREGUNTA
+            // ============================================
+            function openPreguntaModal(editIndex = null) {
+                currentEditIndex = editIndex;
+                const isEdit = editIndex !== null;
+
+                document.getElementById('modal-pregunta-titulo').textContent = isEdit ? 'Editar Pregunta' : 'Nueva Pregunta';
+                document.getElementById('modal-pregunta-guardar').textContent = isEdit ? 'Guardar Cambios' : 'Agregar Pregunta';
+
+                if (isEdit && questions[editIndex]) {
+                    const q = questions[editIndex];
+                    document.getElementById('pregunta-tipo').value = q.tipo;
+                    document.getElementById('pregunta-enunciado').value = q.enunciado;
+                    document.getElementById('pregunta-feedback').value = q.feedback || '';
+
+                    if (q.tipo === 'multiple') {
+                        resetOptionsContainer(q.opciones, q.correcta);
+                    } else {
+                        document.querySelector(`input[name="respuesta-vf"][value="${q.correcta === 0 ? 'verdadero' : 'falso'}"]`).checked = true;
+                    }
+                } else {
+                    document.getElementById('pregunta-tipo').value = 'multiple';
+                    document.getElementById('pregunta-enunciado').value = '';
+                    document.getElementById('pregunta-feedback').value = '';
+                    resetOptionsContainer(['', '', '', ''], -1);
+                    document.querySelectorAll('input[name="respuesta-vf"]').forEach(r => r.checked = false);
+                }
+
+                handleTipoChange();
+                modalPregunta.classList.remove('hidden');
+                document.getElementById('pregunta-enunciado').focus();
+            }
+
+            document.getElementById('btn-agregar-pregunta').addEventListener('click', () => openPreguntaModal());
+
+            // Cambiar tipo de pregunta
+            document.getElementById('pregunta-tipo').addEventListener('change', handleTipoChange);
+
+            function handleTipoChange() {
+                const tipo = document.getElementById('pregunta-tipo').value;
+                const opcionesMultiple = document.getElementById('opciones-multiple');
+                const opcionesVF = document.getElementById('opciones-vf');
+
+                if (tipo === 'verdadero-falso') {
+                    opcionesMultiple.classList.add('hidden');
+                    opcionesVF.classList.remove('hidden');
+                } else {
+                    opcionesMultiple.classList.remove('hidden');
+                    opcionesVF.classList.add('hidden');
+                    // Si el container está vacío, inicializar
+                    if (opcionesContainer.children.length === 0) {
+                        resetOptionsContainer(['', '', '', ''], -1);
+                    }
+                }
+            }
+
+            // Cerrar modal
+            ['modal-pregunta-cerrar', 'modal-pregunta-cancelar'].forEach(id => {
+                document.getElementById(id).addEventListener('click', () => {
+                    modalPregunta.classList.add('hidden');
+                });
+            });
+
+            // Guardar pregunta
+            document.getElementById('modal-pregunta-guardar').addEventListener('click', function() {
+                const tipo = document.getElementById('pregunta-tipo').value;
+                const enunciado = document.getElementById('pregunta-enunciado').value.trim();
+                const feedback = document.getElementById('pregunta-feedback').value.trim();
+
+                // Validación
+                if (!enunciado) {
+                    showToast('Por favor ingresa el enunciado de la pregunta', 'error');
+                    document.getElementById('pregunta-enunciado').focus();
+                    return;
+                }
+
+                let opciones = [];
+                let correcta = -1;
+
+                if (tipo === 'multiple') {
+                    const rows = opcionesContainer.querySelectorAll('.opcion-row');
+                    rows.forEach((row, i) => {
+                        const texto = row.querySelector('.opcion-texto').value.trim();
+                        opciones.push(texto);
+                        if (row.querySelector('input[type="radio"]').checked) {
+                            correcta = i;
+                        }
+                    });
+
+                    // Validar opciones
+                    const opcionesLlenas = opciones.filter(o => o !== '');
+                    if (opcionesLlenas.length < 2) {
+                        showToast('Debes completar al menos 2 opciones', 'error');
+                        return;
+                    }
+                    if (correcta === -1) {
+                        showToast('Debes seleccionar la respuesta correcta', 'error');
+                        return;
+                    }
+                    if (!opciones[correcta]) {
+                        showToast('La opción correcta no puede estar vacía', 'error');
+                        return;
+                    }
+                } else {
+                    // Verdadero/Falso
+                    const vfSelected = document.querySelector('input[name="respuesta-vf"]:checked');
+                    if (!vfSelected) {
+                        showToast('Debes seleccionar si es Verdadero o Falso', 'error');
+                        return;
+                    }
+                    correcta = vfSelected.value === 'verdadero' ? 0 : 1;
+                    opciones = ['Verdadero', 'Falso'];
+                }
+
+                // Crear o actualizar pregunta
+                const questionData = {
+                    id: currentEditIndex !== null ? questions[currentEditIndex].id : questionIdCounter++,
+                    tipo: tipo,
+                    enunciado: enunciado,
+                    opciones: opciones,
+                    correcta: correcta,
+                    feedback: feedback
+                };
+
+                if (currentEditIndex !== null) {
+                    questions[currentEditIndex] = questionData;
+                } else {
+                    questions.push(questionData);
+                }
+
+                renderQuestions();
+                modalPregunta.classList.add('hidden');
+                showToast(currentEditIndex !== null ? 'Pregunta actualizada' : 'Pregunta agregada', 'success');
+            });
+
+            // ============================================
+            // RENDERIZAR PREGUNTAS
+            // ============================================
+            function renderQuestions() {
+                questionsContainer.innerHTML = '';
+
+                questions.forEach((q, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'question-card bg-white rounded-xl border border-slate-200 p-5 shadow-sm';
+                    card.dataset.question = index;
+                    card.dataset.id = q.id;
+
+                    const tipoBadge = q.tipo === 'multiple'
+                        ? '<span class="px-2 py-0.5 rounded text-xs font-bold bg-blue-100 text-blue-700">Selección Múltiple</span>'
+                        : '<span class="px-2 py-0.5 rounded text-xs font-bold bg-purple-100 text-purple-700">Verdadero/Falso</span>';
+
+                    let opcionesHTML = '';
+                    if (q.tipo === 'multiple') {
+                        opcionesHTML = '<div class="space-y-2">';
+                        q.opciones.forEach((opt, i) => {
+                            if (opt) {
+                                const isCorrect = i === q.correcta;
+                                opcionesHTML += isCorrect
+                                    ? `<div class="flex items-center gap-3 p-3 rounded-lg border border-green-300 bg-green-50 option-correct">
+                                        <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                        <span class="text-sm text-slate-700 font-medium">${escapeHtml(opt)}</span>
+                                        <span class="ml-auto text-xs font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded">Correcta</span>
+                                    </div>`
+                                    : `<div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                        <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                        <span class="text-sm text-slate-700">${escapeHtml(opt)}</span>
+                                    </div>`;
+                            }
+                        });
+                        opcionesHTML += '</div>';
+                    } else {
+                        opcionesHTML = '<div class="grid grid-cols-2 gap-3">';
+                        ['Verdadero', 'Falso'].forEach((opt, i) => {
+                            const isCorrect = i === q.correcta;
+                            opcionesHTML += isCorrect
+                                ? `<div class="flex items-center gap-3 p-3 rounded-lg border border-green-300 bg-green-50 option-correct">
+                                    <span class="material-symbols-outlined text-green-600">check_circle</span>
+                                    <span class="text-sm text-slate-700 font-medium">${opt}</span>
+                                </div>`
+                                : `<div class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-slate-50">
+                                    <span class="material-symbols-outlined text-slate-400">radio_button_unchecked</span>
+                                    <span class="text-sm text-slate-700">${opt}</span>
+                                </div>`;
+                        });
+                        opcionesHTML += '</div>';
+                    }
+
+                    card.innerHTML = `
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                                    <span class="text-primary font-bold text-sm">${index + 1}</span>
+                                </div>
+                                ${tipoBadge}
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <button class="btn-move-up p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover arriba">
+                                    <span class="material-symbols-outlined text-lg">expand_less</span>
+                                </button>
+                                <button class="btn-move-down p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors" title="Mover abajo">
+                                    <span class="material-symbols-outlined text-lg">expand_more</span>
+                                </button>
+                                <button class="btn-edit-question p-1.5 rounded hover:bg-slate-100 text-slate-400 hover:text-primary transition-colors" title="Editar">
+                                    <span class="material-symbols-outlined text-lg">edit</span>
+                                </button>
+                                <button class="btn-delete-question p-1.5 rounded hover:bg-red-50 text-slate-400 hover:text-red-500 transition-colors" title="Eliminar">
+                                    <span class="material-symbols-outlined text-lg">delete</span>
+                                </button>
+                            </div>
+                        </div>
+                        <p class="text-slate-900 font-medium mb-4">${escapeHtml(q.enunciado)}</p>
+                        ${opcionesHTML}
+                    `;
+
+                    questionsContainer.appendChild(card);
+                });
+
+                bindQuestionCardEvents();
+                updateStats();
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            // ============================================
+            // EVENTOS DE TARJETAS DE PREGUNTAS
+            // ============================================
+            function bindQuestionCardEvents() {
+                // Editar
+                questionsContainer.querySelectorAll('.btn-edit-question').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.closest('.question-card').dataset.question);
+                        openPreguntaModal(index);
+                    });
+                });
+
+                // Eliminar
+                questionsContainer.querySelectorAll('.btn-delete-question').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        currentEditIndex = parseInt(this.closest('.question-card').dataset.question);
+                        modalEliminar.classList.remove('hidden');
+                    });
+                });
+
+                // Mover arriba
+                questionsContainer.querySelectorAll('.btn-move-up').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.closest('.question-card').dataset.question);
+                        if (index > 0) {
+                            [questions[index], questions[index - 1]] = [questions[index - 1], questions[index]];
+                            renderQuestions();
+                            showToast('Pregunta movida', 'info');
+                        }
+                    });
+                });
+
+                // Mover abajo
+                questionsContainer.querySelectorAll('.btn-move-down').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const index = parseInt(this.closest('.question-card').dataset.question);
+                        if (index < questions.length - 1) {
+                            [questions[index], questions[index + 1]] = [questions[index + 1], questions[index]];
+                            renderQuestions();
+                            showToast('Pregunta movida', 'info');
+                        }
+                    });
+                });
+            }
+
+            // ============================================
+            // ELIMINAR PREGUNTA
+            // ============================================
+            document.getElementById('modal-eliminar-cancelar').addEventListener('click', () => {
+                modalEliminar.classList.add('hidden');
+            });
+
+            document.getElementById('modal-eliminar-confirmar').addEventListener('click', function() {
+                if (currentEditIndex !== null) {
+                    questions.splice(currentEditIndex, 1);
+                    renderQuestions();
+                    currentEditIndex = null;
+                }
+                modalEliminar.classList.add('hidden');
+                showToast('Pregunta eliminada', 'success');
+            });
+
+            // ============================================
+            // VISTA PREVIA
+            // ============================================
+            document.getElementById('btn-preview-prueba').addEventListener('click', function() {
+                generatePreview();
+                modalPreview.classList.remove('hidden');
+            });
+
+            document.getElementById('modal-preview-cerrar').addEventListener('click', () => {
+                modalPreview.classList.add('hidden');
+            });
+
+            function generatePreview() {
+                const previewContainer = modalPreview.querySelector('.space-y-6');
+                const nombre = document.getElementById('config-nombre').value || 'Prueba';
+                const tiempo = document.getElementById('config-tiempo').value || '30';
+                const puntaje = document.getElementById('config-puntaje').value || '70';
+                const intentos = document.getElementById('config-intentos').value || '1';
+
+                // Actualizar header del preview
+                modalPreview.querySelector('h3').textContent = `Vista Previa: ${nombre}`;
+                modalPreview.querySelector('.bg-primary\\/5 h2').textContent = nombre;
+                modalPreview.querySelector('.bg-primary\\/5 .font-bold').textContent = `${tiempo}:00`;
+
+                const infoSpans = modalPreview.querySelectorAll('.bg-primary\\/5 .flex-wrap span');
+                if (infoSpans[0]) infoSpans[0].innerHTML = `<span class="material-symbols-outlined text-base">quiz</span> ${questions.length} Preguntas`;
+                if (infoSpans[1]) infoSpans[1].innerHTML = `<span class="material-symbols-outlined text-base">grade</span> Mínimo: ${puntaje}%`;
+                if (infoSpans[2]) infoSpans[2].innerHTML = `<span class="material-symbols-outlined text-base">replay</span> ${intentos} Intento${intentos > 1 ? 's' : ''}`;
+
+                // Generar preguntas
+                previewContainer.innerHTML = '';
+                questions.forEach((q, index) => {
+                    const questionDiv = document.createElement('div');
+                    questionDiv.className = 'bg-slate-50 rounded-xl p-5';
+
+                    let optionsHTML = '<div class="space-y-2">';
+                    const opts = q.tipo === 'multiple' ? q.opciones.filter(o => o) : ['Verdadero', 'Falso'];
+                    opts.forEach((opt, i) => {
+                        optionsHTML += `
+                            <label class="flex items-center gap-3 p-3 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-primary/50 transition-colors">
+                                <input type="radio" name="preview-q${index}" class="w-4 h-4 text-primary focus:ring-primary">
+                                <span class="text-sm">${escapeHtml(opt)}</span>
+                            </label>
+                        `;
+                    });
+                    optionsHTML += '</div>';
+
+                    questionDiv.innerHTML = `
+                        <p class="text-sm text-primary font-bold mb-2">Pregunta ${index + 1} de ${questions.length}</p>
+                        <p class="text-slate-900 font-medium mb-4">${escapeHtml(q.enunciado)}</p>
+                        ${optionsHTML}
+                    `;
+
+                    previewContainer.appendChild(questionDiv);
+                });
+
+                if (questions.length === 0) {
+                    previewContainer.innerHTML = '<div class="text-center py-8 text-secondary">No hay preguntas para mostrar</div>';
+                }
+            }
+
+            // ============================================
+            // GUARDAR CAMBIOS
+            // ============================================
+            document.getElementById('btn-guardar-prueba').addEventListener('click', function() {
+                const nombre = document.getElementById('config-nombre').value.trim();
+                if (!nombre) {
+                    showToast('El nombre de la prueba es requerido', 'error');
+                    return;
+                }
+                if (questions.length === 0) {
+                    showToast('Agrega al menos una pregunta', 'error');
+                    return;
+                }
+                // Actualizar título
+                document.getElementById('prueba-titulo').textContent = nombre;
+                showToast('Prueba guardada correctamente', 'success');
+            });
+
+            // Sincronizar nombre con título
+            document.getElementById('config-nombre').addEventListener('input', function() {
+                document.getElementById('prueba-titulo').textContent = this.value || 'Nueva Prueba';
+            });
+
+            // Sincronizar tiempo
+            document.getElementById('config-tiempo').addEventListener('input', function() {
+                document.getElementById('stat-tiempo').textContent = `${this.value || 0} min`;
+            });
+
+            // ============================================
+            // ACCIONES RÁPIDAS
+            // ============================================
+            document.getElementById('btn-importar').addEventListener('click', function() {
+                showToast('Función de importación disponible próximamente', 'info');
+            });
+
+            document.getElementById('btn-duplicar').addEventListener('click', function() {
+                if (questions.length === 0) {
+                    showToast('No hay preguntas para duplicar', 'error');
+                    return;
+                }
+                showToast('Prueba duplicada correctamente', 'success');
+            });
+
+            document.getElementById('btn-descargar').addEventListener('click', function() {
+                if (questions.length === 0) {
+                    showToast('No hay preguntas para exportar', 'error');
+                    return;
+                }
+                showToast('Generando PDF...', 'info');
+                setTimeout(() => {
+                    const nombre = document.getElementById('config-nombre').value || 'prueba';
+                    showToast(`PDF descargado: ${nombre.toLowerCase().replace(/\s+/g, '_')}.pdf`, 'success');
+                }, 1500);
+            });
+
+            // ============================================
+            // ACTUALIZAR ESTADÍSTICAS
+            // ============================================
+            function updateStats() {
+                const total = questions.length;
+                const multiple = questions.filter(q => q.tipo === 'multiple').length;
+                const vf = questions.filter(q => q.tipo === 'verdadero-falso').length;
+
+                document.getElementById('stat-preguntas').textContent = total;
+                document.getElementById('stat-multiple').textContent = multiple;
+                document.getElementById('stat-vf').textContent = vf;
+            }
+
+            // ============================================
+            // TOAST
+            // ============================================
+            function showToast(message, type = 'success') {
+                const toastIcon = document.getElementById('toast-icon');
+                const toastMessage = document.getElementById('toast-message');
+
+                toastMessage.textContent = message;
+
+                const iconConfig = {
+                    success: { icon: 'check_circle', class: 'text-green-400' },
+                    error: { icon: 'error', class: 'text-red-400' },
+                    info: { icon: 'info', class: 'text-blue-400' }
+                };
+
+                const config = iconConfig[type] || iconConfig.info;
+                toastIcon.textContent = config.icon;
+                toastIcon.className = `material-symbols-outlined ${config.class}`;
+
+                toast.classList.remove('hidden');
+                setTimeout(() => toast.classList.add('hidden'), 3000);
+            }
+
+            // ============================================
+            // CERRAR MODALES
+            // ============================================
+            const allModals = [modalPregunta, modalEliminar, modalPreview];
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    allModals.forEach(modal => modal.classList.add('hidden'));
+                }
+            });
+
+            allModals.forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('hidden');
+                    }
+                });
+            });
+
+            // ============================================
+            // INICIALIZAR
+            // ============================================
+            if (!isNew) {
+                initializeQuestions();
+            } else {
+                // Para prueba nueva, iniciar con contador en 1 y actualizar stats
+                questionIdCounter = 1;
+                updateStats();
+            }
+        });
+    </script>
+</body>
+
+</html>
